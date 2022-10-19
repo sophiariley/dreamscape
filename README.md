@@ -1,7 +1,17 @@
 # Project Name
+Dreamscape
 
 This first paragraph should be a short description of the app. You can add links
 to your wiki pages that have more detailed descriptions.
+
+This is an Android social media app that is based around user's love of traveling.
+Users can post pictures and videos from trips they have been on, sharing them with
+other users. One could then see a trip that looks intriguing and 'Create A Trip'
+to the same destination through the app. This includes finding other users that 
+might want to go on this trip too, planning the arrival and derparture days, 
+listing the hotels, flight plans etc. Dreamscape is an place for poeple connect and
+share trips they have been on in hopes that everyone finds destinations to travel 
+to tha they otherwise might not have chosen. 
 
 Your audience for the Readme.md are other developers who are joining your team.
 Specifically, the file should contain detailed instructions that any developer
@@ -18,7 +28,6 @@ run in their laptop. For example:
 In order to build this project you first have to install:
 
 * [Node.js](https://nodejs.org/en/)
-* [MongoDB](https://www.mongodb.com/)
 
 If possible, list the actual commands you used to install these, so the reader
 can just cut-n-paste the commands and get everything setup.
