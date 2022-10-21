@@ -1,13 +1,13 @@
 # Dreamscape
 
-This is an Android social media app that is based around user's love of traveling.
+Dreamscape is an Android social media app focused on the user's love of traveling.
 Users can post pictures and videos from trips they have been on, sharing them with
-other users. One could then see a trip that looks intriguing and 'Create A Trip'
-to the same destination through the app. This includes finding other users that 
-might want to go on this trip too, planning the arrival and derparture days, 
-listing the hotels, flight plans etc. Dreamscape is an place for poeple connect and
+other users. Other users can then see a trip that looks intriguing and 'Create A Trip'
+to the same destination through the app. This includes communicating with other users that 
+might want to go on this trip as well, planning arrival and derparture days, 
+listing hotels and flight plans, etc. Dreamscape is a place for poeple connect and
 share trips they have been on in hopes that everyone finds destinations to travel 
-to tha they otherwise might not have chosen. 
+to that they otherwise might not have chosen. 
 
 ## External Requirements
 
