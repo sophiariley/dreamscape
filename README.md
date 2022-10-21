@@ -1,8 +1,4 @@
-# Project Name
-Dreamscape
-
-This first paragraph should be a short description of the app. You can add links
-to your wiki pages that have more detailed descriptions.
+# Dreamscape
 
 This is an Android social media app that is based around user's love of traveling.
 Users can post pictures and videos from trips they have been on, sharing them with
@@ -13,13 +9,6 @@ listing the hotels, flight plans etc. Dreamscape is an place for poeple connect 
 share trips they have been on in hopes that everyone finds destinations to travel 
 to tha they otherwise might not have chosen. 
 
-Your audience for the Readme.md are other developers who are joining your team.
-Specifically, the file should contain detailed instructions that any developer
-can follow to install, compile, run, and test your project. These are not only
-useful to new developers, but also to you when you have to re-install everything
-because your old laptop crashed. Also, the teachers of this class will be
-following your instructions.
-
 ## External Requirements
 
 List all the stuff the reader will need to install in order to get you app to
@@ -27,35 +16,32 @@ run in their laptop. For example:
 
 In order to build this project you first have to install:
 
+* [VS Code](https://code.visualstudio.com/)
 * [Node.js](https://nodejs.org/en/)
-
-If possible, list the actual commands you used to install these, so the reader
-can just cut-n-paste the commands and get everything setup.
-
-You only need to add instructions for the OS you are using.
+  * To confirm that Node JS has been properly downloaded onto your machine, open the command promt and type "node -v". This should return what version of Node JS is       installed on your machine.
+  * To update the node package manager, type "npm install --global".
+* Expo Go (both on a mobile device and on the terminal)
+  * [To install on mobile device](https://expo.dev/client)
+  * [To install on terminal](https://docs.expo.dev/workflow/expo-cli/)
 
 ## Setup
 
-Here you list all the one-time things the developer needs to do after cloning
-your repo. Sometimes there is no need for this section, but some apps require
-some first-time configuration from the developer, for example: setting up a
-database for running your webapp locally.
+Currently, no setup is required after cloning this repo.
 
 ## Running
 
-Specify the commands for a developer to run the app from the cloned repo.
+To run app:
+* Open terminal in VS code and run "expo start"
 
 # Deployment
-
-Webapps need a deployment section that explains how to get it deployed on the
-Internet. These should be detailed enough so anyone can re-deploy if needed
-. Note that you **do not put passwords in git**.
 
 Mobile apps will also sometimes need some instructions on how to build a
 "release" version, maybe how to sign it, and how to run that binary in an
 emulator or in a physical phone.
 
-# Testing
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Testing- To be edited in 492...
 
 In 492 you will write automated tests. When you do you will need to add a
 section that explains how to run them.
@@ -72,10 +58,12 @@ In some cases you need to install test runners, etc. Explain how.
 
 Explain how to run the automated tests.
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 # Authors
 
-Sophia Riley email: ser9@email.sc.edu
-Mia Dia email: mzdia@email.sc.edu
-Avalee Jacobs email: avalee@email.sc.edu
-Dylan Neff email: daneff@email.sc.edu
-Chris Nelson email:
+Sophia Riley, email: ser9@email.sc.edu
+Mia Dia, email: mzdia@email.sc.edu
+Avalee Jacobs, email: avalee@email.sc.edu
+Dylan Neff, email: daneff@email.sc.edu
+Chris Nelson, email: CDN2@email.sc.edu
