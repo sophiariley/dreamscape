@@ -35,9 +35,7 @@ To run app:
 
 # Deployment
 
-Mobile apps will also sometimes need some instructions on how to build a
-"release" version, maybe how to sign it, and how to run that binary in an
-emulator or in a physical phone.
+This app will be deployed via a .apk file that can be downloaded on a mobile device and ran from there.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
