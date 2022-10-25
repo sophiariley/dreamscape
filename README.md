@@ -6,7 +6,7 @@ other users. Other users can then see a trip that looks intriguing and 'Create A
 to the same destination through the app. This includes communicating with other users that 
 might want to go on this trip as well, planning arrival and departure days, 
 listing hotels and flight plans, and other beneficial options. Dreamscape is a place for people to connect and
-share trips they have been on in hopes that everyone finds destinations to travel 
+share trips they have been on in hopes that everyone finds new destinations to travel 
 to that they otherwise might not have chosen. 
 
 ## External Requirements
