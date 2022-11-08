@@ -1,16 +1,36 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { useState, useEffect } from "react";
+import { db } from "./firebase-config";
+import { collection, getDocs } from "firebase/firestore";
 import Constants from 'expo-constants';
 
 export default function App() {
+  const [users, setUsers] = useState([]);
+  const usersCollectionRef = collection(db, "users");
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(usersCollectionRef);
+      setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id })));
+    };
+
+    getUsers();
+  })
   return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <StatusBar style="auto" />
-      </View>
+    <View style={styles.container}>
+      {users.map((user) => {
+        return (
+          <View>
+            <Text> Name: {user.name}</Text>
+            <Text> Age: {user.age}</Text>
+            <Text> ID: {user.id}</Text>
+          </View>
+        );
+      })}
+      
+    </View>
   );
 }
-
 
 // // ---The different screens of Dreamscape---
 // // Looking into consolidating each screen into a seperate file for cleanliness
@@ -72,4 +92,3 @@ const styles = StyleSheet.create({
     elevation: 7,
   },
 }) 
-
