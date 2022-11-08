@@ -7,6 +7,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:892595785043:android:8119b30d65baabd1fc25a6",
+        "android_client_info": {
+          "package_name": "com.dreamscape"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "892595785043-jh80v1q6e47unf61vmvi7t1ko0tpchft.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDK1LY2hgyKKRFXTV4rMh3Xau3siXHEyqU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "892595785043-jh80v1q6e47unf61vmvi7t1ko0tpchft.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:892595785043:android:a092a3d66791bb59fc25a6",
         "android_client_info": {
           "package_name": "sc.com.dreamscape"
