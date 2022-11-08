@@ -1,11 +1,37 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Constants from 'expo-constants';
+import { useState, userEffect, useEffect } from "react";
+import { db } from './firebase-config';
+import { collection, getDocs } from "firebase/firestore";
 
 export default function App() {
+  const [users, setUsers] = useState([]); // this is a hook, holds the list of users in our table
+  const usersCollectionRef = collection(db, "users");
+
+  // function that is called whenever the page is rendered
+  useEffect(() => {
+
+    const getUsers = async () => {
+      const data = await getDocs(usersCollectionRef);
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    }
+
+    getUsers();
+  }, [])
+
   return (
       <View style={styles.container}>
         <Text>Open up App.js to start working on your app!</Text>
+        {users.map((user) => {
+           return (
+            <div> 
+              {" "}
+              <h1> Name: {user.name}</h1>
+              <h1> Age: {user.age} </h1>
+            </div>
+           );
+        })}
         <StatusBar style="auto" />
       </View>
   );
