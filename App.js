@@ -20,7 +20,7 @@ export default function App() {
     <View style={styles.container}>
       {users.map((user) => {
         return (
-          <View>
+          <View key={user.id}>
             <Text> Name: {user.name}</Text>
             <Text> Age: {user.age}</Text>
             <Text> ID: {user.id}</Text>
