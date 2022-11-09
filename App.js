@@ -1,57 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Constants from 'expo-constants';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LoginScreen from './screens/LoginScreen';
+import HomeScreen from './screens/HomsScreen';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <StatusBar style="auto" />
-      </View>
+    <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
+        </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-
-// // ---The different screens of Dreamscape---
-// // Looking into consolidating each screen into a seperate file for cleanliness
-// // This is an idea of the screens to create for the PoC milestone 
-// const LoginScreen = ({ navigation}) => {
-//   // TO DO: Code
-// }
-
-// const ResetPasswordScreen = ({ navigation}) => {
-//   // TO DO: Code
-// }
- 
-// // Unsure how many create account screens we need. Should look into consolidating them into one thing
-// const CreateAccountScreen1 = ({ navigation}) => {
-//   // TO DO: Code
-// }
-
-// const CreateAccountScreen2 = ({ navigation}) => {
-//   // code login screen here
-// }
-
-// const CreateAccountScreen3 = ({ navigation}) => {
-//   // TO DO: Code
-// }
-// //----------------------------------------------------------------------------------------------------
-
-// const HomeScreen = ({ navigation}) => {
-//   // TO DO: Code
-// }
-
-// const ProfileScreen = ({ navigation}) => {
-//   // TO DO: Code
-// }
-
-// const ExploreScreen = ({ navigation}) => {
-//   // TO DO: Code
-// }
-
-// const CreatePostScreen = ({ navigation}) => {
-//   // TO DO: Code
-// }
 
 const styles = StyleSheet.create({
   container: {
