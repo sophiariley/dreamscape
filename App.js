@@ -12,7 +12,7 @@ export default function App() {
   return (
     <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Dreamscape" component={LoginScreen} style={styles.dreamscape}/>
+          <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
         </Stack.Navigator>
     </NavigationContainer>
@@ -21,7 +21,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   dreamscape: {
-    fontSize: 40
+    fontSize: 80
   }
 }) 
 
