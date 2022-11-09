@@ -4,6 +4,12 @@ import { useState, useEffect } from "react";
 import { db } from "./firebase-config";
 import { collection, getDocs } from "firebase/firestore";
 import Constants from 'expo-constants';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LoginScreen from './screens/LoginScreen';
+import HomeScreen from './screens/HomeScreen';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [users, setUsers] = useState([]);
@@ -17,20 +23,13 @@ export default function App() {
     getUsers();
   })
   return (
-    <View style={styles.container}>
-      {users.map((user) => {
-        return (
-          <View key={user.id}>
-            <Text> Name: {user.name}</Text>
-            <Text> Age: {user.age}</Text>
-            <Text> ID: {user.id}</Text>
-          </View>
-        );
-      })}
-      
-    </View>
+      <View style={styles.container}>
+        <Text>Open up App.js to start working on your app!</Text>
+        <StatusBar style="auto" />
+      </View>
   );
 }
+
 
 // // ---The different screens of Dreamscape---
 // // Looking into consolidating each screen into a seperate file for cleanliness
@@ -74,21 +73,7 @@ export default function App() {
 // }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: Constants.statusBarHeight,
-  },
-  swipes: {
-    flex: 1,
-    padding: 10,
-    paddingTop: 8,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    elevation: 7,
-  },
+  dreamscape: {
+    fontSize: 80
+  }
 }) 
