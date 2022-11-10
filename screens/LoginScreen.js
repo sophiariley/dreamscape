@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import { ImageBackground, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {useNavigation} from '@react-navigation/core'
 
 const image = { uri: "https://media4.giphy.com/media/3og0ISzBpn0nNJE3Ac/giphy.gif?cid=ecf05e47kxc23rf9ldw36iuch1geujlfdvraxnb7gm18sznm&rid=giphy.gif&ct=g" };
 
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
+    const [username, setUsername] = useState(' ');
+    const [password, setPassword] = useState(' ');
+
+    // const navigation = useNavigation() // to use when connected to firebase :)
+
+    // TO DO: firebase auth and such...
+
     return (
             <KeyboardAvoidingView
             style={styles.container}
@@ -21,21 +29,21 @@ const LoginScreen = () => {
                             <TextInput 
                                 style={styles.inputText} 
                                 placeholder="Username"
-                                // value={}
-                                // onChangeText={text => }
+                                value={username}
+                                onChangeText={text => setUsername(text)}
                             />
                         <Text style={styles.text}>Enter Password</Text>
                             <TextInput 
                                 style={styles.inputText} 
                                 placeholder="Password"
                                 secureTextEntry //hides password
-                                // value={}
-                                // onChangeText={text => }
+                                value={password}
+                                onChangeText={text => setPassword(text)}
                             />
                     </View>
                     <View style={styles.loginButtonContainer}>
                         <TouchableOpacity
-                            onPress={() => {}}
+                            onPress={() => navigation.navigate('Home')}
                             style={styles.loginButton}
                         > 
                         <Text style={styles.login}>Login!</Text>
@@ -136,4 +144,5 @@ const styles = StyleSheet.create({
 
 
 /* A few notes... 
-    - The 'KeyboardAvoidingView' component prevents the user's digital keyboad from obstructing the view of the application*/
+    - The 'KeyboardAvoidingView' component prevents the user's digital keyboad from obstructing the view of the application
+    - Line 46 (onPress={() => navigation.navigate('Home')}) will be changed when we connect firebase to the login screen*/
