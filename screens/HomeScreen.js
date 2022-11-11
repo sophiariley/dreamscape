@@ -1,12 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import NavigationBar from "../components/navigationBar";
+// import HomeBar from "../components/homeBar";
 
 const HomeScreen = () => {
     return (
         <View style={styles.container}>
-            <View>
-            </View>
             <View style={styles.footer}>
                 <NavigationBar/>
             </View>
@@ -24,6 +23,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    // the styling of the header, used for the home bar
+    header: {
+        position: 'absolute',
+        bottom: 0,
+        alignItems:'center'
     },
     // the styling of the footer, used for the navigation bar
     footer: {
