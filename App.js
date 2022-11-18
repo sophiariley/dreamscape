@@ -5,11 +5,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
-import {FontAwesome5} from 'react-native-vector-icons';
+import ExploreScreen from './screens/ExploreScreen';
+import {FontAwesome5, AntDesign} from 'react-native-vector-icons';
+// import {useNavigation} from '@react-navigation/core'
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+export default function App({}) {
+  // const navigation = useNavigation();
   return (
     <NavigationContainer>
         <Stack.Navigator>
@@ -34,6 +37,34 @@ export default function App() {
                 </View>
               )
             }} name="Home" component={HomeScreen} />
+            <Stack.Screen 
+            options={{ 
+              title: 'Explore',
+              headerTitleAlign: 'center',
+              headerBackVisible: false,
+              headerStyle: {
+                backgroundColor: '#D28A8E'
+              },
+              headerTitleStyle: {
+                color: '#F6F6F6',
+                fontSize: 25
+              },
+              headerRight: () => (
+                <View>
+                  <TouchableOpacity style={styles.button}>
+                    <FontAwesome5 name='envelope' size={35} color='#F6F6F6'/>
+                  </TouchableOpacity>
+                </View>
+              ),
+              headerLeft: () => (
+                <View>
+                  <TouchableOpacity style={styles.button}
+                    onPress={() =>  navigation.navigate('Home')}>
+                    <AntDesign name='arrowleft' size={35} color='#F6F6F6'/>
+                  </TouchableOpacity>
+                </View>
+              )
+            }} name="Explore" component={ExploreScreen} />
         </Stack.Navigator>
     </NavigationContainer>
   );

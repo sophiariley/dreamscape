@@ -1,23 +1,39 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect} from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import {FontAwesome5, Entypo, Foundation} from 'react-native-vector-icons';
+import {useNavigation} from '@react-navigation/core'
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function NavigationBar() {
+export default function NavigationBar({}) {
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <View/>
-                <TouchableOpacity style={styles.button}>
+                {/* home button */}
+                <TouchableOpacity style={styles.button}
+                onPress={() =>  navigation.navigate('Home')}>
                     <Entypo name='home' size={40} color='#3A6496'/>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button}>
+
+                {/* explore button */}
+                <TouchableOpacity style={styles.button}
+                     onPress={() =>  navigation.navigate('Explore')}>
                     <Foundation name='magnifying-glass' size={40} color='#3A6496'/>
                 </TouchableOpacity>
+
+                
+                {/* add post button */}
                 <TouchableOpacity style={styles.button}>
                     <FontAwesome5 name='plus' size={40} color='#3A6496'/>
                 </TouchableOpacity>
+
+                {/* trips button */}
                 <TouchableOpacity style={styles.button}>
                     <FontAwesome5 name='calendar-alt' size={40} color='#3A6496'/>
                 </TouchableOpacity>
+
+                {/* profile button */}
                 <TouchableOpacity style={styles.button}>
                     <FontAwesome5 name='user-alt' size={40} color='#3A6496'/>
                 </TouchableOpacity>
