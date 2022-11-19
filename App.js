@@ -7,11 +7,11 @@ import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import ExploreScreen from './screens/ExploreScreen';
 import {FontAwesome5, AntDesign} from 'react-native-vector-icons';
-// import {useNavigation} from '@react-navigation/core'
+import {useNavigation} from '@react-navigation/native'
 
 const Stack = createNativeStackNavigator();
 
-export default function App({}) {
+export default function App({navigation}) {
   // const navigation = useNavigation();
   return (
     <NavigationContainer>
@@ -38,16 +38,16 @@ export default function App({}) {
               )
             }} name="Home" component={HomeScreen} />
             <Stack.Screen 
-            options={{ 
+            options={{
               title: 'Explore',
-              headerTitleAlign: 'center',
-              headerBackVisible: false,
-              headerStyle: {
-                backgroundColor: '#D28A8E'
-              },
               headerTitleStyle: {
                 color: '#F6F6F6',
                 fontSize: 25
+              },
+              headerTitleAlign: 'center',
+              headerTintColor: '#F6F6F6', // coloring for back button
+              headerStyle: {
+                backgroundColor: '#D28A8E',
               },
               headerRight: () => (
                 <View>
@@ -56,14 +56,15 @@ export default function App({}) {
                   </TouchableOpacity>
                 </View>
               ),
-              headerLeft: () => (
-                <View>
-                  <TouchableOpacity style={styles.button}
-                    onPress={() =>  navigation.navigate('Home')}>
-                    <AntDesign name='arrowleft' size={35} color='#F6F6F6'/>
-                  </TouchableOpacity>
-                </View>
-              )
+              // headerLeft: () => (
+              //   <View>
+              //     <TouchableOpacity style={styles.button}
+              //       navigation={navigation}
+              //       onPress={() => navigation.goBack()}>
+              //       <AntDesign name='arrowleft' size={35} color='#F6F6F6'/>
+              //     </TouchableOpacity>
+              //   </View>
+              // )
             }} name="Explore" component={ExploreScreen} />
         </Stack.Navigator>
     </NavigationContainer>
@@ -73,6 +74,9 @@ export default function App({}) {
 const styles = StyleSheet.create({
   dreamscape: {
     fontSize: 80
+  },
+  backButton: {
+    size: 35
   }
 }) 
 
