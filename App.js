@@ -11,6 +11,8 @@ import {useNavigation} from '@react-navigation/native'
 
 const Stack = createNativeStackNavigator();
 
+
+// TO DO: Change size of back button
 export default function App({navigation}) {
   // const navigation = useNavigation();
   return (
@@ -55,16 +57,7 @@ export default function App({navigation}) {
                     <FontAwesome5 name='envelope' size={35} color='#F6F6F6'/>
                   </TouchableOpacity>
                 </View>
-              ),
-              // headerLeft: () => (
-              //   <View>
-              //     <TouchableOpacity style={styles.button}
-              //       navigation={navigation}
-              //       onPress={() => navigation.goBack()}>
-              //       <AntDesign name='arrowleft' size={35} color='#F6F6F6'/>
-              //     </TouchableOpacity>
-              //   </View>
-              // )
+              )
             }} name="Explore" component={ExploreScreen} />
         </Stack.Navigator>
     </NavigationContainer>
