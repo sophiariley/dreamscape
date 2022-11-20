@@ -4,7 +4,7 @@ import NavigationBar from "../components/navigationBar";
 import {Foundation} from 'react-native-vector-icons';
 
 const ExploreScreen = ({}) => {
-    const [search, setSearch] = useState(' ');
+    // const [search, setSearch] = useState(' ');
     
     return (
         <View style={styles.container}>
