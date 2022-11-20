@@ -14,17 +14,17 @@ const LoginScreen = ({navigation}) => {
     // TO DO: firebase auth and such...
 
     return (
-            <KeyboardAvoidingView
-            style={styles.container}
-            behavior="padding"> 
-                <ImageBackground 
-                    source={image}
-                    style={styles.backgroundImage}
-                >
+        <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding"> 
+            <ImageBackground 
+            source={image}
+            style={styles.backgroundImage}>
+                <View style={styles.dreamscapeContainer}>
                     <Text style={styles.dreamscape}>Dreamscape</Text>
-                    <View
-                        style={styles.inputContainer}
-                    >
+                </View>
+                
+                    <View style={styles.textContainer}>
                         <Text style={styles.text}>Enter Username</Text>
                             <TextInput 
                                 style={styles.inputText} 
@@ -41,6 +41,8 @@ const LoginScreen = ({navigation}) => {
                                 onChangeText={text => setPassword(text)}
                             />
                     </View>
+                
+                <View style={styles.container}>
                     <View style={styles.loginButtonContainer}>
                         <TouchableOpacity
                             onPress={() => navigation.navigate('Home')}
@@ -49,16 +51,16 @@ const LoginScreen = ({navigation}) => {
                         <Text style={styles.login}>Login!</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.noAccountContainer}>
-                        <Text style={styles.noAccountText}>────────   Don't have an account?   ────────</Text>
-                        <TouchableOpacity
-                        onPress={() => {}}
-                        >
-                            <Text style={styles.createText}>Create one here!</Text>
-                        </TouchableOpacity>
-                    </View>
-                </ImageBackground>
-            </KeyboardAvoidingView>
+                </View>
+                
+                <View style={styles.noAccountContainer}>
+                    <Text style={styles.noAccountText}>────────   Don't have an account?   ────────</Text>
+                    <TouchableOpacity onPress={() => {}}>
+                        <Text style={styles.createText}>Create one here!</Text>
+                    </TouchableOpacity>
+                </View>
+            </ImageBackground>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -71,24 +73,38 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    textContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        top: 20
+    },
+    // a container for the dreamscape text
+    dreamscapeContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        top: -20
+    },
     // the styling for the area where text is inputted ("Username","Password")
     inputText: {
         fontSize: 20,
         backgroundColor: '#DADADA',
         opacity: .5,
-        height: '15%',
-        width: '70%',
+        height: '20%',
+        width: '80%',
         borderRadius: 5,
         marginTop: 5,
-        marginBottom: 10
+        marginBottom: 10,
+        paddingLeft: 10
     },
-    // the styling for the container holding the login button
     loginButtonContainer: {
         width: '70%',
         height: '20%',
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        top: 30
     },
     // the styling for the text inside the login button
     login: {
@@ -112,8 +128,9 @@ const styles = StyleSheet.create({
     },
     // the styling for any "unimportant" text
     text: {
-       color: '#F6F6F6',
-       fontSize: 20,
+        color: '#F6F6F6',
+        fontSize: 20,
+        right: 90
     },
     // the styling for the "Dreamscape" text
     dreamscape: {
@@ -141,8 +158,3 @@ const styles = StyleSheet.create({
         padding: 10
     }
 })
-
-
-/* A few notes... 
-    - The 'KeyboardAvoidingView' component prevents the user's digital keyboad from obstructing the view of the application
-    - Line 46 (onPress={() => navigation.navigate('Home')}) will be changed when we connect firebase to the login screen*/
