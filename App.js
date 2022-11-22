@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
+import CreatePost from './screens/CreatePost';
 import ExploreScreen from './screens/ExploreScreen';
 import {FontAwesome5, AntDesign} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/native'
@@ -59,6 +60,19 @@ export default function App({navigation}) {
                 </View>
               )
             }} name="Explore" component={ExploreScreen} />
+            <Stack.Screen 
+            options={{
+              title: 'Create Post',
+              headerTitleStyle: {
+                color: '#F6F6F6',
+                fontSize: 25
+              },
+              headerTitleAlign: 'center',
+              headerTintColor: '#F6F6F6', // coloring for back button
+              headerStyle: {
+                backgroundColor: '#F8C98A',
+              },
+            }} name="Create Post" component={CreatePost} />
         </Stack.Navigator>
     </NavigationContainer>
   );
