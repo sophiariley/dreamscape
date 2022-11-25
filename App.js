@@ -75,13 +75,27 @@ export default function App({navigation}) {
               headerRight: () => (
                 <View>
                   <TouchableOpacity
-                    style={styles.nextButton}> 
+                    style={styles.nextButton}
+                    onPress={() =>  navigation.navigate('FinalPost')}> 
                         <Text style={styles.next}>Next</Text>
                         <AntDesign name='arrowright' size={15} style={styles.rightArrow}/>
                   </TouchableOpacity>
                 </View>
               )
             }} name="Create Post" component={CreatePost} />
+            {/* <Stack.Screen 
+            options={{
+              title: 'Create Post 2',
+              headerTitleStyle: {
+                color: '#F6F6F6',
+                fontSize: 25
+              },
+              headerTitleAlign: 'center',
+              headerTintColor: '#F6F6F6', // coloring for back button
+              headerStyle: {
+                backgroundColor: '#F8C98A',
+              },
+            }} name="Create Post" component={CreatePost2} /> */}
         </Stack.Navigator>
     </NavigationContainer>
   );
