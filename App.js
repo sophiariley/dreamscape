@@ -34,7 +34,7 @@ export default function App({navigation}) {
               },
               headerRight: () => (
                 <View>
-                  <TouchableOpacity style={styles.button}>
+                  <TouchableOpacity>
                     <FontAwesome5 name='envelope' size={35} color='#F6F6F6'/>
                   </TouchableOpacity>
                 </View>
@@ -54,7 +54,7 @@ export default function App({navigation}) {
               },
               headerRight: () => (
                 <View>
-                  <TouchableOpacity style={styles.button}>
+                  <TouchableOpacity>
                     <FontAwesome5 name='envelope' size={35} color='#F6F6F6'/>
                   </TouchableOpacity>
                 </View>
@@ -72,6 +72,15 @@ export default function App({navigation}) {
               headerStyle: {
                 backgroundColor: '#F8C98A',
               },
+              headerRight: () => (
+                <View>
+                  <TouchableOpacity
+                    style={styles.nextButton}> 
+                        <Text style={styles.next}>Next</Text>
+                        <AntDesign name='arrowright' size={15} style={styles.rightArrow}/>
+                  </TouchableOpacity>
+                </View>
+              )
             }} name="Create Post" component={CreatePost} />
         </Stack.Navigator>
     </NavigationContainer>
@@ -84,6 +93,24 @@ const styles = StyleSheet.create({
   },
   backButton: {
     size: 35
+  },
+  nextButton: {
+    backgroundColor: '#3A6496',
+    borderRadius: 5,
+    width: 70,
+    flexDirection: 'row',
+    alignContent: 'center',
+    justifyContent: 'center',
+    opacity: .85
+  },
+  next: {
+    fontSize: 15,
+    padding: 5,
+    color: '#F6F6F6',
+  },
+  rightArrow: {
+    alignSelf:'center',
+    color: '#F6F6F6'
   }
 }) 
 
