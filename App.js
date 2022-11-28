@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import CreatePost from './screens/CreatePost';
+import CreatePost2 from './screens/CreatePost2';
 import ExploreScreen from './screens/ExploreScreen';
 import {FontAwesome5, AntDesign} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/native'
@@ -20,6 +21,7 @@ export default function App({navigation}) {
     <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
+          
           <Stack.Screen 
             options={{ 
               title: 'Dreamscape',
@@ -40,6 +42,7 @@ export default function App({navigation}) {
                 </View>
               )
             }} name="Home" component={HomeScreen} />
+            
             <Stack.Screen 
             options={{
               title: 'Explore',
@@ -60,6 +63,7 @@ export default function App({navigation}) {
                 </View>
               )
             }} name="Explore" component={ExploreScreen} />
+            
             <Stack.Screen 
             options={{
               title: 'Create Post',
@@ -76,14 +80,18 @@ export default function App({navigation}) {
                 <View>
                   <TouchableOpacity
                     style={styles.nextButton}
-                    onPress={() =>  navigation.navigate('FinalPost')}> 
+                    onPress={() =>  navigation.navigate('Create Post 2')}> 
                         <Text style={styles.next}>Next</Text>
                         <AntDesign name='arrowright' size={15} style={styles.rightArrow}/>
                   </TouchableOpacity>
+                  <View>
+                    <CreatePost2 navigation={navigation}/>
+                  </View>
                 </View>
               )
             }} name="Create Post" component={CreatePost} />
-            {/* <Stack.Screen 
+            
+            <Stack.Screen
             options={{
               title: 'Create Post 2',
               headerTitleStyle: {
@@ -95,7 +103,8 @@ export default function App({navigation}) {
               headerStyle: {
                 backgroundColor: '#F8C98A',
               },
-            }} name="Create Post" component={CreatePost2} /> */}
+            }} name="Create Post 2" component={CreatePost2} />
+            
         </Stack.Navigator>
     </NavigationContainer>
   );

@@ -25,7 +25,7 @@ export default function NavigationBar({}) {
                 
                 {/* new post button */}
                 <TouchableOpacity style={styles.button}
-                    onPress={() =>  navigation.navigate('Create Post')}>
+                    onPress={() =>  navigation.navigate('Create Post 2')}>
                     <FontAwesome5 name='plus' size={40} color='#3A6496'/>
                 </TouchableOpacity>
 
