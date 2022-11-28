@@ -6,7 +6,7 @@ const CreateAccount1 = ({navigation}) => {
     const [firstName, setFirstName] = useState(' ');
     const [lastName, setLastName] = useState(' ');
     const [email, setEmail] = useState(' ');
-    const [password, setPassword] = useState(' ');
+    
 
     return (
         <View style={styles.container}>
@@ -37,8 +37,6 @@ const CreateAccount1 = ({navigation}) => {
                     <TextInput 
                         style={styles.inputText} 
                         placeholder=""
-                        // value={email}
-                        // onChangeText={text => setEmail(text)}
                     />
             </View>
             <View style={styles.nextButtonContainer}>
@@ -69,7 +67,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     inputContainer: {
-        top: 110
+        top: 190,
+        position: 'absolute'
     },
     nextButtonContainer: {
         width: '70%',
@@ -78,23 +77,26 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        top: -10
+        bottom: 90,
+        position: 'absolute'
     },
     accountExistsContainer: {
         flexDirection: 'column',
-        bottom: 20
+        bottom: 20,
+        position: 'absolute'
     },
     createNewAccount: {
         color: '#F8C98A',
         fontSize: 35,
-        top: 80
+        top: 100,
+        position: 'absolute'
     },
     inputText: {
         fontSize: 20,
         backgroundColor: '#DADADA',
         borderRadius: 5,
         width: 350,
-        height: '10%'
+        height: '15%'
     },
     text: {
         color: '#3A6496',
