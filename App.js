@@ -10,6 +10,9 @@ import CreatePost2 from './screens/CreatePost2';
 import ExploreScreen from './screens/ExploreScreen';
 import {FontAwesome5, AntDesign} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/native'
+import { useState, useEffect } from "react";
+import { db } from "./firebase-config";
+import { collection, getDocs } from "firebase/firestore";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +20,19 @@ const Stack = createNativeStackNavigator();
 // TO DO: Change size of back button
 export default function App({navigation}) {
   // const navigation = useNavigation();
+
+  const [users, setUsers] = useState([]);
+  const usersCollectionRef = collection(db, "users");
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(usersCollectionRef);
+      setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id })));
+    };
+
+    getUsers();
+  })
+
+  
   return (
     <NavigationContainer>
         <Stack.Navigator>

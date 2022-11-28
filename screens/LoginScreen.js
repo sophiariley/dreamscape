@@ -23,7 +23,6 @@ const LoginScreen = ({navigation}) => {
                 <View style={styles.dreamscapeContainer}>
                     <Text style={styles.dreamscape}>Dreamscape</Text>
                 </View>
-                
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>Enter Username</Text>
                             <TextInput 
