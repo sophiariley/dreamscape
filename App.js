@@ -8,6 +8,8 @@ import HomeScreen from './screens/HomeScreen';
 import CreatePost from './screens/CreatePost';
 import CreatePost2 from './screens/CreatePost2';
 import ExploreScreen from './screens/ExploreScreen';
+import CreateAccount1 from './screens/CreateAccount1'
+import CreateAccount2 from './screens/CreateAccount2'
 import {FontAwesome5, AntDesign} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/native'
 
@@ -21,6 +23,10 @@ export default function App({navigation}) {
     <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
+
+          <Stack.Screen options={{ headerShown: false }} name="Create Account 1" component={CreateAccount1} />
+
+          <Stack.Screen options={{ headerShown: false }} name="Create Account 2" component={CreateAccount2} />
           
           <Stack.Screen 
             options={{ 

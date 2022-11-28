@@ -55,7 +55,7 @@ const LoginScreen = ({navigation}) => {
                 
                 <View style={styles.noAccountContainer}>
                     <Text style={styles.noAccountText}>────────   Don't have an account?   ────────</Text>
-                    <TouchableOpacity onPress={() => {}}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Create Account 1')}>
                         <Text style={styles.createText}>Create one here!</Text>
                     </TouchableOpacity>
                 </View>

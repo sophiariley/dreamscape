@@ -2,7 +2,7 @@ import React, { useState} from "react";
 import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import {Ionicons} from 'react-native-vector-icons';
 
-// ah
+
 const CreatePost2 = ({navigation}) => {
     const [caption, setCaption] = useState(' ');
     return (
