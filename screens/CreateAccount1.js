@@ -1,3 +1,4 @@
+import { addDoc } from "firebase/firestore";
 import React, { useState} from "react";
 import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import {AntDesign} from 'react-native-vector-icons';
@@ -8,6 +9,11 @@ const CreateAccount1 = ({navigation}) => {
     const [email, setEmail] = useState(' ');
     const [password, setPassword] = useState(' ');
 
+    const createUser = async () =>{
+        await addDoc(usersCollectionref, {firstName: firstName, lastName: lastName, 
+            email: email, password: password});
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.createNewAccount}>Create New Account</Text>
@@ -17,21 +23,27 @@ const CreateAccount1 = ({navigation}) => {
                         style={styles.inputText} 
                         placeholder=""
                         value={firstName}
-                        onChangeText={text => setFirstName(text)}
+                        onChange={(event) => {
+                            setFirstName(event.target.value);
+                        }}
                     />
                 <Text style={styles.text}>Enter Last Name</Text>
                     <TextInput 
                         style={styles.inputText} 
                         placeholder=""
                         value={lastName}
-                        onChangeText={text => setLastName(text)}
+                        onChange={(event) => {
+                            setLastName(event.target.value);
+                        }}
                     />
                 <Text style={styles.text}>Enter Email</Text>
                     <TextInput 
                         style={styles.inputText} 
                         placeholder=""
                         value={email}
-                        onChangeText={text => setEmail(text)}
+                        onChange={(event) => {
+                            setEmail(event.target.value);
+                        }}
                     />
                 <Text style={styles.text}>Confirm Email</Text>
                     <TextInput 
@@ -43,7 +55,7 @@ const CreateAccount1 = ({navigation}) => {
             </View>
             <View style={styles.nextButtonContainer}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Create Account 2')}
+                    onPress={function(event) {() => navigation.navigate('Create Account 2'); {createUser}}}
                     style={styles.nextButton}
                 > 
                     <Text style={styles.next}>Next</Text>
