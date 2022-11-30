@@ -7,6 +7,7 @@ const CreatePost2 = ({navigation}) => {
     const [caption, setCaption] = useState(' ');
     return (
         <View style={styles.contianer}>
+            <View style={styles.photoContainer}/>
             <KeyboardAvoidingView style={styles.captionContainer}>
                 <TextInput
                     color='#3A6496' 
@@ -41,16 +42,24 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center', 
         flexDirection: 'column',
-        botton: 0,
-        // position: 'absolute'
     },
     captionContainer: {
         backgroundColor: '#F6F6F6',
         opacity: .8,
         alignSelf: 'center',
         width: '95%',
-        height: '40%',
-        borderRadius: 5
+        height: '25%',
+        borderRadius: 5,
+        top: 35
+    },
+    photoContainer: {
+        backgroundColor: 'pink',
+        opacity: .8,
+        alignSelf: 'center',
+        width: '95%',
+        height: '60%',
+        borderRadius: 5,
+        top: 20
     },
     captionText: {
         fontSize: 18,
@@ -63,7 +72,8 @@ const styles = StyleSheet.create({
         height: '20%',
         flex: 1,
         alignSelf: 'center',
-        // position: 'absolute'
+        position: 'absolute',
+        top: 550
     },
     postButton: {
         backgroundColor: '#D28A8E', // pink color
@@ -82,6 +92,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingBottom: 30,
         paddingTop: 20,
+        position: 'absolute',
+        top: 475
     },
     globe: {
         padding: 10,

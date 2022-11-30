@@ -1,10 +1,14 @@
 import React, { useState} from "react";
 import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, Button, TouchableOpacity} from "react-native";
 import {Foundation} from 'react-native-vector-icons';
+import CreatePostHeader from "../components/createPostHeader";
 
 const CreatePost = ({}) => {
     return (
         <View style={styles.container}>
+            <View>
+                <CreatePostHeader/>
+            </View>
             <View style={styles.cameraRollContainer}>
                 <Text style={styles.text}>Camera Roll</Text>
             </View>
