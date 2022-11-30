@@ -55,7 +55,7 @@ const CreateAccount1 = ({navigation}) => {
             </View>
             <View style={styles.nextButtonContainer}>
                 <TouchableOpacity
-                    onPress={function(event) {() => navigation.navigate('Create Account 2'); {createUser}}}
+                    //onPress={function(event) {() => navigation.navigate('Create Account 2'); {createUser}}}
                     style={styles.nextButton}
                 > 
                     <Text style={styles.next}>Next</Text>
