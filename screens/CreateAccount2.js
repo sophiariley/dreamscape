@@ -1,10 +1,35 @@
 import React, { useState} from "react";
 import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import {AntDesign} from 'react-native-vector-icons';
+//import { getDatabase, ref, set } from "firebase/database";
+import { doc, setDoc, collection, addDoc } from "firebase/firestore"; 
+import { db } from "../firebase-config";
 
-const CreateAccount2 = ({navigation}) => {
+
+function writeUserData(userId, username, password) {
+    const usersCollectionRef = collection(db, "users");
+    setDoc(db, 'users' + userId), {
+      username: username,
+      password: password
+    };
+  }
+
+  function createUser(firstName, lastName, email, username, password) {
+    const runit = async () => await addDoc(collection(db, "users"), {
+   FirstName: firstName,
+   LastName: lastName,
+   Email: email,
+   Username: username,
+   Password: password
+ });
+ runit();
+}
+
+const CreateAccount2 = ({route, navigation}) => {
+    const { firstName, lastName, email } = route.params;
     const [username, setUsername] = useState(' ');
     const [password, setPassword] = useState(' ');
+    //const res = db.collection('users');
     return (
         <KeyboardAvoidingView behavior='padding' style={styles.container}>
             <Text style={styles.createNewAccount}>Create New Account</Text>
@@ -34,8 +59,15 @@ const CreateAccount2 = ({navigation}) => {
                     />
             </View>
             <View style={styles.nextButtonContainer}>
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('Home')} // change to Login later
+                <TouchableOpacity //res.add({
+                    //    username: username,
+                    //    password: password
+                    //})
+                    //writeUserData("hello", username, password)}
+                    //createUser(firstName, lastName, email, username, password)}
+                    onPress={() => { navigation.navigate('Home'); createUser(firstName, lastName, email, username, password)} }
+                    // change to Login later
+
                     style={styles.nextButton}
                 > 
                     <Text style={styles.next}>Next</Text>

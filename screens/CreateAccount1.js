@@ -52,7 +52,8 @@ const CreateAccount1 = ({navigation}) => {
             </View>
             <View style={styles.nextButtonContainer}>
                 <TouchableOpacity
-                    onPress={() => createUser(firstName, lastName, email)}//navigation.navigate('Create Account 2')}
+                    //onPress={() => createUser(firstName, lastName, email)} //navigation.navigate('Create Account 2')}
+                    onPress={() => navigation.navigate('Create Account 2', {firstName: firstName, lastName: lastName, email: email})}
                     style={styles.nextButton}
                 > 
                     <Text style={styles.next}>Next</Text>
