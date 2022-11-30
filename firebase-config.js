@@ -1,15 +1,17 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "@firebase/firestore";
+import { collection } from "firebase/firestore";
 
+//If authenticated from firebase: Change allow read, write: if false; to request.auth != null;
 const firebaseConfig = {
-    apiKey: "AIzaSyBPdJALj4gSP1bYq1Qb1pxp3f_kD06vnjI",
-    authDomain: "testprojecttut.firebaseapp.com",
-    projectId: "testprojecttut",
-    storageBucket: "testprojecttut.appspot.com",
-    messagingSenderId: "115582004192",
-    appId: "1:115582004192:web:1a48d5781e1b842e90d985",
-    measurementId: "G-Q04J24L3XG"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  export const db = getFirestore(app);
+  apiKey: "AIzaSyCQfGUm8m_xCI6reoq0KDFRxYR7ARQkW48",
+  authDomain: "accountcreate-b2ae6.firebaseapp.com",
+  projectId: "accountcreate-b2ae6",
+  storageBucket: "accountcreate-b2ae6.appspot.com",
+  messagingSenderId: "258288834486",
+  appId: "1:258288834486:web:5c195eb3162bda078bd317",
+  measurementId: "G-ZWHL678E50"
+};
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+export const usersCollectionRef = collection(db, "users");

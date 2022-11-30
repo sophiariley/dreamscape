@@ -161,3 +161,4 @@ const styles = StyleSheet.create({
   }
 }) 
 
+export const usersCollectionRef = collection(db, "users");

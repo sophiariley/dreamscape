@@ -1,10 +1,27 @@
 import React, { useState} from "react";
 import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import {AntDesign} from 'react-native-vector-icons';
+import { addDoc, collection } from "firebase/firestore";
+import { usersCollectionRef, db } from "../firebase-config";
 
-const CreateAccount2 = ({navigation}) => {
-    const [username, setUsername] = useState(' ');
-    const [password, setPassword] = useState(' ');
+const CreateAccount2 = ({route, navigation}) => {
+    const { firstName } = route.params;
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    function createUser(firstName, username, password) {
+        const runit = async () => await addDoc(collection(db, "users"), {
+          firstName: firstName,
+          username: username,
+          password: password
+        });
+     runit();
+   }
+
+   function nextScreen() {
+    navigation.navigate('Home');
+   }
+
     return (
         <KeyboardAvoidingView behavior='padding' style={styles.container}>
             <Text style={styles.createNewAccount}>Create New Account</Text>
@@ -35,7 +52,8 @@ const CreateAccount2 = ({navigation}) => {
             </View>
             <View style={styles.nextButtonContainer}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Home')} // change to Login later
+                    //onPress={() => navigation.navigate('Home')} // change to Login later
+                    onPress={() => { navigation.navigate('Home'); createUser(firstName, username, password)} }
                     style={styles.nextButton}
                 > 
                     <Text style={styles.next}>Next</Text>
