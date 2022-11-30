@@ -1,42 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, Dimensions} from "react-native";
 import NavigationBar from "../components/navigationBar";
 import { Feather } from 'react-native-vector-icons';
 import { SafeAreaView } from "react-native-safe-area-context";
-import Photos from "../assets/Photos";
+import PhotoGrid from "../components/photoGrid";
+
+
 const ProfileScreen = () => {
-    const photos = [
-         {
-        image: require("../assets/posts/image1.jpg")
-        },
-        {
-            image: require("../assets/posts/image2.jpg")
-        },
-        {
-            image: require("../assets/posts/image3.jpg")
-        },
-        {
-            image: require("../assets/posts/image4.jpg")
-        },
-        {
-            image: require("../assets/posts/image5.jpg")
-        },
-        {
-            image: require("../assets/posts/image6.jpg")
-        },
-        {
-            image: require("../assets/posts/image7.jpg")
-        },
-        {
-            image: require("../assets/posts/image8.jpg")
-        },
-        {
-            image: require("../assets/posts/image9.jpg")
-        },
-        {
-            image: require("../assets/posts/image10.jpg")
-        }
-    ]
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.profileName}>global_guy_123</Text>
@@ -120,23 +90,13 @@ const ProfileScreen = () => {
                     </TouchableOpacity>
                 </View>
             </View>
-            <View>
-                <FlatList 
-                key={'_'}
-                horizontal={false}
-                data={photos} 
-                renderItem= {
-                    renderImages = item => {
-                        return <View><Image source={{url: item.image}} style={{height:100, width:100}}/>
-                        </View>
-                    }
-                }
-                numColumns={3}/>
+            {/* Photo Grid View */}
+            <View style={{flex: 1, marginBottom: 60}}>
+                <PhotoGrid/>
             </View>
-
-            <View style={styles.footer}>
+            <SafeAreaView style={styles.footer}>
                 <NavigationBar/>
-            </View>
+            </SafeAreaView>
         </SafeAreaView>
     )
 }
