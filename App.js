@@ -70,7 +70,7 @@ export default function App({navigation}) {
               )
             }} name="Explore" component={ExploreScreen} />
             
-            <Stack.Screen 
+            {/* <Stack.Screen 
             options={{
               title: 'Create Post',
               headerTitleStyle: {
@@ -95,7 +95,9 @@ export default function App({navigation}) {
                   </View>
                 </View>
               )
-            }} name="Create Post" component={CreatePost} />
+            }} name="Create Post" component={CreatePost} /> */}
+
+            <Stack.Screen options={{ headerShown: false }} name="Create Post" component={CreatePost} />
             
             <Stack.Screen
             options={{
@@ -109,7 +111,7 @@ export default function App({navigation}) {
               headerStyle: {
                 backgroundColor: '#F8C98A',
               },
-            }} name="Create Post 2" component={CreatePost2} />
+            }} name="Add Caption" component={CreatePost2} />
             
         </Stack.Navigator>
     </NavigationContainer>
