@@ -1,11 +1,22 @@
 import React, { useState} from "react";
 import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import {AntDesign} from 'react-native-vector-icons';
+import { db } from "../firebase-config";
+import { collection, addDoc } from "firebase/firestore";
 
 const CreateAccount1 = ({navigation}) => {
     const [firstName, setFirstName] = useState(' ');
     const [lastName, setLastName] = useState(' ');
     const [email, setEmail] = useState(' ');
+
+    function createUser(firstName, lastName, email) {
+         const runit = async () => await addDoc(collection(db, "users"), {
+        FirstName: firstName,
+        LastName: lastName,
+        Email: email
+      });
+      runit();
+    }
     
 
     return (
@@ -41,7 +52,7 @@ const CreateAccount1 = ({navigation}) => {
             </View>
             <View style={styles.nextButtonContainer}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Create Account 2')}
+                    onPress={() => createUser(firstName, lastName, email)}//navigation.navigate('Create Account 2')}
                     style={styles.nextButton}
                 > 
                     <Text style={styles.next}>Next</Text>
