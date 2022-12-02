@@ -24,7 +24,7 @@ const Stack = createNativeStackNavigator();
 export default function App({navigation}) {
   // const navigation = useNavigation();
 
-  const [users, setUsers] = useState([]);
+  /*const [users, setUsers] = useState([]);
   const usersCollectionRef = collection(db, "users");
   useEffect(() => {
     const getUsers = async () => {
@@ -33,7 +33,7 @@ export default function App({navigation}) {
     };
 
     getUsers();
-  })
+  })*/
 
   
   return (

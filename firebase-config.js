@@ -2,14 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "@firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBPdJALj4gSP1bYq1Qb1pxp3f_kD06vnjI",
-    authDomain: "testprojecttut.firebaseapp.com",
-    projectId: "testprojecttut",
-    storageBucket: "testprojecttut.appspot.com",
-    messagingSenderId: "115582004192",
-    appId: "1:115582004192:web:1a48d5781e1b842e90d985",
-    measurementId: "G-Q04J24L3XG"
-  };
+  apiKey: "AIzaSyAXdO3bphsrtMMFJOZiBtOLW9mmt1xq2VI",
+  authDomain: "dreamscapeofficial-ef560.firebaseapp.com",
+  projectId: "dreamscapeofficial-ef560",
+  storageBucket: "dreamscapeofficial-ef560.appspot.com",
+  messagingSenderId: "807254456245",
+  appId: "1:807254456245:web:1e2e848654275595e20bfc"
+};
 
   const app = initializeApp(firebaseConfig);
   export const db = getFirestore(app);
