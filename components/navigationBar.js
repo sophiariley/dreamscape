@@ -35,7 +35,8 @@ export default function NavigationBar({}) {
                 </TouchableOpacity>
 
                 {/* profile button */}
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button}
+                onPress={() =>  navigation.navigate('Profile')}>
                     <FontAwesome5 name='user-alt' size={40} color='#3A6496'/>
                 </TouchableOpacity>
             <View/>

@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignSelf: 'center',
         position: 'absolute',
-        top: 550
+        bottom: -100
     },
     postButton: {
         backgroundColor: '#D28A8E', // pink color

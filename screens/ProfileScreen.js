@@ -5,7 +5,6 @@ import { Feather } from 'react-native-vector-icons';
 import { SafeAreaView } from "react-native-safe-area-context";
 import PhotoGrid from "../components/photoGrid";
 
-
 const ProfileScreen = () => {
     return (
         <SafeAreaView style={styles.container}>

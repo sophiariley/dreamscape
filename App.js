@@ -10,6 +10,7 @@ import CreatePost2 from './screens/CreatePost2';
 import ExploreScreen from './screens/ExploreScreen';
 import CreateAccount1 from './screens/CreateAccount1'
 import CreateAccount2 from './screens/CreateAccount2'
+import ProfileScreen from './screens/ProfileScreen';
 import {FontAwesome5, AntDesign} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/native'
 import { useState, useEffect } from "react";
@@ -43,7 +44,7 @@ export default function App({navigation}) {
           <Stack.Screen options={{ headerShown: false }} name="Create Account 1" component={CreateAccount1} />
 
           <Stack.Screen options={{ headerShown: false }} name="Create Account 2" component={CreateAccount2} />
-          
+          <Stack.Screen options={{ headerShown: false }} name="Profile" component={ProfileScreen} />
           <Stack.Screen 
             options={{ 
               title: 'Dreamscape',

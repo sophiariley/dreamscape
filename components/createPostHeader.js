@@ -14,7 +14,7 @@ export default function CreatePostHeader({}) {
                 </TouchableOpacity>
                 <Text style={styles.text}>Create Post</Text>
                 <TouchableOpacity
-                onPress={() =>  navigation.navigate('Create Post 2')}
+                onPress={() =>  navigation.navigate('Add Caption')}
                 style={styles.nextButton}>
                     <Text style={styles.next}>Next</Text>
                 </TouchableOpacity>
