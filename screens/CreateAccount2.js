@@ -27,8 +27,8 @@ function writeUserData(userId, username, password) {
 
 const CreateAccount2 = ({route, navigation}) => {
     const { firstName, lastName, email } = route.params;
-    const [username, setUsername] = useState(' ');
-    const [password, setPassword] = useState(' ');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     //const res = db.collection('users');
     return (
         <KeyboardAvoidingView behavior='padding' style={styles.container}>

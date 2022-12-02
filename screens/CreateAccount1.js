@@ -5,9 +5,9 @@ import { db } from "../firebase-config";
 import { collection, addDoc } from "firebase/firestore";
 
 const CreateAccount1 = ({navigation}) => {
-    const [firstName, setFirstName] = useState(' ');
-    const [lastName, setLastName] = useState(' ');
-    const [email, setEmail] = useState(' ');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
 
     function createUser(firstName, lastName, email) {
          const runit = async () => await addDoc(collection(db, "users"), {
@@ -108,7 +108,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#DADADA',
         borderRadius: 5,
         width: 350,
-        height: '15%'
+        height: '15%',
+        paddingLeft: 10
+
     },
     text: {
         color: '#3A6496',
