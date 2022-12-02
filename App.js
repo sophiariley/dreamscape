@@ -23,16 +23,16 @@ const Stack = createNativeStackNavigator();
 export default function App({navigation}) {
   // const navigation = useNavigation();
 
-  const [users, setUsers] = useState([]);
-  const usersCollectionRef = collection(db, "users");
-  useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(usersCollectionRef);
-      setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id })));
-    };
+  // const [users, setUsers] = useState([]);
+  // const usersCollectionRef = collection(db, "users");
+  // useEffect(() => {
+  //   const getUsers = async () => {
+  //     const data = await getDocs(usersCollectionRef);
+  //     setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id })));
+  //   };
 
-    getUsers();
-  })
+  //   getUsers();
+  // })
 
   
   return (

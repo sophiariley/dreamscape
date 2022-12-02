@@ -16,11 +16,11 @@ function writeUserData(userId, username, password) {
 
   function createUser(firstName, lastName, email, username, password) {
     const runit = async () => await addDoc(collection(db, "users"), {
-   firstName: firstName,
-   lastName: lastName,
-   email: email,
-   username: username,
-   password: password
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    username: username,
+    password: password
  });
  runit();
 }
