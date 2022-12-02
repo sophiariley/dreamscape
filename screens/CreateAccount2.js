@@ -49,7 +49,7 @@ const CreateAccount2 = ({route, navigation}) => {
                         value={password}
                         onChangeText={text => setPassword(text)}
                     />
-                <Text style={styles.text}>Enter Password</Text>
+                <Text style={styles.text}>Re-enter Password</Text>
                     <TextInput 
                         style={styles.inputText} 
                         placeholder=""

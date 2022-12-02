@@ -8,6 +8,7 @@ const ExploreScreen = ({}) => {
     
     return (
         <View style={styles.container}>
+            <View style={styles.header}>
             <KeyboardAvoidingView style={styles.searchBar}
             behavior="padding">
                 <Foundation name='magnifying-glass' size={25} color='#3A6496' style={styles.icon}/>
@@ -18,6 +19,7 @@ const ExploreScreen = ({}) => {
                     // onChangeText={text => setSearch(text)}
                 />
             </KeyboardAvoidingView>
+            </View>
             <KeyboardAvoidingView style={styles.footer}>
                 <NavigationBar/>
             </KeyboardAvoidingView>
@@ -35,11 +37,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    // the styling of the header, used for the home bar
+    // the styling of the header, used for the search bar
     header: {
         position: 'absolute',
-        bottom: 0,
-        alignItems:'center'
+        top: 300,
+        alignItems:'center',
+        width: '100%'
     },
     // the styling of the footer, used for the navigation bar
     footer: {

@@ -6,7 +6,7 @@ import CreatePostHeader from "../components/createPostHeader";
 const CreatePost = ({}) => {
     return (
         <View style={styles.container}>
-            <View>
+            <View style={styles.header}>
                 <CreatePostHeader/>
             </View>
             <View style={styles.cameraRollContainer}>
@@ -38,5 +38,11 @@ const styles = StyleSheet.create({
         padding: 5,
         alignSelf: 'center',
         fontSize: 25
+    },
+    header: {
+        position: 'absolute',
+        top: 300,
+        alignItems:'center',
+        width: '100%'
     }
 })
