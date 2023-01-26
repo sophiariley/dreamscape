@@ -39,11 +39,11 @@ This app will be deployed via a .apk file that can be downloaded on a mobile dev
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Testing- To be edited in 492...
+# Testing
 
-To run the tests run "npm test" in the terminal. This will execute all tests.
+To run all available tests, run "npm test" in the terminal. This will execute all tests.
 
-The tests are located in the tests directory.
+Tests are located in the tests directory.
 
 ## Testing Technology
 
