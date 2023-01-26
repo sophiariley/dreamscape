@@ -43,7 +43,7 @@ This app will be deployed via a .apk file that can be downloaded on a mobile dev
 
 To run all available tests, run "npm test" in the terminal. This will execute all tests.
 
-Tests are located in the tests directory.
+All tests are located in the tests directory.
 
 ## Testing Technology
 
