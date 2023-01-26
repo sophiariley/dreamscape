@@ -1,9 +1,9 @@
-import React from "react";
-import { render } from "@testing-library/react-native";
-import LoginScreen from "../screens/LoginScreen";
+import React from 'react';
+import {create} from 'react-test-renderer';
+import LoginScreen from './LoginScreen';
 
-// does the login screen render its default elements?
-it ("renders default elements", () => {
-    const {getAllByText} = render(<LoginScreen/>);
-    expect(getAllByText('Login').length).toBe(1);
+
+test('renders correctly across screens', () => {
+  const tree = create(<LoginScreen />);
+  expect(tree).toMatchSnapshot();
 });
