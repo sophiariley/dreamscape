@@ -1,5 +1,7 @@
 import React, { useState, useEffect} from "react";
 import { ImageBackground, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+
+// Firebase portion of code commented out for unit testing
 // import {useNavigation} from '@react-navigation/core'
 //import firestore from '@react-native-firebase/firestore';
 // import { collection, query, where, onSnapshot, getDocs, setDoc, doc } from "firebase/firestore";
