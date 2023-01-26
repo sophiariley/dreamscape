@@ -41,12 +41,9 @@ This app will be deployed via a .apk file that can be downloaded on a mobile dev
 
 # Testing- To be edited in 492...
 
-In 492 you will write automated tests. When you do you will need to add a
-section that explains how to run them.
+To run the tests run "npm test" in the terminal. This will execute all tests.
 
-The unit tests are in `/test/unit`.
-
-The behavioral tests are in `/test/casper/`.
+The tests are located in the tests directory.
 
 ## Testing Technology
 
