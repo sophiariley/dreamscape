@@ -1,9 +1,9 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
-
+import {create} from 'react-test-renderer';
 import LoginScreen from './LoginScreen';
 
-test('renders correctly', () => {
-  const tree = renderer.create(<LoginScreen />).toJSON();
+
+test('renders correctly across screens', () => {
+  const tree = create(<LoginScreen />);
   expect(tree).toMatchSnapshot();
 });
