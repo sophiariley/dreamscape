@@ -65,9 +65,10 @@ const LoginScreen = ({navigation}) => {
                                 onChangeText={text => setPassword(text)}
                             />
                     </View>
-                
+
                 <View style={styles.container}>
-                    <View style={styles.loginButtonContainer}>
+                    <View style={styles.loginButtonContainer}
+                    testID = "loginButton"> {/**used for first test in LoginButton.test.js */}
                         <TouchableOpacity
                             onPress={() => {
                                 auth(username, password).then(
