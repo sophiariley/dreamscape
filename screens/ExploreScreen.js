@@ -2,9 +2,24 @@ import React, { useState} from "react";
 import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView } from "react-native";
 import NavigationBar from "../components/navigationBar";
 import {Foundation} from 'react-native-vector-icons';
+import { collection, query, where, onSnapshot, getDocs, setDoc, doc } from "firebase/firestore";
+import { db } from "../firebase-config";
 
 const ExploreScreen = ({}) => {
-    // const [search, setSearch] = useState(' ');
+    const [search, setSearch] = useState(' ');
+
+    async function findUsernameMatch(username) {
+        const q = query(collection(db, "users"), where("username", "==", username));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            console.log(doc.data().username); //TODO - Alter this to help with UI display
+        });
+    }
+
+    function doBoth(text) {
+        setSearch(text);
+        findUsernameMatch(text);
+    }
     
     return (
         <View style={styles.container}>
@@ -15,8 +30,8 @@ const ExploreScreen = ({}) => {
                 <TextInput
                     style={styles.searchBarText}
                     placeholder="Search"
-                    // value={search}
-                    // onChangeText={text => setSearch(text)}
+                    value={search}
+                    onChangeText={text => doBoth(text)}
                 />
             </KeyboardAvoidingView>
             </View>
