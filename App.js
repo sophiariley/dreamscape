@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
+import ResetPasswordScreen from './screens/ResetPasswordScreen';
 import CreatePost from './screens/CreatePost';
 import CreatePost2 from './screens/CreatePost2';
 import ExploreScreen from './screens/ExploreScreen';
@@ -40,6 +41,8 @@ export default function App({navigation}) {
     <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
+
+          <Stack.Screen options={{ headerShown: false }} name="Reset Password" component={ResetPasswordScreen} />
 
           <Stack.Screen options={{ headerShown: false }} name="Create Account 1" component={CreateAccount1} />
 
