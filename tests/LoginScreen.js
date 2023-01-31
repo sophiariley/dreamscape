@@ -66,6 +66,7 @@ const LoginScreen = ({navigation}) => {
                             />
                     </View>
 
+                {/** Start LoginButton.test */}
                 <View style={styles.container}>
                     <View style={styles.loginButtonContainer}
                     testID = "loginButton"> {/**used for first test in LoginButton.test.js */}
@@ -84,7 +85,8 @@ const LoginScreen = ({navigation}) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-                
+                {/** End LoginButton.test */}
+
                 <View style={styles.noAccountContainer}>
                     <Text style={styles.noAccountText}>────────   Don't have an account?   ────────</Text>
                     <TouchableOpacity 

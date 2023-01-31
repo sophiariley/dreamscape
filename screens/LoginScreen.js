@@ -4,6 +4,7 @@ import {useNavigation} from '@react-navigation/core'
 //import firestore from '@react-native-firebase/firestore';
 import { collection, query, where, onSnapshot, getDocs, setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase-config";
+import { faBlackboard } from "@fortawesome/free-solid-svg-icons";
 
 
 const image = { uri: "https://media4.giphy.com/media/3og0ISzBpn0nNJE3Ac/giphy.gif?cid=ecf05e47kxc23rf9ldw36iuch1geujlfdvraxnb7gm18sznm&rid=giphy.gif&ct=g" };
@@ -62,6 +63,13 @@ const LoginScreen = ({navigation}) => {
                                 value={password}
                                 onChangeText={text => setPassword(text)}
                             />
+                    </View>
+                
+                    <View style={styles.forgotPasswordContainer}>
+                        <TouchableOpacity 
+                            onPress={() => {navigation.navigate('Reset Password')}}>
+                            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                        </TouchableOpacity>
                     </View>
                 
                 <View style={styles.container}>
@@ -128,6 +136,14 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         paddingLeft: 10
     },
+    forgotPasswordContainer: {
+        right: 40
+    },
+    forgotPasswordText: {
+        fontSize: 15,
+        color: '#DADADA',
+        alignSelf: 'flex-end'
+    },
     loginButtonContainer: {
         width: '70%',
         height: '20%',
@@ -169,7 +185,6 @@ const styles = StyleSheet.create({
         fontSize: 60,
         color: '#F8C98A' // yellow color
     },
-    // the container for the "forgot password?" text
     noAccountContainer: {
         flex: 1,
         justifyContent: 'center',
