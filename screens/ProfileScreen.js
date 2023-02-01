@@ -4,15 +4,42 @@ import NavigationBar from "../components/navigationBar";
 import { Feather } from 'react-native-vector-icons';
 import { SafeAreaView } from "react-native-safe-area-context";
 import PhotoGrid from "../components/photoGrid";
+import { getStorage, ref, getDownloadURL } from "firebase/storage"
+import { db, storage } from "../firebase-config";
+import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual } from "firebase/firestore";
 
 const ProfileScreen = () => {
+
+    //Firebase Storage for images and videos
+    //const storageRef = ref(storage);
+    //const spaceRef = ref(storage, 'images/outerspace.jpg');
+    const spacePath = 'images/outerspace.jpg';
+    //const gsSpaceRef = ref(storage, 'gs://dreamscapeofficial-ef560.appspot.com/images/outerspace.jpg');
+    
+    //picpath = db.collection("users").getDoc("bV26oHiTJBDec19IiA5b").collection("images").getDoc("DPKrc0Z8ZOBvEOwMXHTd").url;
+    
+    function getPicUrl(picPath) {
+        const storage = getStorage();
+        const picRef = ref(storage,picPath);
+        const runit = async () => {
+            const downloadUrl = await getDownloadURL(picRef)
+            .catch((error) => {
+                // Handle any errors
+              });
+            console.log('Image URL: ', downloadUrl);
+            return downloadUrl;
+        }
+        runit();
+    }
+
+    //First Image tage was source={require("../assets/profile_photo.jpg")} ....
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.profileName}>global_guy_123</Text>
 
             <View style={styles.profileContainer}>
                 <View style={styles.profileImage}>
-                    <Image source={require("../assets/profile_photo.jpg")} style={styles.image}/>
+                    <Image source={getPicUrl(spacePath)} style={styles.image}/>
                 </View>
                 <View style={{flexDirection: 'row', marg: 'center'}}>
                     <View style={{alignItems: 'center'}}>
