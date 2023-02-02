@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState} from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, Dimensions} from "react-native";
 import NavigationBar from "../components/navigationBar";
 import { Feather } from 'react-native-vector-icons';
 import { SafeAreaView } from "react-native-safe-area-context";
 import PhotoGrid from "../components/photoGrid";
-import { getStorage, ref, getDownloadURL } from "firebase/storage"
+import { getStorage, ref, getDownloadURL, } from "firebase/storage"
 import { db, storage } from "../firebase-config";
 import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual } from "firebase/firestore";
 
@@ -17,29 +17,34 @@ const ProfileScreen = () => {
     //const gsSpaceRef = ref(storage, 'gs://dreamscapeofficial-ef560.appspot.com/images/outerspace.jpg');
     
     //picpath = db.collection("users").getDoc("bV26oHiTJBDec19IiA5b").collection("images").getDoc("DPKrc0Z8ZOBvEOwMXHTd").url;
-    
-    function getPicUrl(picPath) {
-        const storage = getStorage();
-        const picRef = ref(storage,picPath);
-        const runit = async () => {
-            const downloadUrl = await getDownloadURL(picRef)
+    //const imageURL = 'https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fouterspace.jpg?alt=media&token=8833e81d-bdb4-43a4-9939-cc35211ef45d';
+
+    const [globalUrl, setGlobalUrl] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5');
+
+    async function getPicUrl(picPath) {
+        const pathRef = ref(storage,picPath);
+        const downloadUrl = await getDownloadURL(pathRef)
             .catch((error) => {
                 // Handle any errors
               });
             console.log('Image URL: ', downloadUrl);
-            return downloadUrl;
-        }
-        runit();
+            setGlobalUrl(downloadUrl);
+            //return downloadUrl;
     }
 
+    getPicUrl(spacePath);
+    //console.log('Called Function: ', globalUrl);
+
     //First Image tage was source={require("../assets/profile_photo.jpg")} ....
+    //GETS SPACE PIC AS PROFILE PIC-> uri: 'https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fouterspace.jpg?alt=media&token=8833e81d-bdb4-43a4-9939-cc35211ef45d'
+    //source={{uri: getPicUrl(spacePath)}}
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.profileName}>global_guy_123</Text>
 
             <View style={styles.profileContainer}>
                 <View style={styles.profileImage}>
-                    <Image source={getPicUrl(spacePath)} style={styles.image}/>
+                    <Image source={{uri: globalUrl}} style={styles.image}/>
                 </View>
                 <View style={{flexDirection: 'row', marg: 'center'}}>
                     <View style={{alignItems: 'center'}}>
