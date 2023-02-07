@@ -4,7 +4,6 @@ import {useNavigation} from '@react-navigation/core'
 //import firestore from '@react-native-firebase/firestore';
 import { collection, query, where, onSnapshot, getDocs, setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase-config";
-import { faBlackboard } from "@fortawesome/free-solid-svg-icons";
 
 
 const image = { uri: "https://media4.giphy.com/media/3og0ISzBpn0nNJE3Ac/giphy.gif?cid=ecf05e47kxc23rf9ldw36iuch1geujlfdvraxnb7gm18sznm&rid=giphy.gif&ct=g" };
@@ -78,7 +77,9 @@ const LoginScreen = ({navigation}) => {
                             onPress={() => {
                                 auth(username, password).then(
                                     function(value) {
-                                        if (value) {navigation.navigate('Home')} 
+                                        if (value) {navigation.navigate('Home', {
+                                            paramKey: username,
+                                        })} 
                                     }
 
                                 );

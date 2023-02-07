@@ -5,20 +5,29 @@ import {useNavigation} from '@react-navigation/core'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function NavigationBar({}) {
+export default function NavigationBar({toNavBar}) {
+    const username = toNavBar;
+    const printData = () => {
+        console.log("NavBar: ", username);
+    }
+    printData();
     const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <View/>
                 {/* home button */}
                 <TouchableOpacity style={styles.button}
-                onPress={() =>  navigation.navigate('Home')}>
+                onPress={() =>  navigation.navigate('Home', {
+                    paramKey: username,
+                })}>
                     <Entypo name='home' size={40} color='#3A6496'/>
                 </TouchableOpacity>
 
                 {/* explore button */}
                 <TouchableOpacity style={styles.button}
-                     onPress={() =>  navigation.navigate('Explore')}>
+                     onPress={() =>  navigation.navigate('Explore', {
+                        paramKey: username,
+                    })}>
                     <Foundation name='magnifying-glass' size={40} color='#3A6496'/>
                 </TouchableOpacity>
 
@@ -36,9 +45,12 @@ export default function NavigationBar({}) {
 
                 {/* profile button */}
                 <TouchableOpacity style={styles.button}
-                onPress={() =>  navigation.navigate('Profile')}>
+                onPress={() =>  navigation.navigate('Profile', {
+                    paramKey: username,
+                })}>
                     <FontAwesome5 name='user-alt' size={40} color='#3A6496'/>
                 </TouchableOpacity>
+                <Text>{}</Text>
             <View/>
         </View>
     )

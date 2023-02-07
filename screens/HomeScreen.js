@@ -1,13 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import NavigationBar from "../components/navigationBar";
 // import HomeBar from "../components/homeBar";
 
-const HomeScreen = () => {
+const HomeScreen = ({route}) => {
+
+    //const [data, setData] = useState('nothing');
+    const data = route.params.paramKey;
+    const toNavBar = () => {
+        console.log("Home Screen data:", data);
+        console.log("Home Screen route:", route.params.paramKey);
+        //setData(route.params.paramKey);
+        //return data;
+    }
+    const printData = () => {
+        //setData(route.params.paramKey);
+        console.log("Home Screen data:", data);
+        console.log("Home Screen route:", route.params.paramKey);
+    }
+
+    //printData();
+    toNavBar();
+
     return (
         <View style={styles.container}>
             <View style={styles.footer}>
-                <NavigationBar/>
+                <NavigationBar toNavBar={data}/>
             </View>
             
         </View>

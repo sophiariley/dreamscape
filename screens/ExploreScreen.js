@@ -5,7 +5,7 @@ import {Foundation} from 'react-native-vector-icons';
 import { collection, query, where, onSnapshot, getDocs, setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase-config";
 
-const ExploreScreen = ({}) => {
+const ExploreScreen = ({route}) => {
     const [search, setSearch] = useState(' ');
 
     async function findUsernameMatch(username) {
@@ -20,6 +20,9 @@ const ExploreScreen = ({}) => {
         setSearch(text);
         findUsernameMatch(text);
     }
+
+    //User Info
+    const username = route.params.paramKey;
     
     return (
         <View style={styles.container}>
@@ -36,7 +39,7 @@ const ExploreScreen = ({}) => {
             </KeyboardAvoidingView>
             </View>
             <KeyboardAvoidingView style={styles.footer}>
-                <NavigationBar/>
+                <NavigationBar toNavBar={username}/>
             </KeyboardAvoidingView>
         </View>
         

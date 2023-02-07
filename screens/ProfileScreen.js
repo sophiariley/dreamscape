@@ -8,7 +8,7 @@ import { getStorage, ref, getDownloadURL, } from "firebase/storage"
 import { db, storage } from "../firebase-config";
 import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual } from "firebase/firestore";
 
-const ProfileScreen = () => {
+const ProfileScreen = ({route}) => {
 
     //Firebase Storage for images and videos
     //const storageRef = ref(storage);
@@ -19,6 +19,7 @@ const ProfileScreen = () => {
     //picpath = db.collection("users").getDoc("bV26oHiTJBDec19IiA5b").collection("images").getDoc("DPKrc0Z8ZOBvEOwMXHTd").url;
     //const imageURL = 'https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fouterspace.jpg?alt=media&token=8833e81d-bdb4-43a4-9939-cc35211ef45d';
 
+    //url of pic in firebase store - originally set to default profile pic
     const [globalUrl, setGlobalUrl] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5');
 
     async function getPicUrl(picPath) {
@@ -31,16 +32,23 @@ const ProfileScreen = () => {
             setGlobalUrl(downloadUrl);
             //return downloadUrl;
     }
-
     getPicUrl(spacePath);
-    //console.log('Called Function: ', globalUrl);
+
+    //Printing User Login info
+    const username = route.params.paramKey;
+    //const username = NavigationBar.username;
+    const printData = () => {
+        console.log("Profile Screen: ", username);
+        //console.log("Profile Screen from NavBar: ", NavigationBar.username);
+    }
+    printData();
 
     //First Image tage was source={require("../assets/profile_photo.jpg")} ....
     //GETS SPACE PIC AS PROFILE PIC-> uri: 'https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fouterspace.jpg?alt=media&token=8833e81d-bdb4-43a4-9939-cc35211ef45d'
     //source={{uri: getPicUrl(spacePath)}}
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.profileName}>global_guy_123</Text>
+            <Text style={styles.profileName}>{username}</Text>
 
             <View style={styles.profileContainer}>
                 <View style={styles.profileImage}>
@@ -126,7 +134,7 @@ const ProfileScreen = () => {
                 <PhotoGrid/>
             </View>
             <SafeAreaView style={styles.footer}>
-                <NavigationBar/>
+                <NavigationBar toNavBar={username}/>
             </SafeAreaView>
         </SafeAreaView>
     )
