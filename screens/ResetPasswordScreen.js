@@ -5,12 +5,13 @@ import LoginScreen from "./LoginScreen";
 
 const ResetPasswordScreen = ({navigation}) => {
     const [email, setEmail] = useState('');
+    const [newPassword, setNewPassword] = useState('');
 
     return (
         <View style={styles.container}>
             <Text style={styles.resetPassword}> Reset Password </Text>
 
-            <View style={styles.inputContainer}>
+            <View style={styles.emailContainer}>
                 <Text style={styles.miscText}>Enter the email associated with your</Text>
                 <Text style={styles.miscText}>account:</Text>
                 <TextInput 
@@ -18,6 +19,16 @@ const ResetPasswordScreen = ({navigation}) => {
                     placeholder="Email"
                     value={email}
                     onChangeText={text => setEmail(text)}
+                />
+            </View>
+
+            <View style={styles.newPasswordContainer}>
+                <Text style={styles.miscText}>Enter new password</Text>
+                <TextInput 
+                    style={styles.inputText} 
+                    placeholder="New password"
+                    value={newPassword}
+                    onChangeText={text => setNewPassword(text)}
                 />
             </View>
 
@@ -52,23 +63,29 @@ const styles = StyleSheet.create ({
         alignContent: 'center',
         justifyContent: 'center'
     },  
-    inputContainer: {
+    emailContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        top: 200
+        top: 175
+    },
+    newPasswordContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        top: 75
     },
     resetPassword: {
         color: '#F8C98A',
         fontSize: 40,
         alignSelf: 'center',
-        top: 225
+        top: 200
     },
     resetPasswordButtonContainer: {
         width: '70%',
         height: '20%',
         flex: 1,
         alignSelf: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        top: -40
     },
     resetPasswordButton: {
         backgroundColor: '#D28A8E', // pink color
