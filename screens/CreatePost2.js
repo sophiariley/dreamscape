@@ -5,22 +5,26 @@ import {Ionicons} from 'react-native-vector-icons';
 
 const CreatePost2 = ({navigation}) => {
     const [caption, setCaption] = useState(' ');
+    const [location, setLocation] = useState(' ');
     return (
         <View style={styles.contianer}>
             <View style={styles.photoContainer}/>
             <KeyboardAvoidingView style={styles.captionContainer}>
                 <TextInput
-                    color='#3A6496' 
-                    style={styles.captionText} 
-                    placeholder="Write caption..."
-                    placeholderTextColor={'#3A6496'}
-                    value={caption}
-                    onChangeText={text => setCaption(text)}
+                     style={styles.captionText} 
+                     placeholder="Write caption..."
+                     value={caption}
+                     onChangeText={text => setCaption(text)}
                 />
             </KeyboardAvoidingView>
             <View style={styles.location}>
                 <Ionicons style={styles.globe} name='globe-outline' size={30} color='#3A6496'/>
-                <Text style={styles.locationText}>Add Location</Text>
+                <TextInput 
+                    style={styles.locationText}
+                    placeholder= 'Add Location'
+                    value={location}
+                    onChangeText={text => setLocation(text)}
+                />
             </View>
             <View style={styles.postButtonContainer}>
                 <TouchableOpacity 
@@ -64,8 +68,13 @@ const styles = StyleSheet.create({
     captionText: {
         fontSize: 18,
         color: '#3A6496',
-        padding: 10,
-        opacity: .8
+        opacity: .5,
+        height: '20%',
+        width: '80%',
+        borderRadius: 5,
+        marginTop: 5,
+        marginBottom: 10,
+        paddingLeft: 10
     },
     postButtonContainer: {
         width: '50%',
@@ -73,7 +82,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignSelf: 'center',
         position: 'absolute',
-        bottom: -100
+        bottom: -125
     },
     postButton: {
         backgroundColor: '#D28A8E', // pink color
