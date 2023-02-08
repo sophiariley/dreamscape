@@ -2,6 +2,10 @@ import React, { useState} from "react";
 import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, Button, TouchableOpacity} from "react-native";
 import {Foundation} from 'react-native-vector-icons';
 import CreatePostHeader from "../components/createPostHeader";
+// import CameraRollPicker from 'react-native-camera-roll-picker';
+
+
+
 
 const CreatePost = ({}) => {
     return (
@@ -11,6 +15,7 @@ const CreatePost = ({}) => {
             </View>
             <View style={styles.cameraRollContainer}>
                 <Text style={styles.text}>Camera Roll</Text>
+                {/* <CameraRollPicker callback={this.getSelectedImages}/> */}
             </View>
         </View>
     )
