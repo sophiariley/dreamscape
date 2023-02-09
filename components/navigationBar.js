@@ -4,9 +4,28 @@ import {FontAwesome5, Entypo, Foundation} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/core'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function NavigationBar({}) {
     const navigation = useNavigation();
+
+    const [image, setImage] = useState(null);
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+        });
+
+        console.log(result);
+
+        if (!result.canceled) {
+        setImage(result.assets[0].uri);
+        }
+    };
+
     return (
         <View style={styles.container}>
             <View/>
@@ -25,7 +44,8 @@ export default function NavigationBar({}) {
                 
                 {/* new post button */}
                 <TouchableOpacity style={styles.button}
-                    onPress={() =>  navigation.navigate('Create Post')}>
+                    onPress={pickImage}>
+                    {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
                     <FontAwesome5 name='plus' size={40} color='#3A6496'/>
                 </TouchableOpacity>
 
