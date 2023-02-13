@@ -22,7 +22,8 @@ const ExploreScreen = ({route}) => {
     }
 
     //User Info
-    const username = route.params.paramKey;
+    const username = route.params.username;
+    const userID = route.params.userID;
     
     return (
         <View style={styles.container}>
@@ -39,7 +40,7 @@ const ExploreScreen = ({route}) => {
             </KeyboardAvoidingView>
             </View>
             <KeyboardAvoidingView style={styles.footer}>
-                <NavigationBar toNavBar={username}/>
+                <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>
             </KeyboardAvoidingView>
         </View>
         

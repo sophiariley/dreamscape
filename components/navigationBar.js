@@ -5,10 +5,11 @@ import {useNavigation} from '@react-navigation/core'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function NavigationBar({toNavBar}) {
-    const username = toNavBar;
+export default function NavigationBar({toNavBarUsername, toNavBarUserID}) {
+    const username = toNavBarUsername;
+    const userID = toNavBarUserID;
     const printData = () => {
-        console.log("NavBar: ", username);
+        console.log("NavBar username: ", username, " Nav Bar userID: ", userID);
     }
     printData();
     const navigation = useNavigation();
@@ -18,7 +19,8 @@ export default function NavigationBar({toNavBar}) {
                 {/* home button */}
                 <TouchableOpacity style={styles.button}
                 onPress={() =>  navigation.navigate('Home', {
-                    paramKey: username,
+                    username: username,
+                    userID: userID,
                 })}>
                     <Entypo name='home' size={40} color='#3A6496'/>
                 </TouchableOpacity>
@@ -26,7 +28,8 @@ export default function NavigationBar({toNavBar}) {
                 {/* explore button */}
                 <TouchableOpacity style={styles.button}
                      onPress={() =>  navigation.navigate('Explore', {
-                        paramKey: username,
+                        username: username,
+                        userID: userID,
                     })}>
                     <Foundation name='magnifying-glass' size={40} color='#3A6496'/>
                 </TouchableOpacity>
@@ -46,7 +49,8 @@ export default function NavigationBar({toNavBar}) {
                 {/* profile button */}
                 <TouchableOpacity style={styles.button}
                 onPress={() =>  navigation.navigate('Profile', {
-                    paramKey: username,
+                    username: username,
+                    userID: userID,
                 })}>
                     <FontAwesome5 name='user-alt' size={40} color='#3A6496'/>
                 </TouchableOpacity>
