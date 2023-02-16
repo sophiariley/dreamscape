@@ -87,4 +87,4 @@ const styles = StyleSheet.create({
     }
 })
 
-/*Icon can be found at https://oblador.github.io/react-native-vector-icons/ */
+/*Icons can be found at https://oblador.github.io/react-native-vector-icons/ */
