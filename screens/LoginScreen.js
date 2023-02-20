@@ -13,6 +13,7 @@ const LoginScreen = ({navigation}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isTrue, setIsTrue] = useState(false);
+    const [userID, setUserID] = useState('');
 
     async function auth(username, password) {
         const q = query(collection(db, "users"), where("username", "==", username), where("password", "==", password));
@@ -20,6 +21,7 @@ const LoginScreen = ({navigation}) => {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             console.log(doc.id, " => ", doc.data());
+            setUserID(doc.id);
             setIsTrue(true);
             verified = true;
         });
@@ -78,7 +80,8 @@ const LoginScreen = ({navigation}) => {
                                 auth(username, password).then(
                                     function(value) {
                                         if (value) {navigation.navigate('Home', {
-                                            paramKey: username,
+                                            username: username,
+                                            password: password,
                                         })} 
                                     }
 

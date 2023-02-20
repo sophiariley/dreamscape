@@ -5,31 +5,28 @@ import {AntDesign} from 'react-native-vector-icons';
 import { doc, setDoc, collection, addDoc } from "firebase/firestore"; 
 import { db } from "../firebase-config";
 
-
-function writeUserData(userId, username, password) {
-    const usersCollectionRef = collection(db, "users");
-    setDoc(db, 'users' + userId), {
-      username: username,
-      password: password
-    };
-  }
-
-  function createUser(firstName, lastName, email, username, password) {
-    const runit = async () => await addDoc(collection(db, "users"), {
-   firstName: firstName,
-   lastName: lastName,
-   email: email,
-   username: username,
-   password: password
- });
- runit();
-}
-
 const CreateAccount2 = ({route, navigation}) => {
     const { firstName, lastName, email } = route.params;
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [userID, setUserID] = useState(''); //CAN BE USED TO PASS UID THROUGH INSTEAD OF FINDING IT LATER
     //const res = db.collection('users');
+
+    function createUser(firstName, lastName, email, username, password) {
+        const runit = async () => await addDoc(collection(db, "users"), {
+       firstName: firstName,
+       lastName: lastName,
+       email: email,
+       username: username,
+       password: password
+     })
+     .then(function(docRef) {
+        console.log("Create Acct UID: ", docRef.id);
+        setUserID(docRef.id);
+     });
+     runit();
+    }
+
     return (
         <KeyboardAvoidingView behavior='padding' style={styles.container}>
             <Text style={styles.createNewAccount}>Create New Account</Text>
@@ -59,13 +56,11 @@ const CreateAccount2 = ({route, navigation}) => {
                     />
             </View>
             <View style={styles.nextButtonContainer}>
-                <TouchableOpacity //res.add({
-                    //    username: username,
-                    //    password: password
-                    //})
-                    //writeUserData("hello", username, password)}
-                    //createUser(firstName, lastName, email, username, password)}
-                    onPress={() => { navigation.navigate('Home'); createUser(firstName, lastName, email, username, password)} }
+                <TouchableOpacity 
+                    onPress={() => { createUser(firstName, lastName, email, username, password); navigation.navigate('Home', {
+                        username: username,
+                        password: password,
+                    }) } }
                     // change to Login later
 
                     style={styles.nextButton}

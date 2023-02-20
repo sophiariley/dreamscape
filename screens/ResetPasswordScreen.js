@@ -2,10 +2,40 @@ import React, { useState, useEffect} from "react";
 import { ImageBackground, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import {useNavigation} from '@react-navigation/core'
 import LoginScreen from "./LoginScreen";
+import { collection, query, where, onSnapshot, getDocs, setDoc, doc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase-config";
 
 const ResetPasswordScreen = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
+    const [userID, setUserID] = useState('');
+
+    async function findEmailMatch(email) {
+        setEmail(email);
+        const q = query(collection(db, "users"), where("email", "==", email));
+        let verified = false;
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            console.log(doc.id, " => ", doc.data());
+            setUserID(doc.id);
+            verified = true;
+        });
+        if (verified) {
+            console.log("email match")
+            return Promise.resolve(true);
+        } else {
+            console.log("no email match");
+            return Promise.resolve(false);
+        }
+    }
+
+    async function updatePassword(newPassword) {
+        console.log("userID: ", userID);
+        const docRef = doc(db, "users", userID);
+        await updateDoc(docRef, {
+            password: newPassword,
+        });
+    }
 
     return (
         <View style={styles.container}>
@@ -18,7 +48,7 @@ const ResetPasswordScreen = ({navigation}) => {
                     style={styles.inputText} 
                     placeholder="Email"
                     value={email}
-                    onChangeText={text => setEmail(text)}
+                    onChangeText={text => findEmailMatch(text)}
                 />
             </View>
 
@@ -34,7 +64,7 @@ const ResetPasswordScreen = ({navigation}) => {
 
             <View style={styles.resetPasswordButtonContainer}>
                 <TouchableOpacity
-                    onPress={() => {{navigation.navigate('Login')}}}
+                    onPress={() => {updatePassword(newPassword); navigation.navigate('Login')}}
                     style={styles.resetPasswordButton}
                 > 
                 <Text style={styles.resetPasswordButtonText}>Reset Password</Text>

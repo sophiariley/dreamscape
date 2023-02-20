@@ -10,32 +10,22 @@ import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, do
 
 const ProfileScreen = ({route}) => {
 
-    async function auth(username) {
-        const q = query(collection(db, "users"), where("username", "==", username));
-        let verified = false;
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
+    async function getPicID(docRef) {
+        const images = await getDocs(collection(docRef, "images"));
+        images.forEach((doc) => {
             console.log(doc.id, " => ", doc.data());
-            verified = true;
-            setUserID(doc.id);
+            setPicID(doc.id);
+            setCount(10);
         });
-        if (verified) {
-            console.log("true")
-            return Promise.resolve(true);
-        } else {
-            console.log("false");
-            return Promise.resolve(false);
-        }
     }
-
-    
-    const spacePath = "images/outerspace.jpg";
     
     async function getPicPath(userID) {
         const docRef = doc(db, "users", userID);
         const docSnap = await getDoc(docRef);
-        const pic = doc(docRef, "images", "DPKrc0Z8ZOBvEOwMXHTd"); //change from hard code
-        //const pic = doc(docRef, "images", "2Zz3JGFco2dG0n6CMsE1"); //wo right doc still got space for bob logged in
+        //const pic = doc(docRef, "images", "DPKrc0Z8ZOBvEOwMXHTd"); //change from hard code
+        //const pic = doc(docRef, "images", "2Zz3JGFco2dG0n6CMsE1");
+        console.log("GetPicPath PICID: ", picID);
+        const pic = doc(docRef, "images", picID);
         const picSnap = await getDoc(pic);
         const mypath = picSnap.data().url;
         //take parenthases away
@@ -46,15 +36,15 @@ const ProfileScreen = ({route}) => {
         setGlobalPicPath(newmypath);
     }
 
-    //const imageURL = 'https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fouterspace.jpg?alt=media&token=8833e81d-bdb4-43a4-9939-cc35211ef45d';
-
     //url of pic in firebase store - originally set to default profile pic
+    const [picID, setPicID] = useState(''); //2Zz3JGFco2dG0n6CMsE1
     const [globalUrl, setGlobalUrl] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5');
-    const [userID, setUserID] = useState('bV26oHiTJBDec19IiA5b'); //was bV26oHiTJBDec19IiA5b **** IF works find GIT PULL then pass id from login to profile
-    const [globalPicPath, setGlobalPicPath] = useState('');
+    const [globalPicPath, setGlobalPicPath] = useState('default.jpg');
+    const [count, setCount] = useState(0);
     
-    //Printing User Login info
-    const username = route.params.paramKey;
+    //username and userID of logged in account
+    const username = route.params.username;
+    const userID = route.params.userID;
 
     async function getPicUrl(picpath) {
         //console.log("is there quotes? ", picpath);
@@ -68,24 +58,23 @@ const ProfileScreen = ({route}) => {
     }
 
     async function doItAll() {
+        const docRef = doc(db, "users", userID);
+        await getPicID(docRef);
         console.log("User ID: ", userID);
-        await getPicPath(userID); 
-        console.log("We here, ", globalPicPath);
-        await getPicUrl(globalPicPath);
+        if(count>0){
+            await getPicPath(userID); 
+            console.log("We here, ", globalPicPath);
+            await getPicUrl(globalPicPath);
+        }
     }
 
-    if (auth(username)) {
-        doItAll();
-    }
+    doItAll();
 
     const printData = () => {
-        console.log("Profile Screen: ", username);
+        console.log("Profile Screen username: ", username, "profile screen userID: ", userID, "profile screen picID: ", picID);
     }
     printData();
 
-    //First Image tage was source={require("../assets/profile_photo.jpg")} ....
-    //GETS SPACE PIC AS PROFILE PIC-> uri: 'https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fouterspace.jpg?alt=media&token=8833e81d-bdb4-43a4-9939-cc35211ef45d'
-    //source={{uri: getPicUrl(spacePath)}}
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.profileName}>{username}</Text>
@@ -174,7 +163,7 @@ const ProfileScreen = ({route}) => {
                 <PhotoGrid/>
             </View>
             <SafeAreaView style={styles.footer}>
-                <NavigationBar toNavBar={username}/>
+                <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>
             </SafeAreaView>
         </SafeAreaView>
     )

@@ -1,31 +1,44 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import NavigationBar from "../components/navigationBar";
+import { collection, query, where, onSnapshot, getDocs, setDoc, doc } from "firebase/firestore";
+import { db } from "../firebase-config";
 // import HomeBar from "../components/homeBar";
 
 const HomeScreen = ({route}) => {
 
-    //const [data, setData] = useState('nothing');
-    const data = route.params.paramKey;
-    const toNavBar = () => {
-        console.log("Home Screen data:", data);
-        console.log("Home Screen route:", route.params.paramKey);
+    const username = route.params.username;
+    const password = route.params.password;
+    const [userID, setUserID] = useState('');
+    const [count, setCount] = useState(0);
+
+    async function getUserID(username, password) {
+        const q = query(collection(db, "users"), where("username", "==", username), where("password", "==", password));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            setUserID(doc.id);
+        });
+    }
+
+    const printToNavBars = () => {
+        console.log("Home Screen username:", username);
+        console.log("Home Screen password:", password);
+        console.log("Home Screen userID: ", userID);
         //setData(route.params.paramKey);
         //return data;
     }
-    const printData = () => {
-        //setData(route.params.paramKey);
-        console.log("Home Screen data:", data);
-        console.log("Home Screen route:", route.params.paramKey);
-    }
 
     //printData();
-    toNavBar();
+    if (count < 1) {
+        getUserID(username, password);
+        setCount(10);
+    }
+    printToNavBars();
 
     return (
         <View style={styles.container}>
             <View style={styles.footer}>
-                <NavigationBar toNavBar={data}/>
+                <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>
             </View>
             
         </View>
