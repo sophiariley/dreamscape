@@ -1,10 +1,25 @@
-import React from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, ScrollView } from "react-native";
+import React, {useState} from "react";
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, ScrollView, Modal } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import NavigationBar from "../components/navigationBar";
-import {FontAwesome5, Entypo, Foundation} from 'react-native-vector-icons';
-import { AntDesign, EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import Comments from "../components/comments";
+
 const PostScreen = () => {
+    const [isLiked, setIsLiked] = useState(false);
+    const [showComments, setShowComments] = useState(false);
+
+    const handleLikePress = () => {
+        setIsLiked(prevIsLiked => !prevIsLiked);
+    };
+
+    const handleCommentPress = () => {
+        setShowComments(true);
+    };
+
+    const handleCloseComments = () => {
+        setShowComments(false);
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -20,26 +35,36 @@ const PostScreen = () => {
                         <Text style={styles.location}>Location</Text>
                     </View>
                 </View>
+
                 <View style={{width: Dimensions.get('screen').width}}> 
                     <Image style={styles.post}
                     source={require('../assets/posts/image10.jpg')}
                     /> 
                 </View>
-                <View style={{flexDirection: 'row', margin: 5, alignItems: 'center', flex: 2, justifyContent: 'space-between',}}>
-                    <FontAwesome name='heart-o' size={35} style={{marginRight: 15,marginBottom:-5}}/>
-                    <FontAwesome name='comment-o' size={35} style={{}}/>
+
+                <View style={{flexDirection: 'row', margin: 5, alignItems: 'center', flex: 2, justifyContent: 'space-between'}}>
+                    <TouchableOpacity onPress={handleLikePress}>
+                        <FontAwesome name={isLiked ? 'heart' : 'heart-o'} size={35} color={isLiked ? 'red' : 'black'}style={{marginRight: 15,marginBottom:-5}}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleCommentPress}>
+                        <FontAwesome name='comment-o' size={35} style={{}}/>
+                    </TouchableOpacity>
                 </View>
+
                 <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
                         <Text style={[styles.profileName, {marginLeft: 5, marginTop: 5, marginRight: 5}]}>john_travels</Text>
                         <Text style={styles.caption}>Caption</Text>
-                </View>                       
+                </View>     
+
                 <Text style={{fontWeight: '200', marginLeft: 5, marginTop: 15, alignSelf: 'center'}}>View comments</Text>
                 <Text style={{fontWeight: '200', fontSize: 12,textAlign: 'right', margin: 5}}>Posted on ...</Text>
+                {showComments && <Comments/>}
             </ScrollView>
 
             <SafeAreaView style={styles.footer}>
                 <NavigationBar/>
             </SafeAreaView>
+
         </SafeAreaView>
         
     )
@@ -53,7 +78,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 1,
         justifyContent: 'flex-start',
-        //alignItems: 'center',
     },
     accountContainer: {
         flexDirection: 'row',
