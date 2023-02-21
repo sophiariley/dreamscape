@@ -1,10 +1,11 @@
 import React, { useState} from "react";
-import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView } from "react-native";
+import { StyleSheet, TextInput, View, KeyboardAvoidingView } from "react-native";
 import NavigationBar from "../components/navigationBar";
 import {Foundation} from 'react-native-vector-icons';
+// import ProfileSearchReturn from "../components/profileSearchReturn";
 
 const ExploreScreen = ({}) => {
-    // const [search, setSearch] = useState(' ');
+    const [search, setSearch] = useState(' ');
     
     return (
         <View style={styles.container}>
@@ -15,16 +16,16 @@ const ExploreScreen = ({}) => {
                 <TextInput
                     style={styles.searchBarText}
                     placeholder="Search"
-                    // value={search}
-                    // onChangeText={text => setSearch(text)}
+                    value={search}
+                    onChangeText={text => setSearch(text)}
                 />
             </KeyboardAvoidingView>
             </View>
             <KeyboardAvoidingView style={styles.footer}>
                 <NavigationBar/>
             </KeyboardAvoidingView>
+            {/* <ProfileSearchReturn/> */}
         </View>
-        
     )
 }
 

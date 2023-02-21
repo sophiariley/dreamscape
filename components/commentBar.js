@@ -10,7 +10,7 @@ export default function CommentBar({}) {
                     style={styles.inputText} 
                     placeholder="Comment something here..."
                     value={comment}
-                    onChangeText={text => setUsername(text)}
+                    onChangeText={text => setComment(text)}
                 />
                 <TouchableOpacity style = {styles.postContainer}>
                     <Text style={styles.postText}>Post!</Text>
@@ -25,7 +25,7 @@ const styles = StyleSheet.create ({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignContent: 'center',
-        bottom: 20
+        bottom: 20,
     },
     inputText: {
         fontSize: 20,
@@ -36,6 +36,7 @@ const styles = StyleSheet.create ({
         paddingTop: 5,
         paddingBottom: 5,
         paddingLeft: 10,
+        right: 30
         
     },
     postText: {
@@ -49,6 +50,6 @@ const styles = StyleSheet.create ({
     postContainer: {
         backgroundColor: '#3A6496',
         borderRadius: 5,
-        
+        left: 30
     }
 })

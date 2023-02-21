@@ -1,9 +1,7 @@
-import React, { useState, useEffect} from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import React, {useState} from "react";
+import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {FontAwesome5, Entypo, Foundation} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/core'
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as ImagePicker from 'expo-image-picker';
 
 export default function NavigationBar({}) {

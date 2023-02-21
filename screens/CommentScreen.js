@@ -1,7 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from "react-native";
+import { StyleSheet, View, TextInput } from "react-native";
 import CommentBar from "../components/commentBar";
-import {FontAwesome} from 'react-native-vector-icons';
 
 const CommentScreen = () => {
     return (
@@ -12,7 +11,6 @@ const CommentScreen = () => {
             <View style={styles.footer}>
                 <CommentBar/>
             </View>
-            
         </View>
         
     )
