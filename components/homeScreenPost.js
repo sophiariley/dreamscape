@@ -24,9 +24,9 @@ export default function CommentLikeDislike({}) {
                 <View style={styles.buttons}>
                     <Pressable onPress={() => setMustDo((isMustDo) => !isMustDo)}>
                         <Text 
-                            style={[{color: mustDo ? "#3A6496" : "white"},
-                            {backgroundColor: mustDo ? "white" : "#3A6496"},
-                            {borderColor: mustDo ? "#3A6496" : "white"},
+                            style={[{color: mustDo ? "white" : "#3A6496"},
+                            {backgroundColor: mustDo ? "#3A6496" : "white"},
+                            {borderColor: mustDo ? "white" : "#3A6496"},
                             {borderRadius: 5},
                             {borderWidth: 2},
                             styles.text]}> Must do!</Text>

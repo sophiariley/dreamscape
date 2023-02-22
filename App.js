@@ -135,11 +135,11 @@ export default function App({navigation}) {
               )
             }} name="Create Post" component={CreatePost} /> */}
 
-            <Stack.Screen options={{ headerShown: false }} name="Create Post" component={CreatePost} />
+            {/* <Stack.Screen options={{ headerShown: false }} name="Create Post" component={CreatePost} /> */}
             
             <Stack.Screen
             options={{
-              title: 'Create Post 2',
+              title: 'Create Post',
               headerTitleStyle: {
                 color: '#F6F6F6',
                 fontSize: 25
@@ -149,7 +149,7 @@ export default function App({navigation}) {
               headerStyle: {
                 backgroundColor: '#F8C98A',
               },
-            }} name="Add Caption" component={CreatePost2} />
+            }} name="Create Post" component={CreatePost2} />
             
         </Stack.Navigator>
     </NavigationContainer>

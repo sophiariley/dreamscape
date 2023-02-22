@@ -54,8 +54,7 @@ export default function NavigationBar({toNavBarUsername, toNavBarUserID}) {
                 
                 {/* new post button */}
                 <TouchableOpacity style={styles.button}
-                    onPress={pickImage}>
-                    {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+                    onPress={() => navigation.navigate('Create Post')}>
                     <FontAwesome5 name='plus' size={40} color='#3A6496'/>
                 </TouchableOpacity>
 
