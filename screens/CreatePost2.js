@@ -20,8 +20,8 @@ const CreatePost2 = ({navigation}) => {
 
         console.log(result);
 
-        if (!result.canceled) {
-        setImage(result.assets[0].uri);
+        if (!result.canceled) { // cancelled
+            setImage(result.assets[0].uri);
         }
     };
 
