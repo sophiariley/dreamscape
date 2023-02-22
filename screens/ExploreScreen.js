@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView } from "react-native";
+import { StyleSheet, TextInput, View, KeyboardAvoidingView } from "react-native";
 import NavigationBar from "../components/navigationBar";
 import {Foundation} from 'react-native-vector-icons';
 import { collection, query, where, onSnapshot, getDocs, setDoc, doc } from "firebase/firestore";
@@ -42,8 +42,8 @@ const ExploreScreen = ({route}) => {
             <KeyboardAvoidingView style={styles.footer}>
                 <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>
             </KeyboardAvoidingView>
+            {/* <ProfileSearchReturn/> */}
         </View>
-        
     )
 }
 
