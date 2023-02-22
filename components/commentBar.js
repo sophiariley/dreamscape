@@ -30,13 +30,13 @@ const styles = StyleSheet.create ({
     inputText: {
         fontSize: 20,
         backgroundColor: '#DADADA',
-        width: '120%',
+        width: '80%',
         opacity: .5,
         borderRadius: 5,
         paddingTop: 5,
         paddingBottom: 5,
         paddingLeft: 10,
-        right: 30
+        right: 5
         
     },
     postText: {
@@ -50,6 +50,6 @@ const styles = StyleSheet.create ({
     postContainer: {
         backgroundColor: '#3A6496',
         borderRadius: 5,
-        left: 30
+        left: 5
     }
 })

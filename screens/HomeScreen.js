@@ -1,17 +1,14 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, View } from "react-native";
 import NavigationBar from "../components/navigationBar";
-import {FontAwesome} from 'react-native-vector-icons';
+import CommentLikeDislike from "../components/homeScreenPost";
 // import HomeBar from "../components/homeBar";
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({}) => {
     return (
         <View style={styles.container}>
             <View>
-                <TouchableOpacity style={styles.button}
-                onPress={() =>  navigation.navigate('Comment Screen')}>
-                    <FontAwesome name='comment-o' size={30} color='#3A6496'/>
-                </TouchableOpacity>
+                <CommentLikeDislike/>
             </View>
             <View style={styles.footer}>
                 <NavigationBar/>
