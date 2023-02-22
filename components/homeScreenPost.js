@@ -3,6 +3,7 @@ import { useState } from "react";
 import {StyleSheet, Text, View, TouchableOpacity, Pressable} from "react-native";
 import {FontAwesome, Ionicons} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/core'
+import Comments from "./comments";
 
 export default function CommentLikeDislike({}) {
     const navigation = useNavigation();
@@ -12,6 +13,7 @@ export default function CommentLikeDislike({}) {
     
     return (
         <View style={styles.container}>
+                {/* <Comments/> */}
                 <View style={styles.buttons}>
                     <TouchableOpacity
                     onPress={() =>  navigation.navigate('Comment Screen')}>

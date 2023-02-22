@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Image, Text} from 'react-native';
 import {FontAwesome5, Entypo, Foundation} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/core'
 import * as ImagePicker from 'expo-image-picker';
