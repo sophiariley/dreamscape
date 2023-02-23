@@ -1,5 +1,5 @@
-import React, { useEffect, useState} from "react";
-import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, Pressable, Image } from "react-native";
+import React, {useState} from "react";
+import {StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, Pressable, Image} from "react-native";
 import {Ionicons} from 'react-native-vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -12,10 +12,10 @@ const CreatePost2 = ({navigation}) => {
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
         });
 
         console.log(result);
