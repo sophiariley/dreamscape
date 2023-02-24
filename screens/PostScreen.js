@@ -4,8 +4,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import NavigationBar from "../components/navigationBar";
 import { FontAwesome } from "@expo/vector-icons";
 import Comments from "../components/comments";
+import { Ionicons } from "@expo/vector-icons";
 
-const PostScreen = () => {
+const PostScreen = ({navigation}) => {
     const [isLiked, setIsLiked] = useState(false);
     const [showComments, setShowComments] = useState(false);
 
@@ -23,6 +24,9 @@ const PostScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.buttonContainer}>
+                    <Ionicons name='chevron-back' size={35} />
+            </TouchableOpacity>
             <ScrollView>
                 {/*Profile container*/}
                 <View style={styles.accountContainer}>
