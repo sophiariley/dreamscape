@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import PostScreen from '../screens/PostScreen';
 
 const Images = [
   { url: require('../assets/posts/image1.jpg') },

@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import NavigationBar from "../components/navigationBar";
 import { collection, query, where, onSnapshot, getDocs, setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase-config";
-import CommentLikeDislike from "../components/homeScreenPost";
+import HomeScreenPost from "../components/homeScreenPost";
 // import HomeBar from "../components/homeBar";
 
 const HomeScreen = ({route}) => {
@@ -39,7 +39,7 @@ const HomeScreen = ({route}) => {
     return (
         <View style={styles.container}>
             <View>
-                <CommentLikeDislike/>
+                <HomeScreenPost/>
             </View>
             <View style={styles.footer}>
                 <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>

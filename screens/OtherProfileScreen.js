@@ -4,95 +4,15 @@ import NavigationBar from "../components/navigationBar";
 import { Feather } from 'react-native-vector-icons';
 import { SafeAreaView } from "react-native-safe-area-context";
 import PhotoGrid from "../components/photoGrid";
-import { getStorage, ref, getDownloadURL, } from "firebase/storage"
-import { db, storage } from "../firebase-config";
-import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual } from "firebase/firestore";
 
-const ProfileScreen = ({route}) => {
-
-    async function auth(username) {
-        const q = query(collection(db, "users"), where("username", "==", username));
-        let verified = false;
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data());
-            verified = true;
-            setUserID(doc.id);
-        });
-        if (verified) {
-            console.log("true")
-            return Promise.resolve(true);
-        } else {
-            console.log("false");
-            return Promise.resolve(false);
-        }
-    }
-
-    
-    const spacePath = "images/outerspace.jpg";
-    
-    async function getPicPath(userID) {
-        const docRef = doc(db, "users", userID);
-        const docSnap = await getDoc(docRef);
-        const pic = doc(docRef, "images", "DPKrc0Z8ZOBvEOwMXHTd"); //change from hard code
-        //const pic = doc(docRef, "images", "2Zz3JGFco2dG0n6CMsE1"); //wo right doc still got space for bob logged in
-        const picSnap = await getDoc(pic);
-        const mypath = picSnap.data().url;
-        //take parenthases away
-        var strpath = mypath;
-        var result = strpath.substring(8, strpath.length-1); //changes 1 to 8 to takeout images/
-        const newmypath = result;
-        console.log("getPicPath: ", newmypath);
-        setGlobalPicPath(newmypath);
-    }
-
-    //const imageURL = 'https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fouterspace.jpg?alt=media&token=8833e81d-bdb4-43a4-9939-cc35211ef45d';
-
-    //url of pic in firebase store - originally set to default profile pic
-    const [globalUrl, setGlobalUrl] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5');
-    const [userID, setUserID] = useState('bV26oHiTJBDec19IiA5b'); //was bV26oHiTJBDec19IiA5b **** IF works find GIT PULL then pass id from login to profile
-    const [globalPicPath, setGlobalPicPath] = useState('');
-    
-    //Printing User Login info
-    const username = route.params.paramKey;
-
-    async function getPicUrl(picpath) {
-        //console.log("is there quotes? ", picpath);
-        const imagesRef = ref(storage, "images");
-        const pathRef = ref(imagesRef,picpath);
-        const downloadUrl = await getDownloadURL(pathRef)
-            .catch((error) => {
-              });
-            console.log('Image URL: ', downloadUrl);
-            setGlobalUrl(downloadUrl);
-    }
-
-    async function doItAll() {
-        console.log("User ID: ", userID);
-        await getPicPath(userID); 
-        console.log("We here, ", globalPicPath);
-        await getPicUrl(globalPicPath);
-    }
-
-    if (auth(username)) {
-        doItAll();
-    }
-
-    const printData = () => {
-        console.log("Profile Screen: ", username);
-    }
-    printData();
-
-    //First Image tage was source={require("../assets/profile_photo.jpg")} ....
-    //GETS SPACE PIC AS PROFILE PIC-> uri: 'https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fouterspace.jpg?alt=media&token=8833e81d-bdb4-43a4-9939-cc35211ef45d'
-    //source={{uri: getPicUrl(spacePath)}}
+const OtherProfileScreen = ({route}) => {
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.profileName}>{username}</Text>
+            <Text style={styles.profileName}>john_travels</Text>
 
             <View style={styles.profileContainer}>
                 <View style={styles.profileImage}>
-                    <Image source={{uri: globalUrl}} style={styles.image}/>
+                    <Image source={require('../assets/profile_photo.jpg')} style={styles.image}/>
                 </View>
                 <View style={{flexDirection: 'row', marg: 'center'}}>
                     <View style={{alignItems: 'center'}}>
@@ -174,13 +94,13 @@ const ProfileScreen = ({route}) => {
                 <PhotoGrid/>
             </View>
             <SafeAreaView style={styles.footer}>
-                <NavigationBar toNavBar={username}/>
+                <NavigationBar/>
             </SafeAreaView>
         </SafeAreaView>
     )
 }
 
-export default ProfileScreen;
+export default OtherProfileScreen;
 
 const styles = StyleSheet.create({
     container: {

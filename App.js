@@ -12,13 +12,14 @@ import ExploreScreen from './screens/ExploreScreen';
 import CreateAccount1 from './screens/CreateAccount1'
 import CreateAccount2 from './screens/CreateAccount2'
 import ProfileScreen from './screens/ProfileScreen';
-import CommentScreen from './screens/CommentScreen';
-import {FontAwesome5, AntDesign} from 'react-native-vector-icons';
+import CommentScreen from './screens/comments';
+import {FontAwesome5} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/native'
 import { useState, useEffect } from "react";
 import { db } from "./firebase-config";
 import { collection, getDocs } from "firebase/firestore";
 import PostScreen from './screens/PostScreen';
+import OtherProfileScreen from './screens/OtherProfileScreen'
 
 const Stack = createNativeStackNavigator();
 
@@ -53,22 +54,10 @@ export default function App({navigation}) {
           <Stack.Screen options={{ headerShown: false }} name="Profile" component={ProfileScreen} />
 
           <Stack.Screen options={{ headerShown: false }} name="PostScreen" component={PostScreen} />
-          
-          <Stack.Screen 
-            options={{ 
-              title: 'Comments',
-              headerTitleAlign: 'center',
-              headerTintColor: '#F6F6F6', // coloring for back button
-              headerStyle: {
-                backgroundColor: '#D28A8E'
-              },
-              headerTitleStyle: {
-                color: '#F6F6F6',
-                fontSize: 25
-              }
-            }} 
-            name="Comment Screen" component={CommentScreen} />
-          
+
+           <Stack.Screen options={{ headerShown: false }} name="CommentsScreen" component={CommentScreen} />
+
+          <Stack.Screen options={{ headerShown: false }} name="OtherProfileScreen" component={OtherProfileScreen} />
           <Stack.Screen 
             options={{ 
               title: 'Dreamscape',

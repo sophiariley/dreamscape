@@ -1,25 +1,14 @@
 import React, {useState} from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, ScrollView, Modal } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, ScrollView, SafeAreaView } from "react-native";
 import NavigationBar from "../components/navigationBar";
 import { FontAwesome } from "@expo/vector-icons";
-import Comments from "../components/comments";
 import { Ionicons } from "@expo/vector-icons";
 
 const PostScreen = ({navigation}) => {
     const [isLiked, setIsLiked] = useState(false);
-    const [showComments, setShowComments] = useState(false);
 
     const handleLikePress = () => {
         setIsLiked(prevIsLiked => !prevIsLiked);
-    };
-
-    const handleCommentPress = () => {
-        setShowComments(true);
-    };
-
-    const handleCloseComments = () => {
-        setShowComments(false);
     };
 
     return (
@@ -52,7 +41,7 @@ const PostScreen = ({navigation}) => {
                         <FontAwesome name={isLiked ? 'heart' : 'heart-o'} size={35} color={isLiked ? 'red' : 'black'}style={{marginRight: 15,marginBottom:-5}}/>
                     </TouchableOpacity>
                     {/*Comment button*/}
-                    <TouchableOpacity onPress={handleCommentPress}>
+                    <TouchableOpacity onPress={() => navigation.navigate('CommentsScreen')}>
                         <FontAwesome name='comment-o' size={35} style={{}}/>
                     </TouchableOpacity>
                 </View>
@@ -62,7 +51,7 @@ const PostScreen = ({navigation}) => {
                         <Text style={styles.caption}>Caption</Text>
                 </View> 
                 {/*View comments button*/}    
-                <TouchableOpacity onPress={handleCommentPress}>
+                <TouchableOpacity onPress={() => navigation.navigate('CommentsScreen')}>
                     <Text style={{fontWeight: '200', marginLeft: 5, marginTop: 15, alignSelf: 'center'}}>View comments</Text>
                 </TouchableOpacity>
                 {/*Date posted*/}
@@ -71,11 +60,7 @@ const PostScreen = ({navigation}) => {
             <SafeAreaView style={styles.footer}>
                 <NavigationBar/>
             </SafeAreaView>
-        <Modal visible={showComments} animationType='slide'>
-            <Comments onClose={handleCloseComments} />
-        </Modal>
         </SafeAreaView>
-        
     )
 }
 
