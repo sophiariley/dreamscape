@@ -34,7 +34,7 @@ const ProfileScreen = ({route}) => {
         const newmypath = result;
         console.log("getPicPath: ", newmypath);
         setGlobalPicPath(newmypath);
-        //setGlobalPostUrls(['https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5']);
+        
     }
 
     //url of pic in firebase store - originally set to default profile pic
@@ -42,9 +42,7 @@ const ProfileScreen = ({route}) => {
     const [globalUrl, setGlobalUrl] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5');
     const [globalPicPath, setGlobalPicPath] = useState('default.jpg');
     const [count, setCount] = useState(0);
-    
-    const [globalPostUrls, setGlobalPostUrls] = useState(['https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5']);
-    const PostURLS = [];
+
     //username and userID of logged in account
     const username = route.params.username;
     const userID = route.params.userID;
@@ -72,18 +70,13 @@ const ProfileScreen = ({route}) => {
         }
 
         doItAllPosts();
-        //const postURLs = doItAllPosts();
-        //setGlobalPostUrls(postURLs);
     }
 
     doItAll();
 
-    // / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
-    
-    //const [picIDArray, updatePicIDArray] = useState([]);
-    
-    //const [globalPostUrls, setGlobalPostUrls] = useState([]);
-   
+    // Generating Post Pictures / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
+    const [globalPostUrls, setGlobalPostUrls] = useState(['https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5']);
+    //const PostURLS = [];
     
     async function getPicIDPosts(docRef) {
         const picIDArray = [];
@@ -93,83 +86,29 @@ const ProfileScreen = ({route}) => {
         images.forEach(async (doc) => {
             console.log(doc.id, " => ", doc.data());
             picIDArray.push(doc.id);
-            //setCount(10);
         });
         return picIDArray;
     }
 
-    // async function getPicPathPosts(picIDArray) {
-    //     const picPathArray = [];
-    //     const docRef = doc(db, "users", userID);
-    //     const docSnap = await getDoc(docRef);
-    //     picIDArray.forEach(async (picID) => {
-    //         console.log(picID);
-    //         const pic = doc(docRef, "userPosts", picID);
-    //         const picSnap = await getDoc(pic);
-    //         const mypath = picSnap.data().image;
-    //         picPathArray.push("WHATS UP", picID);
-    //         //setCount(10);
-    //     });
-    //     return picPathArray;
-    // }
 
     async function getPicPathPosts(picIDArray) {
         const picPathArray = [];
-        // var coun = 0;
         const docRef = doc(db, "users", userID);
-        // picIDArray.map(async (picID) => {
-        //     console.log("GetPicPath PICID ", picID);
-        //     const pic = doc(docRef, "userPosts", picID);
-        //     const picSnap = await getDoc(pic);
-        //     const mypath = picSnap.data().image;
-        //     //take parenthases away
-        //     var strpath = mypath;
-        //     var result = strpath.substring(8, strpath.length-1); //changes 1 to 8 to takeout images/
-        //     const newmypath = result;
-        //     //picPathArray.push(newmypath);
-        //     return newmypath;
-        // });
         for (let i = 0; i < picIDArray.length; i++) {
-            console.log("GetPicPath PICID ", picIDArray[i]);
             const pic = doc(docRef, "userPosts", picIDArray[i]);
             const picSnap = await getDoc(pic);
             const mypath = picSnap.data().image;
-            //take parenthases away
             var strpath = mypath;
-            var result = strpath.substring(8, strpath.length-1); //changes 1 to 8 to takeout images/
+            var result = strpath.substring(8, strpath.length-1);
             const newmypath = result;
             picPathArray.push(newmypath);
         }
-        // picPathArray.map((picPath) => {
-        //     console.log(picPath, " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ", picPathArray.length);
-        // });
         return picPathArray;
-    }
-
-    async function manipulateString(picID, docRef) {
-        const pic = doc(docRef, "userPosts", picID);
-        const picSnap = await getDoc(pic);
-        const mypath = picSnap.data().image;
-        //take parenthases away
-        var strpath = mypath;
-        var result = strpath.substring(8, strpath.length-1); //changes 1 to 8 to takeout images/
-        const newmypath = result;
-        console.log("NEW PATH",newmypath);
-        return "", newmypath;
     }
 
     async function getPicUrlPosts(GlobalPicPathsPosts) {
         const imagesRef = ref(storage, "images");
         const globURLs = [];
-        // GlobalPicPathsPosts.map(async (picpath) => {
-        //     const pathRef = ref(imagesRef,picpath);
-        //     const downloadUrl = await getDownloadURL(pathRef)
-        //         .catch((error) => {
-        //           });
-        //     console.log('Image URL: ', downloadUrl);
-        //     //globURLs.push(downloadUrl);;
-        //     picpath = downloadUrl
-        // });
 
         for (let i = 0; i <GlobalPicPathsPosts.length; i++) {
             const pathRef = ref(imagesRef,GlobalPicPathsPosts[i]);
@@ -180,35 +119,19 @@ const ProfileScreen = ({route}) => {
             globURLs.push(downloadUrl);
         }
         return globURLs;
-        //setGlobalPostUrls(GlobalPicPathsPosts);
     }
 
-    // async function getPicSnap(pic) {
-    //     const picSnap = await getDoc(pic);
-    //     const mypath = picSnap.data().image;
-    //     const strpath = mypath;
-    //     return mypath;
-    // }
     async function doItAllPosts() {
         const docRef = doc(db, "users", userID);
         const picIDArray = await getPicIDPosts(docRef);
-        //console.log("User ID!! ", userID);
         console.log("ARRAY length",picIDArray.length);
         if(picIDArray.length>0){
             const GlobalPicPathsPosts = await getPicPathPosts(picIDArray);
             console.log("We here! - ", GlobalPicPathsPosts.length);
-            // GlobalPicPathsPosts.map((picPath) => {
-            //     console.log(picPath, " HELLO ", GlobalPicPathsPosts.length);
-            // });
             const picURLs = await getPicUrlPosts(GlobalPicPathsPosts);
-            //return picURLs;
             //setGlobalPostUrls(picURLs);
-            this.postURLS = picURLs;
         } // else say "no posts yet" or "create a post with the plus button"
-        // setCount(0);
-        //return [];
     }
-    //doItAllPosts();
 
 
     const printData = () => {
@@ -235,7 +158,7 @@ const ProfileScreen = ({route}) => {
                     </View>
                     <View style={{alignItems: 'center'}}>
                         <Text style={styles.number}>
-                            9
+                            {globalPostUrls.length}
                         </Text>
                         <Text style={styles.numberDescription}>
                             Posts
@@ -301,36 +224,7 @@ const ProfileScreen = ({route}) => {
             </View>
             {/* Photo Grid View */}
             <View style={{flex: 1, marginBottom: 60}}>
-                <PhotoGrid PostUrls={postURLS}/>
-                {/* {
-                    <View>
-                    <FlatList 
-                        data={globalPostUrls}
-                        renderItem = {item => {
-                            return (
-                                <View style={{flex: 1, marginBottom: 2}}>
-                                    <TouchableOpacity>
-                                    <Image 
-                                        source={{uri: item.item}}
-                                        style={{
-                                            height: screenWidth/3,
-                                            width: screenWidth/3 - 2
-                                        }}
-                                    />
-                                    </TouchableOpacity>
-                                </View>
-                            )}
-                        }
-                        onLayout= { e => {
-                            const {width,height} = e.nativeEvent.layout
-                            console.log(height);
-                        }}
-                        numColumns={3}
-                        key={'_'}
-                    />
-                </View>
-                //)
-                } */}
+                <PhotoGrid PostUrls={globalPostUrls}/>
             </View>
             <SafeAreaView style={styles.footer}>
                 <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>
