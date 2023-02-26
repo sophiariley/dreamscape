@@ -70,6 +70,8 @@ const ProfileScreen = ({route}) => {
         }
 
         doItAllPosts();
+        getFollowingCount(docRef);
+        getFollowerCount(docRef);
     }
 
     doItAll();
@@ -134,6 +136,29 @@ const ProfileScreen = ({route}) => {
     }
 
 
+    // Get Follower/Following Information to display / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
+    const [followingCount, setFollowingCount] = useState(0);
+    const [followerCount, setFollowerCount] = useState(0);
+
+    async function getFollowingCount(docRef) {
+        var count = 0;
+        const images = await getDocs(collection(docRef, "following"));
+        images.forEach((doc) => {
+            //console.log(doc.id, " => ", doc.data());
+            count++;
+        });
+        setFollowingCount(count);
+    }
+
+    async function getFollowerCount(docRef) {
+        var count = 0;
+        const images = await getDocs(collection(docRef, "followers"));
+        images.forEach((doc) => {
+            count++;
+        });
+        setFollowerCount(count);
+    }
+
     const printData = () => {
         console.log("Profile Screen username: ", username, "profile screen userID: ", userID, "profile screen picID: ", picID);
     }
@@ -166,7 +191,7 @@ const ProfileScreen = ({route}) => {
                     </View>
                     <View style={{alignItems: 'center'}}>
                         <Text style={styles.number}>
-                            997
+                            {followerCount}
                         </Text>
                         <Text style={styles.numberDescription}>
                             Followers
@@ -174,7 +199,7 @@ const ProfileScreen = ({route}) => {
                     </View>
                     <View style={{alignItems: 'center'}}>
                         <Text style={styles.number}>
-                            561
+                            {followingCount}
                         </Text>
                         <Text style={styles.numberDescription}>
                             Following
