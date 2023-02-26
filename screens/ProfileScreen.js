@@ -136,9 +136,10 @@ const ProfileScreen = ({route}) => {
     }
 
 
-    // Get Follower/Following Information to display / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
+    // Get Follower/Following/Name Information to display / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
     const [followingCount, setFollowingCount] = useState(0);
     const [followerCount, setFollowerCount] = useState(0);
+    const [firstName, setFirstName] = useState(username);
 
     async function getFollowingCount(docRef) {
         var count = 0;
@@ -159,6 +160,12 @@ const ProfileScreen = ({route}) => {
         setFollowerCount(count);
     }
 
+    async function getFirstName(docRef) {
+        const name = await getDocs(collection(docRef));
+        setFirstName(name);
+    }
+
+    // Printing to console / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
     const printData = () => {
         console.log("Profile Screen username: ", username, "profile screen userID: ", userID, "profile screen picID: ", picID);
     }
@@ -210,7 +217,7 @@ const ProfileScreen = ({route}) => {
 
             <View style={styles.profileInfo}>
                 <View style={{flexDirection: 'row'}}>
-                    <Text style={styles.textName}>Harry,</Text>
+                    <Text style={styles.textName}>{firstName},</Text>
                     <Text style={{color: '#3A6496', fontSize: 18, textAlignVertical: 'bottom'}}>31</Text>
                 </View>
                 <Text style={{fontSize: 13, color: '#3A6496', opacity: .7}}>Maryland</Text>  
