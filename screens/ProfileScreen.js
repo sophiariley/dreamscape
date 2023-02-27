@@ -72,6 +72,7 @@ const ProfileScreen = ({route}) => {
         doItAllPosts();
         getFollowingCount(docRef);
         getFollowerCount(docRef);
+        getFirstName(docRef);
     }
 
     doItAll();
@@ -161,8 +162,8 @@ const ProfileScreen = ({route}) => {
     }
 
     async function getFirstName(docRef) {
-        const name = await getDocs(collection(docRef));
-        setFirstName(name);
+        const docSnap = await getDoc(docRef);
+        setFirstName(docSnap.data().firstName);
     }
 
     // Printing to console / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
