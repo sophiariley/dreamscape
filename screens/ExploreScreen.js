@@ -6,7 +6,7 @@ import { collection, query, where, onSnapshot, getDocs, setDoc, doc } from "fire
 import { db } from "../firebase-config";
 
 const ExploreScreen = ({route}) => {
-    const [search, setSearch] = useState(' ');
+    const [search, setSearch] = useState('');
 
     async function findUsernameMatch(username) {
         const q = query(collection(db, "users"), where("username", "==", username));
