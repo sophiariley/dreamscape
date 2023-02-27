@@ -15,7 +15,7 @@ const ProfileScreen = ({route}) => {
         images.forEach((doc) => {
             console.log(doc.id, " => ", doc.data());
             setPicID(doc.id);
-            setCount(12)
+            setCount(10);
         });
     }
 
@@ -34,7 +34,7 @@ const ProfileScreen = ({route}) => {
         const newmypath = result;
         console.log("getPicPath: ", newmypath);
         setGlobalPicPath(newmypath);
-        //setGlobalPostUrls(['https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5']);
+        
     }
 
     //url of pic in firebase store - originally set to default profile pic
@@ -42,9 +42,7 @@ const ProfileScreen = ({route}) => {
     const [globalUrl, setGlobalUrl] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5');
     const [globalPicPath, setGlobalPicPath] = useState('default.jpg');
     const [count, setCount] = useState(0);
-    
-    const [globalPostUrls, setGlobalPostUrls] = useState(['https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5']);
-    const PostURLS = ['https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5'];
+
     //username and userID of logged in account
     const username = route.params.username;
     const userID = route.params.userID;
@@ -70,15 +68,18 @@ const ProfileScreen = ({route}) => {
             console.log("We here, ", globalPicPath);
             await getPicUrl(globalPicPath);
         }
+
         doItAllPosts();
-        //const postURLs = doItAllPosts();
-        //setGlobalPostUrls(postURLs);
+        getFollowingCount(docRef);
+        getFollowerCount(docRef);
+        getFirstName(docRef);
     }
 
     doItAll();
 
-    // / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
-    
+    // Generating Post Pictures / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
+    const [globalPostUrls, setGlobalPostUrls] = useState(['https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5']);
+    //const PostURLS = [];
     
     async function getPicIDPosts(docRef) {
         const picIDArray = [];
@@ -88,38 +89,24 @@ const ProfileScreen = ({route}) => {
         images.forEach(async (doc) => {
             console.log(doc.id, " => ", doc.data());
             picIDArray.push(doc.id);
-            //setCount(10);
         });
         return picIDArray;
     }
+
 
     async function getPicPathPosts(picIDArray) {
         const picPathArray = [];
         const docRef = doc(db, "users", userID);
         for (let i = 0; i < picIDArray.length; i++) {
-            console.log("GetPicPath PICID ", picIDArray[i]);
             const pic = doc(docRef, "userPosts", picIDArray[i]);
             const picSnap = await getDoc(pic);
             const mypath = picSnap.data().image;
-            //take parenthases away
             var strpath = mypath;
-            var result = strpath.substring(8, strpath.length-1); //changes 1 to 8 to takeout images/
+            var result = strpath.substring(8, strpath.length-1);
             const newmypath = result;
             picPathArray.push(newmypath);
         }
         return picPathArray;
-    }
-
-    async function manipulateString(picID, docRef) {
-        const pic = doc(docRef, "userPosts", picID);
-        const picSnap = await getDoc(pic);
-        const mypath = picSnap.data().image;
-        //take parenthases away
-        var strpath = mypath;
-        var result = strpath.substring(8, strpath.length-1); //changes 1 to 8 to takeout images/
-        const newmypath = result;
-        console.log("NEW PATH",newmypath);
-        return "", newmypath;
     }
 
     async function getPicUrlPosts(GlobalPicPathsPosts) {
@@ -135,36 +122,60 @@ const ProfileScreen = ({route}) => {
             globURLs.push(downloadUrl);
         }
         return globURLs;
-        //setGlobalPostUrls(GlobalPicPathsPosts);
     }
-
-    const userPosts = [];
 
     async function doItAllPosts() {
         const docRef = doc(db, "users", userID);
         const picIDArray = await getPicIDPosts(docRef);
-        //console.log("User ID!! ", userID);
         console.log("ARRAY length",picIDArray.length);
         if(picIDArray.length>0){
+            
             const GlobalPicPathsPosts = await getPicPathPosts(picIDArray);
             console.log("We here! - ", GlobalPicPathsPosts.length);
             const picURLs = await getPicUrlPosts(GlobalPicPathsPosts);
-            setGlobalPostUrls(picURLs);
-            this.PostURLS = picURLs;
-            this.userPosts = picURLs
-            return picURLs;
+            if (!(picURLs.every(item => globalPostUrls.indexOf(item)>-1))) {
+                setGlobalPostUrls(picURLs);
+            }
+            
         } // else say "no posts yet" or "create a post with the plus button"
-        // setCount(0);
-        return [];
     }
-    //doItAllPosts();
 
 
+    // Get Follower/Following/Name Information to display / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
+    const [followingCount, setFollowingCount] = useState(0);
+    const [followerCount, setFollowerCount] = useState(0);
+    const [firstName, setFirstName] = useState(username);
+
+    async function getFollowingCount(docRef) {
+        var count = 0;
+        const images = await getDocs(collection(docRef, "following"));
+        images.forEach((doc) => {
+            //console.log(doc.id, " => ", doc.data());
+            count++;
+        });
+        setFollowingCount(count);
+    }
+
+    async function getFollowerCount(docRef) {
+        var count = 0;
+        const images = await getDocs(collection(docRef, "followers"));
+        images.forEach((doc) => {
+            count++;
+        });
+        setFollowerCount(count);
+    }
+
+    async function getFirstName(docRef) {
+        const docSnap = await getDoc(docRef);
+        setFirstName(docSnap.data().firstName);
+    }
+
+    // Printing to console / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
     const printData = () => {
         console.log("Profile Screen username: ", username, "profile screen userID: ", userID, "profile screen picID: ", picID);
     }
     printData();
-    
+
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.profileName}>{username}</Text>
@@ -184,7 +195,7 @@ const ProfileScreen = ({route}) => {
                     </View>
                     <View style={{alignItems: 'center'}}>
                         <Text style={styles.number}>
-                            9
+                            {globalPostUrls.length}
                         </Text>
                         <Text style={styles.numberDescription}>
                             Posts
@@ -192,7 +203,7 @@ const ProfileScreen = ({route}) => {
                     </View>
                     <View style={{alignItems: 'center'}}>
                         <Text style={styles.number}>
-                            997
+                            {followerCount}
                         </Text>
                         <Text style={styles.numberDescription}>
                             Followers
@@ -200,7 +211,7 @@ const ProfileScreen = ({route}) => {
                     </View>
                     <View style={{alignItems: 'center'}}>
                         <Text style={styles.number}>
-                            561
+                            {followingCount}
                         </Text>
                         <Text style={styles.numberDescription}>
                             Following
@@ -211,7 +222,7 @@ const ProfileScreen = ({route}) => {
 
             <View style={styles.profileInfo}>
                 <View style={{flexDirection: 'row'}}>
-                    <Text style={styles.textName}>Harry,</Text>
+                    <Text style={styles.textName}>{firstName},</Text>
                     <Text style={{color: '#3A6496', fontSize: 18, textAlignVertical: 'bottom'}}>31</Text>
                 </View>
                 <Text style={{fontSize: 13, color: '#3A6496', opacity: .7}}>Maryland</Text>  
@@ -251,35 +262,6 @@ const ProfileScreen = ({route}) => {
             {/* Photo Grid View */}
             <View style={{flex: 1, marginBottom: 60}}>
                 <PhotoGrid PostUrls={globalPostUrls}/>
-                {/* {
-                    <View>
-                    <FlatList 
-                        data={globalPostUrls}
-                        renderItem = {item => {
-                            return (
-                                <View style={{flex: 1, marginBottom: 2}}>
-                                    <TouchableOpacity>
-                                    <Image 
-                                        source={{uri: item.item}}
-                                        style={{
-                                            height: screenWidth/3,
-                                            width: screenWidth/3 - 2
-                                        }}
-                                    />
-                                    </TouchableOpacity>
-                                </View>
-                            )}
-                        }
-                        onLayout= { e => {
-                            const {width,height} = e.nativeEvent.layout
-                            console.log(height);
-                        }}
-                        numColumns={3}
-                        key={'_'}
-                    />
-                </View>
-                //)
-                } */}
             </View>
             <SafeAreaView style={styles.footer}>
                 <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>
