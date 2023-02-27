@@ -129,10 +129,14 @@ const ProfileScreen = ({route}) => {
         const picIDArray = await getPicIDPosts(docRef);
         console.log("ARRAY length",picIDArray.length);
         if(picIDArray.length>0){
+            
             const GlobalPicPathsPosts = await getPicPathPosts(picIDArray);
             console.log("We here! - ", GlobalPicPathsPosts.length);
             const picURLs = await getPicUrlPosts(GlobalPicPathsPosts);
-            //setGlobalPostUrls(picURLs);
+            if (!(picURLs.every(item => globalPostUrls.indexOf(item)>-1))) {
+                setGlobalPostUrls(picURLs);
+            }
+            
         } // else say "no posts yet" or "create a post with the plus button"
     }
 
