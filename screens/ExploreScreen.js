@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { StyleSheet, TextInput, View, KeyboardAvoidingView } from "react-native";
+import { StyleSheet, TextInput, View, KeyboardAvoidingView, If } from "react-native";
 import NavigationBar from "../components/navigationBar";
 import ProfileSearchReturn from "../components/profileSearchReturn";
 import {Foundation} from 'react-native-vector-icons';
@@ -9,15 +9,17 @@ import { db } from "../firebase-config";
 const ExploreScreen = ({route}) => {
     const [search, setSearch] = useState('');
     const [match, setMatch] = useState('');
-    //const [matchFound, setMatchFound] = useState(true);
+    const [matchFound, setMatchFound] = useState(false);
 
     async function findUsernameMatch(username) {
         setMatch('');
+        setMatchFound(false);
         const q = query(collection(db, "users"), where("username", "==", username));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             console.log(doc.data().username); //TODO - Alter this to help with UI display
             setMatch(username);
+            setMatchFound(true);
         });
     }
 
@@ -29,6 +31,9 @@ const ExploreScreen = ({route}) => {
     //User Info
     const username = route.params.username;
     const userID = route.params.userID;
+
+
+    const searchReturn = matchFound && match!=''? <ProfileSearchReturn toSearchReturnUsername={match}/> : null;
     
     return (
         <View style={styles.container}>
@@ -47,7 +52,7 @@ const ExploreScreen = ({route}) => {
             <KeyboardAvoidingView style={styles.footer}>
                 <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>
             </KeyboardAvoidingView>
-            <ProfileSearchReturn toSearchReturnUsername={match}/>
+            {searchReturn}
         </View>
     )
 }
