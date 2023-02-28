@@ -3,13 +3,14 @@ import {View, StyleSheet, TouchableOpacity, Text, Image} from 'react-native';
 import {Feather} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/core'
 
-const ProfileSearchReturn = ({}) => {
+const ProfileSearchReturn = ({toSearchReturnUsername}) => {
+    const username = toSearchReturnUsername;
     return (
         <View style={styles.container}>
             <View style={styles.pfp}>
                 <Image source={require("../assets/profile_photo.jpg")} style={styles.image}/>
             </View>
-            <Text style={styles.usernameText}>Insert username here</Text>
+            <Text style={styles.usernameText}>{username}</Text>
             <Feather name='arrow-right' style={styles.arrow} size={20}/>
         </View>
     )
