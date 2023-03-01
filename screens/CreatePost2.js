@@ -4,7 +4,11 @@ import {Ionicons} from 'react-native-vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
 
-const CreatePost2 = ({navigation}) => {
+const CreatePost2 = ({navigation, route}) => {
+
+    const username = route.params.username;
+    const userID = route.params.userID;
+
     const [caption, setCaption] = useState(' ');
     const [location, setLocation] = useState(' ');
 
@@ -61,7 +65,10 @@ const CreatePost2 = ({navigation}) => {
             <View style={styles.postButtonContainer}>
                 <TouchableOpacity 
                     style={styles.postButton}
-                    onPress={() => navigation.navigate('Home')}>
+                    onPress={() => navigation.navigate('Home', {
+                        username: username,
+                        userID: userID,
+                    })}>
                     <Text style={styles.postText}>Post</Text>
                 </TouchableOpacity>
             
