@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { StyleSheet, TextInput, View, KeyboardAvoidingView, If } from "react-native";
+import { StyleSheet, TextInput, View, KeyboardAvoidingView, Text } from "react-native";
 import NavigationBar from "../components/navigationBar";
 import ProfileSearchReturn from "../components/profileSearchReturn";
 import {Foundation} from 'react-native-vector-icons';
@@ -33,7 +33,7 @@ const ExploreScreen = ({route}) => {
     const userID = route.params.userID;
 
 
-    const searchReturn = matchFound && match!=''? <ProfileSearchReturn toSearchReturnUsername={match}/> : null;
+    const searchReturn = matchFound && match!=''? <ProfileSearchReturn toSearchReturnUsername={match} toSearchReturnUserID={userID}/> : null;
     
     return (
         <View style={styles.container}>

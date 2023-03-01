@@ -6,6 +6,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import PhotoGrid from "../components/photoGrid";
 
 const OtherProfileScreen = ({route}) => {
+
+    const username = route.params.username;
+    const userID = route.params.userID;
+
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.profileName}>john_travels</Text>
@@ -94,7 +98,7 @@ const OtherProfileScreen = ({route}) => {
                 <PhotoGrid/>
             </View>
             <SafeAreaView style={styles.footer}>
-                <NavigationBar/>
+                <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>
             </SafeAreaView>
         </SafeAreaView>
     )
