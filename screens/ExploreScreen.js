@@ -10,6 +10,7 @@ const ExploreScreen = ({route}) => {
     const [search, setSearch] = useState('');
     const [match, setMatch] = useState('');
     const [matchFound, setMatchFound] = useState(false);
+    const [matchID, setMatchID] = useState('');
 
     async function findUsernameMatch(username) {
         setMatch('');
@@ -20,6 +21,7 @@ const ExploreScreen = ({route}) => {
             console.log(doc.data().username); //TODO - Alter this to help with UI display
             setMatch(username);
             setMatchFound(true);
+            setMatchID(doc.id);
         });
     }
 
@@ -33,7 +35,7 @@ const ExploreScreen = ({route}) => {
     const userID = route.params.userID;
 
 
-    const searchReturn = matchFound && match!=''? <ProfileSearchReturn toSearchReturnUsername={match} toSearchReturnUserID={userID}/> : null;
+    const searchReturn = matchFound && match!='' && matchID!=''? <ProfileSearchReturn toSearchReturnUsername={match} toSearchReturnUserID={matchID} toNavBarUsername={username} toNavBarUserID={userID}/> : null;
     
     return (
         <View style={styles.container}>
