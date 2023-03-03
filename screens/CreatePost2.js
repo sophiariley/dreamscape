@@ -2,6 +2,9 @@ import React, {useState} from "react";
 import {StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, Pressable, Image} from "react-native";
 import {Ionicons} from 'react-native-vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import { ref, uploadBytes, uploadBytesResumable } from "firebase/storage"
+import { db, storage } from "../firebase-config";
+import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual, getCountFromServer } from "firebase/firestore";
 
 
 const CreatePost2 = ({navigation, route}) => {
@@ -13,6 +16,10 @@ const CreatePost2 = ({navigation, route}) => {
     const [location, setLocation] = useState(' ');
 
     const [image, setImage] = useState(null);
+
+    const metadata = {
+        contentType: 'image/jpeg'
+    };
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -26,8 +33,21 @@ const CreatePost2 = ({navigation, route}) => {
 
         if (!result.canceled) { // cancelled
             setImage(result.assets[0].uri);
+            //call method to add pic to storage and firestore here
+            const uri = result.assets[0].uri;
+            console.log("upload uri: ", uri);
+            const picname = uri.substring(uri.lastIndexOf('/') + 1);
+            const file = uri.substring(7);
+            console.log('File: ', file);
+            //const blob = await result.blob();
+            uploadPic(file, picname);
         }
     };
+
+    function uploadPic(image, name) {
+        const storageRef = ref(storage, 'images/' + name);
+        uploadBytes(storageRef, image, metadata);
+    }
 
     return (
         <View style={styles.container}>
