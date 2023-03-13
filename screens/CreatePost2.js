@@ -12,8 +12,8 @@ const CreatePost2 = ({navigation, route}) => {
     const username = route.params.username;
     const userID = route.params.userID;
 
-    const [caption, setCaption] = useState(' ');
-    const [location, setLocation] = useState(' ');
+    const [caption, setCaption] = useState('');
+    const [location, setLocation] = useState('');
 
     const [image, setImage] = useState(null);
 
