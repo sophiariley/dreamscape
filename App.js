@@ -12,14 +12,14 @@ import ExploreScreen from './screens/ExploreScreen';
 import CreateAccount1 from './screens/CreateAccount1'
 import CreateAccount2 from './screens/CreateAccount2'
 import ProfileScreen from './screens/ProfileScreen';
-import CommentScreen from './screens/comments';
-import {FontAwesome5} from 'react-native-vector-icons';
+import CommentScreen from './screens/CommentScreen';
+import MessageScreen from './screens/MessageScreen';
+import SettingsScreen from './screens/SettingsScreen';
+import {FontAwesome5, AntDesign} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/native'
 import { useState, useEffect } from "react";
 import { db } from "./firebase-config";
 import { collection, getDocs } from "firebase/firestore";
-import PostScreen from './screens/PostScreen';
-import OtherProfileScreen from './screens/OtherProfileScreen'
 
 const Stack = createNativeStackNavigator();
 
@@ -53,13 +53,23 @@ export default function App({navigation}) {
           
           <Stack.Screen options={{ headerShown: false }} name="Profile" component={ProfileScreen} />
 
-          <Stack.Screen options={{ headerShown: false }} name="PostScreen" component={PostScreen} />
-
-           <Stack.Screen options={{ headerShown: false }} name="CommentsScreen" component={CommentScreen} />
-
-          <Stack.Screen options={{ headerShown: false }} name="OtherProfileScreen" component={OtherProfileScreen} />
           <Stack.Screen 
             options={{ 
+              title: 'Comments',
+              headerTitleAlign: 'center',
+              headerTintColor: '#F6F6F6', // coloring for back button
+              headerStyle: {
+                backgroundColor: '#D28A8E'
+              },
+              headerTitleStyle: {
+                color: '#F6F6F6',
+                fontSize: 25
+              }
+            }} 
+            name="Comment Screen" component={CommentScreen} />
+          
+          <Stack.Screen 
+            options={({ navigation }) => ({
               title: 'Dreamscape',
               headerTitleAlign: 'center',
               headerBackVisible: false,
@@ -72,12 +82,13 @@ export default function App({navigation}) {
               },
               headerRight: () => (
                 <View>
-                  <TouchableOpacity>
+                  <TouchableOpacity 
+                    onPress={() =>  navigation.navigate('Messages')}>
                     <FontAwesome5 name='envelope' size={35} color='#F6F6F6'/>
                   </TouchableOpacity>
                 </View>
               )
-            }} name="Home" component={HomeScreen} />
+            })} name="Home" component={HomeScreen} />
             
             <Stack.Screen 
             options={{
@@ -90,45 +101,9 @@ export default function App({navigation}) {
               headerTintColor: '#F6F6F6', // coloring for back button
               headerStyle: {
                 backgroundColor: '#D28A8E',
-              },
-              headerRight: () => (
-                <View>
-                  <TouchableOpacity>
-                    <FontAwesome5 name='envelope' size={35} color='#F6F6F6'/>
-                  </TouchableOpacity>
-                </View>
-              )
+              }
             }} name="Explore" component={ExploreScreen} />
-            
-            {/* <Stack.Screen 
-            options={{
-              title: 'Create Post',
-              headerTitleStyle: {
-                color: '#F6F6F6',
-                fontSize: 25
-              },
-              headerTitleAlign: 'center',
-              headerTintColor: '#F6F6F6', // coloring for back button
-              headerStyle: {
-                backgroundColor: '#F8C98A',
-              },
-              headerRight: () => (
-                <View>
-                  <TouchableOpacity
-                    style={styles.nextButton}
-                    onPress={() =>  navigation.navigate('Create Post 2')}> 
-                        <Text style={styles.next}>Next</Text>
-                        <AntDesign name='arrowright' size={15} style={styles.rightArrow}/>
-                  </TouchableOpacity>
-                  <View>
-                    <CreatePost2 navigation={navigation}/>
-                  </View>
-                </View>
-              )
-            }} name="Create Post" component={CreatePost} /> */}
-
-            {/* <Stack.Screen options={{ headerShown: false }} name="Create Post" component={CreatePost} /> */}
-            
+          
             <Stack.Screen
             options={{
               title: 'Create Post',
@@ -142,8 +117,36 @@ export default function App({navigation}) {
                 backgroundColor: '#F8C98A',
               },
             }} name="Create Post" component={CreatePost2} />
+
+            <Stack.Screen 
+            options={{ 
+              title: 'Messages',
+              headerTitleStyle: {
+                color: '#F6F6F6',
+                fontSize: 25
+              },
+              headerTitleAlign: 'center',
+              headerTintColor: '#F6F6F6', // coloring for back button
+              headerStyle: {
+                backgroundColor: '#D28A8E',
+              }
+            }} name="Messages" component={MessageScreen} />
+
+            <Stack.Screen options={{ 
+              title: 'Settings',
+              headerTitleStyle: {
+                color: '#F6F6F6',
+                fontSize: 25
+              },
+              headerTitleAlign: 'center',
+              headerTintColor: '#F6F6F6', // coloring for back button
+              headerStyle: {
+                backgroundColor: '#D28A8E',
+              }
+            }} name="Settings" component={SettingsScreen} />
             
         </Stack.Navigator>
+
     </NavigationContainer>
   );
 }
@@ -173,5 +176,4 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     color: '#F6F6F6'
   }
-}) 
-
+})
