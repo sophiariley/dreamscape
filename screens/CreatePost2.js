@@ -16,6 +16,7 @@ const CreatePost2 = ({navigation, route}) => {
     const [location, setLocation] = useState('');
 
     const [image, setImage] = useState(null);
+    const [name, setName] = useState('');
 
     const metadata = {
         contentType: 'image/jpeg'
@@ -27,27 +28,42 @@ const CreatePost2 = ({navigation, route}) => {
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
-        });
+        })
 
         console.log(result);
 
         if (!result.canceled) { // cancelled
             setImage(result.assets[0].uri);
-            //call method to add pic to storage and firestore here
             const uri = result.assets[0].uri;
             console.log("upload uri: ", uri);
             const picname = uri.substring(uri.lastIndexOf('/') + 1);
-            const file = uri.substring(7);
-            console.log('File: ', file);
-            //const blob = await result.blob();
-            uploadPic(file, picname);
+            setName(picname);
         }
     };
 
-    function uploadPic(image, name) {
+    async function uploadImageAsync(uri) {
+        const blob = await new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.onload = function() {
+            resolve(xhr.response);
+          };
+          xhr.onerror = function(e) {
+            console.log(e);
+            reject(new TypeError('Network request failed'));
+          };
+          xhr.responseType = 'blob';
+          xhr.open('GET', uri, true);
+          xhr.send(null);
+        });
+      
         const storageRef = ref(storage, 'images/' + name);
-        uploadBytes(storageRef, image, metadata);
-    }
+        const snapshot = uploadBytes(storageRef, blob, metadata);
+      
+        // We're done with the blob, close and release it
+        blob.close();
+      
+        //return await snapshot.ref.getDownloadURL();
+      }
 
     return (
         <View style={styles.container}>
@@ -85,10 +101,10 @@ const CreatePost2 = ({navigation, route}) => {
             <View style={styles.postButtonContainer}>
                 <TouchableOpacity 
                     style={styles.postButton}
-                    onPress={() => navigation.navigate('Home', {
+                    onPress={() => {uploadImageAsync(image); navigation.navigate('Home', {
                         username: username,
                         userID: userID,
-                    })}>
+                    })}}>
                     <Text style={styles.postText}>Post</Text>
                 </TouchableOpacity>
             
