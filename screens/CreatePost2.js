@@ -68,14 +68,14 @@ const CreatePost2 = ({navigation, route}) => {
         .catch((error) => {
 
         });
-        addToFirestore(name);
+        addToFirestore(name, caption);
         setImageURL(snapShotURL);
         console.log("UpDown URL: ", snapShotURL);
       }
 
-    async function addToFirestore(image) {
+    async function addToFirestore(image, caption) {
         const userRef = doc(db, "users", userID);
-        const docRef = await addDoc(collection(userRef, "userPosts"), {image});
+        const docRef = await addDoc(collection(userRef, "userPosts"), {image, caption});
     }
 
     return (
