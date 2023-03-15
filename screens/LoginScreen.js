@@ -1,9 +1,12 @@
 import React, { useState, useEffect} from "react";
-import { ImageBackground, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ImageBackground, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView } from "react-native";
 import {useNavigation} from '@react-navigation/core'
 //import firestore from '@react-native-firebase/firestore';
 import { collection, query, where, onSnapshot, getDocs, setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase-config";
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { faAlignCenter } from "@fortawesome/free-solid-svg-icons";
+
 
 
 const image = { uri: "https://media4.giphy.com/media/3og0ISzBpn0nNJE3Ac/giphy.gif?cid=ecf05e47kxc23rf9ldw36iuch1geujlfdvraxnb7gm18sznm&rid=giphy.gif&ct=g" };
@@ -39,40 +42,38 @@ const LoginScreen = ({navigation}) => {
     }
     
     return (
-        <KeyboardAvoidingView
-        style={styles.container}
-        behavior="padding"> 
+        <View style={styles.container}>
             <ImageBackground 
             source={image}
             style={styles.backgroundImage}>
                 <View style={styles.dreamscapeContainer}>
                     <Text style={styles.dreamscape}>Dreamscape</Text>
                 </View>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.text}>Enter Username</Text>
-                            <TextInput 
-                                style={styles.inputText} 
-                                placeholder="Username"
-                                value={username}
-                                onChangeText={text => setUsername(text)}
-                            />
-                        <Text style={styles.text}>Enter Password</Text>
-                            <TextInput 
-                                style={styles.inputText} 
-                                placeholder="Password"
-                                secureTextEntry //hides password
-                                value={password}
-                                onChangeText={text => setPassword(text)}
-                            />
-                    </View>
-                
-                    <View style={styles.forgotPasswordContainer}>
-                        <TouchableOpacity 
-                            onPress={() => {navigation.navigate('Reset Password')}}>
-                            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-                        </TouchableOpacity>
-                    </View>
-                
+                <View style={styles.textContainer}>
+                    <Text style={styles.text}>Enter Username</Text>
+                        <TextInput 
+                            style={styles.inputText} 
+                            placeholder="Username"
+                            value={username}
+                            onChangeText={text => setUsername(text)}
+                        />
+                    <Text style={styles.text}>Enter Password</Text>
+                        <TextInput 
+                            style={styles.inputText} 
+                            placeholder="Password"
+                            secureTextEntry //hides password
+                            value={password}
+                            onChangeText={text => setPassword(text)}
+                        />
+                </View>
+                        
+                <View style={styles.forgotPasswordContainer}>
+                    <TouchableOpacity 
+                        onPress={() => {navigation.navigate('Reset Password')}}>
+                        <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                    </TouchableOpacity>
+                </View>
+                        
                 <View style={styles.container}>
                     <View style={styles.loginButtonContainer}>
                         <TouchableOpacity
@@ -83,26 +84,25 @@ const LoginScreen = ({navigation}) => {
                                             username: username,
                                             password: password,
                                         })} 
-                                    }
-
+                                        }
                                 );
                             }}
                             style={styles.loginButton}
                         > 
-                        <Text style={styles.login}> Login! </Text>
-                        </TouchableOpacity>
+                            <Text style={styles.login}> Login! </Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
-                
+                        
                 <View style={styles.noAccountContainer}>
                     <Text style={styles.noAccountText}>────────   Don't have an account?   ────────</Text>
-                    <TouchableOpacity 
-                        onPress={() => {navigation.navigate('Create Account 1')}}>
+                        <TouchableOpacity 
+                            onPress={() => {navigation.navigate('Create Account 1')}}>
                         <Text style={styles.createText}>Create one here!</Text>
                     </TouchableOpacity>
                 </View>
             </ImageBackground>
-        </KeyboardAvoidingView>
+        </View>
     )
 }
 
