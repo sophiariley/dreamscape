@@ -2,9 +2,9 @@ import React, {useState} from "react";
 import {StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, Pressable, Image} from "react-native";
 import {Ionicons} from 'react-native-vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { ref, uploadBytes, uploadBytesResumable } from "firebase/storage"
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { db, storage } from "../firebase-config";
-import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual, getCountFromServer } from "firebase/firestore";
+import { collection, addDoc, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual, getCountFromServer } from "firebase/firestore";
 
 
 const CreatePost2 = ({navigation, route}) => {
@@ -17,6 +17,7 @@ const CreatePost2 = ({navigation, route}) => {
 
     const [image, setImage] = useState(null);
     const [name, setName] = useState('');
+    const [imageURL, setImageURL] = useState('');
 
     const metadata = {
         contentType: 'image/jpeg'
@@ -57,13 +58,25 @@ const CreatePost2 = ({navigation, route}) => {
         });
       
         const storageRef = ref(storage, 'images/' + name);
-        const snapshot = uploadBytes(storageRef, blob, metadata);
+        const snapshot = await uploadBytes(storageRef, blob, metadata);
       
         // We're done with the blob, close and release it
         blob.close();
       
-        //return await snapshot.ref.getDownloadURL();
+        //const fileRef = ref(storage, 'images/' + name);
+        const snapShotURL =  await getDownloadURL(storageRef)
+        .catch((error) => {
+
+        });
+        addToFirestore(name);
+        setImageURL(snapShotURL);
+        console.log("UpDown URL: ", snapShotURL);
       }
+
+    async function addToFirestore(image) {
+        const userRef = doc(db, "users", userID);
+        const docRef = await addDoc(collection(userRef, "userPosts"), {image});
+    }
 
     return (
         <View style={styles.container}>

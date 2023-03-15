@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import PhotoGrid from "../components/photoGrid";
 import { getStorage, ref, getDownloadURL, } from "firebase/storage"
 import { db, storage } from "../firebase-config";
-import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual } from "firebase/firestore";
+import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual, getCountFromServer } from "firebase/firestore";
 import {EvilIcons} from 'react-native-vector-icons';
 // import {useNavigation} from '@react-navigation/core'
 // import SettingsScreen from "./SettingsScreen";
@@ -69,9 +69,108 @@ const ProfileScreen = ({route, navigation}) => {
             console.log("We here, ", globalPicPath);
             await getPicUrl(globalPicPath);
         }
+        doItAllPosts();
+        getFollowingCount(docRef);
+        getFollowerCount(docRef);
+        getFirstName(docRef);
     }
 
     doItAll();
+
+        // Generating Post Pictures / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
+        const [globalPostUrls, setGlobalPostUrls] = useState(['https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5']);
+        //const PostURLS = [];
+    
+        async function getPicIDPosts(docRef) {
+            const picIDArray = [];
+            const images = await getDocs(collection(docRef, "userPosts"));
+            const snapshot = await getCountFromServer(collection(docRef, "userPosts"));
+            console.log('count: ', snapshot.data().count);
+            images.forEach(async (doc) => {
+                console.log(doc.id, " => ", doc.data());
+                picIDArray.push(doc.id);
+            });
+            return picIDArray;
+        }
+    
+    
+        async function getPicPathPosts(picIDArray) {
+            const picPathArray = [];
+            const docRef = doc(db, "users", userID);
+            for (let i = 0; i < picIDArray.length; i++) {
+                const pic = doc(docRef, "userPosts", picIDArray[i]);
+                const picSnap = await getDoc(pic);
+                const mypath = picSnap.data().image;
+                var strpath = mypath;
+                var result = strpath.substring(8, strpath.length-1);
+                const newmypath = result;
+                picPathArray.push(newmypath);
+            }
+            return picPathArray;
+        }
+    
+        async function getPicUrlPosts(GlobalPicPathsPosts) {
+            const imagesRef = ref(storage, "images");
+            const globURLs = [];
+    
+            for (let i = 0; i <GlobalPicPathsPosts.length; i++) {
+                const pathRef = ref(imagesRef,GlobalPicPathsPosts[i]);
+                const downloadUrl = await getDownloadURL(pathRef)
+                    .catch((error) => {
+                      });
+                console.log('Image URL: ', downloadUrl);
+                globURLs.push(downloadUrl);
+            }
+            return globURLs;
+        }
+    
+        async function doItAllPosts() {
+            const docRef = doc(db, "users", userID);
+            const picIDArray = await getPicIDPosts(docRef);
+            console.log("ARRAY length",picIDArray.length);
+            if(picIDArray.length>0){
+    
+                const GlobalPicPathsPosts = await getPicPathPosts(picIDArray);
+                console.log("We here! - ", GlobalPicPathsPosts.length);
+                const picURLs = await getPicUrlPosts(GlobalPicPathsPosts);
+                if (!(picURLs.every(item => globalPostUrls.indexOf(item)>-1))) {
+                    setGlobalPostUrls(picURLs);
+                }
+    
+            } // else say "no posts yet" or "create a post with the plus button"
+        }
+    
+    
+        // Get Follower/Following/Name Information to display / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
+        const [followingCount, setFollowingCount] = useState(0);
+        const [followerCount, setFollowerCount] = useState(0);
+        const [firstName, setFirstName] = useState(username);
+    
+        async function getFollowingCount(docRef) {
+            var count = 0;
+            const images = await getDocs(collection(docRef, "following"));
+            images.forEach((doc) => {
+                //console.log(doc.id, " => ", doc.data());
+                count++;
+            });
+            setFollowingCount(count);
+        }
+    
+        async function getFollowerCount(docRef) {
+            var count = 0;
+            const images = await getDocs(collection(docRef, "followers"));
+            images.forEach((doc) => {
+                count++;
+            });
+            setFollowerCount(count);
+        }
+    
+        async function getFirstName(docRef) {
+            const docSnap = await getDoc(docRef);
+            setFirstName(docSnap.data().firstName);
+        }
+    
+        // Printing to console / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
 
     const printData = () => {
         console.log("Profile Screen username: ", username, "profile screen userID: ", userID, "profile screen picID: ", picID);
@@ -104,7 +203,7 @@ const ProfileScreen = ({route, navigation}) => {
                     </View>
                     <View style={{alignItems: 'center'}}>
                         <Text style={styles.number}>
-                            9
+                            {globalPostUrls.length}
                         </Text>
                         <Text style={styles.numberDescription}>
                             Posts
@@ -112,7 +211,7 @@ const ProfileScreen = ({route, navigation}) => {
                     </View>
                     <View style={{alignItems: 'center'}}>
                         <Text style={styles.number}>
-                            997
+                            {followerCount}
                         </Text>
                         <Text style={styles.numberDescription}>
                             Followers
@@ -120,7 +219,7 @@ const ProfileScreen = ({route, navigation}) => {
                     </View>
                     <View style={{alignItems: 'center'}}>
                         <Text style={styles.number}>
-                            561
+                            {followingCount}
                         </Text>
                         <Text style={styles.numberDescription}>
                             Following
@@ -131,7 +230,7 @@ const ProfileScreen = ({route, navigation}) => {
 
             <View style={styles.profileInfo}>
                 <View style={{flexDirection: 'row'}}>
-                    <Text style={styles.textName}>Harry,</Text>
+                    <Text style={styles.textName}>{firstName},</Text>
                     <Text style={{color: '#3A6496', fontSize: 18, textAlignVertical: 'bottom'}}>31</Text>
                 </View>
                 <Text style={{fontSize: 13, color: '#3A6496', opacity: .7}}>Maryland</Text>  
@@ -170,7 +269,7 @@ const ProfileScreen = ({route, navigation}) => {
             </View>
             {/* Photo Grid View */}
             <View style={{flex: 1, marginBottom: 60}}>
-                <PhotoGrid/>
+                <PhotoGrid PostUrls={globalPostUrls}/>
             </View>
             <SafeAreaView style={styles.footer}>
                 <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>
