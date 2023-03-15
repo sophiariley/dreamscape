@@ -16,7 +16,7 @@ const ProfileScreen = ({route, navigation}) => {
     async function getPicID(docRef) {
         const images = await getDocs(collection(docRef, "images"));
         images.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data());
+            //console.log(doc.id, " => ", doc.data());
             setPicID(doc.id);
             setCount(10);
         });
@@ -27,7 +27,7 @@ const ProfileScreen = ({route, navigation}) => {
         const docSnap = await getDoc(docRef);
         //const pic = doc(docRef, "images", "DPKrc0Z8ZOBvEOwMXHTd"); //change from hard code
         //const pic = doc(docRef, "images", "2Zz3JGFco2dG0n6CMsE1");
-        console.log("GetPicPath PICID: ", picID);
+        //console.log("GetPicPath PICID: ", picID);
         const pic = doc(docRef, "images", picID);
         const picSnap = await getDoc(pic);
         const mypath = picSnap.data().url;
@@ -35,7 +35,7 @@ const ProfileScreen = ({route, navigation}) => {
         var strpath = mypath;
         var result = strpath.substring(8, strpath.length-1); //changes 1 to 8 to takeout images/
         const newmypath = result;
-        console.log("getPicPath: ", newmypath);
+        //console.log("getPicPath: ", newmypath);
         setGlobalPicPath(newmypath);
     }
 
@@ -56,17 +56,17 @@ const ProfileScreen = ({route, navigation}) => {
         const downloadUrl = await getDownloadURL(pathRef)
             .catch((error) => {
               });
-            console.log('Image URL: ', downloadUrl);
+            //console.log('Image URL: ', downloadUrl);
             setGlobalUrl(downloadUrl);
     }
 
     async function doItAll() {
         const docRef = doc(db, "users", userID);
         await getPicID(docRef);
-        console.log("User ID: ", userID);
+        //console.log("User ID: ", userID);
         if(count>0){
             await getPicPath(userID); 
-            console.log("We here, ", globalPicPath);
+            //console.log("We here, ", globalPicPath);
             await getPicUrl(globalPicPath);
         }
         doItAllPosts();
@@ -85,9 +85,9 @@ const ProfileScreen = ({route, navigation}) => {
             const picIDArray = [];
             const images = await getDocs(collection(docRef, "userPosts"));
             const snapshot = await getCountFromServer(collection(docRef, "userPosts"));
-            console.log('count: ', snapshot.data().count);
+            //console.log('count: ', snapshot.data().count);
             images.forEach(async (doc) => {
-                console.log(doc.id, " => ", doc.data());
+                //console.log(doc.id, " => ", doc.data());
                 picIDArray.push(doc.id);
             });
             return picIDArray;
@@ -101,10 +101,12 @@ const ProfileScreen = ({route, navigation}) => {
                 const pic = doc(docRef, "userPosts", picIDArray[i]);
                 const picSnap = await getDoc(pic);
                 const mypath = picSnap.data().image;
-                var strpath = mypath;
-                var result = strpath.substring(8, strpath.length-1);
-                const newmypath = result;
-                picPathArray.push(newmypath);
+                //console.log("------------ THIS IS WHAT I WANT TO LOOK AT: ", mypath);
+                //var strpath = mypath;
+                //var result = strpath.substring(8, strpath.length-1);
+                //const newmypath = result;
+                //picPathArray.push(newmypath);
+                picPathArray.push(mypath)
             }
             return picPathArray;
         }
@@ -118,7 +120,7 @@ const ProfileScreen = ({route, navigation}) => {
                 const downloadUrl = await getDownloadURL(pathRef)
                     .catch((error) => {
                       });
-                console.log('Image URL: ', downloadUrl);
+                //console.log('Image URL: ', downloadUrl);
                 globURLs.push(downloadUrl);
             }
             return globURLs;
@@ -127,11 +129,11 @@ const ProfileScreen = ({route, navigation}) => {
         async function doItAllPosts() {
             const docRef = doc(db, "users", userID);
             const picIDArray = await getPicIDPosts(docRef);
-            console.log("ARRAY length",picIDArray.length);
+            //console.log("ARRAY length",picIDArray.length);
             if(picIDArray.length>0){
     
                 const GlobalPicPathsPosts = await getPicPathPosts(picIDArray);
-                console.log("We here! - ", GlobalPicPathsPosts.length);
+                //console.log("We here! - ", GlobalPicPathsPosts.length);
                 const picURLs = await getPicUrlPosts(GlobalPicPathsPosts);
                 if (!(picURLs.every(item => globalPostUrls.indexOf(item)>-1))) {
                     setGlobalPostUrls(picURLs);
@@ -175,7 +177,7 @@ const ProfileScreen = ({route, navigation}) => {
     const printData = () => {
         console.log("Profile Screen username: ", username, "profile screen userID: ", userID, "profile screen picID: ", picID);
     }
-    printData();
+    //printData();
 
     return (
         <SafeAreaView style={styles.container}>
