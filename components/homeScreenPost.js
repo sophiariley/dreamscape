@@ -3,7 +3,6 @@ import { useState } from "react";
 import {StyleSheet, Text, View, TouchableOpacity, Pressable} from "react-native";
 import {FontAwesome, Ionicons} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/core'
-import Comments from "./comments";
 
 export default function CommentLikeDislike({}) {
     const navigation = useNavigation();

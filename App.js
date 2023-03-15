@@ -12,7 +12,8 @@ import ExploreScreen from './screens/ExploreScreen';
 import CreateAccount1 from './screens/CreateAccount1'
 import CreateAccount2 from './screens/CreateAccount2'
 import ProfileScreen from './screens/ProfileScreen';
-import CommentScreen from './screens/CommentScreen';
+// import CommentScreen from './screens/CommentScreen';
+import Comments from './screens/CommentScreen';
 import MessageScreen from './screens/MessageScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import {FontAwesome5, AntDesign} from 'react-native-vector-icons';
@@ -66,7 +67,7 @@ export default function App({navigation}) {
                 fontSize: 25
               }
             }} 
-            name="Comment Screen" component={CommentScreen} />
+            name="Comment Screen" component={Comments} />
           
           <Stack.Screen 
             options={({ navigation }) => ({
