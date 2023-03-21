@@ -6,10 +6,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import PhotoGrid from "../components/photoGrid";
 import { getStorage, ref, getDownloadURL, } from "firebase/storage"
 import { db, storage } from "../firebase-config";
-import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual, getCountFromServer } from "firebase/firestore";
+import { collection, query, where, onSnapshot, getDocs, getDoc, addDoc, doc, deleteDoc, getCountFromServer } from "firebase/firestore";
 
 const OtherProfileScreen = ({route}) => {
 
+    //realUsername & realUserID are logged in account, username and userID are other account
     const username = route.params.otherUsername;
     const userID = route.params.otherUserID;
     const realUsername = route.params.username;
@@ -20,11 +21,54 @@ const OtherProfileScreen = ({route}) => {
     const [globalUrl, setGlobalUrl] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5');
     const [globalPicPath, setGlobalPicPath] = useState('default.jpg');
     const [count, setCount] = useState(0);
+    const [followText, setFollowText] = useState('Follow');
+
+    const followAccount = async () => {
+        setFollowText('Following');
+        const userRef = doc(db, "users", realUserID);
+        await addDoc(collection(userRef, 'following'), {
+            userID: userID
+        });
+        const otherUserRef = doc(db, "users", userID);
+        await addDoc(collection(otherUserRef, 'followers'), {
+            userID: realUserID
+        });
+    }
+
+    const unFollowAccount = async () => {
+        setFollowText('Follow');
+        const userRef = doc(db, "users", realUserID);
+        const q = query(collection(userRef, "following"), where("userID", "==", userID));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            //This deleted the account from users collection -----------------------------
+            //deleteDoc(userRef, 'following', doc.id);
+        });
+        const otherUserRef = doc(db, "users", userID);
+        const q2 = query(collection(otherUserRef, "following"), where("userID", "==", realUserID));
+        const querySnapshot2 = await getDocs(q2);
+        querySnapshot2.forEach((doc) => {
+            //deleteDoc(userRef, 'followers', doc.id);
+        });
+    }
+
+    const loadFollowData = async () => {
+        const userRef = doc(db, "users", realUserID);
+        const followingUsers = await getDocs(collection(userRef, 'following'));
+        followingUsers.forEach((doc) => {
+            const followID = doc.data().userID;
+            console.log("followID", followID);
+            console.log("userID: ", userID);
+            if(userID === followID) {
+                setFollowText('Following');
+            }
+        });
+    }
 
     async function getPicID(docRef) {
         const images = await getDocs(collection(docRef, "images"));
         images.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data());
+            //console.log(doc.id, " => ", doc.data());
             setPicID(doc.id);
             setCount(10);
         });
@@ -35,7 +79,7 @@ const OtherProfileScreen = ({route}) => {
         const docSnap = await getDoc(docRef);
         //const pic = doc(docRef, "images", "DPKrc0Z8ZOBvEOwMXHTd"); //change from hard code
         //const pic = doc(docRef, "images", "2Zz3JGFco2dG0n6CMsE1");
-        console.log("GetPicPath PICID: ", picID);
+        //console.log("GetPicPath PICID: ", picID);
         const pic = doc(docRef, "images", picID);
         const picSnap = await getDoc(pic);
         const mypath = picSnap.data().url;
@@ -43,7 +87,7 @@ const OtherProfileScreen = ({route}) => {
         var strpath = mypath;
         var result = strpath.substring(8, strpath.length-1); //changes 1 to 8 to takeout images/
         const newmypath = result;
-        console.log("getPicPath: ", newmypath);
+        //console.log("getPicPath: ", newmypath);
         setGlobalPicPath(newmypath);
     }
 
@@ -54,7 +98,7 @@ const OtherProfileScreen = ({route}) => {
         const downloadUrl = await getDownloadURL(pathRef)
             .catch((error) => {
               });
-            console.log('Image URL: ', downloadUrl);
+            //console.log('Image URL: ', downloadUrl);
             setGlobalUrl(downloadUrl);
 
     }
@@ -62,17 +106,18 @@ const OtherProfileScreen = ({route}) => {
     async function doItAll() {
         const docRef = doc(db, "users", userID);
         await getPicID(docRef);
-        console.log("User ID: ", userID);
+        //console.log("User ID: ", userID);
         if(count>0){
             await getPicPath(userID); 
-            console.log("We here, ", globalPicPath);
+            //console.log("We here, ", globalPicPath);
             await getPicUrl(globalPicPath);
         }
 
         doItAllPosts();
         getFollowingCount(docRef);
         getFollowerCount(docRef);
-        //getFirstName(docRef);
+        getFirstName(docRef);
+        loadFollowData();
     }
 
     doItAll();
@@ -83,9 +128,9 @@ const OtherProfileScreen = ({route}) => {
         const picIDArray = [];
         const images = await getDocs(collection(docRef, "userPosts"));
         const snapshot = await getCountFromServer(collection(docRef, "userPosts"));
-        console.log('count: ', snapshot.data().count);
+        //console.log('count: ', snapshot.data().count);
         images.forEach(async (doc) => {
-            console.log(doc.id, " => ", doc.data());
+            //console.log(doc.id, " => ", doc.data());
             picIDArray.push(doc.id);
         });
         return picIDArray;
@@ -116,7 +161,7 @@ const OtherProfileScreen = ({route}) => {
             const downloadUrl = await getDownloadURL(pathRef)
                 .catch((error) => {
                   });
-            console.log('Image URL: ', downloadUrl);
+            //console.log('Image URL: ', downloadUrl);
             globURLs.push(downloadUrl);
         }
         return globURLs;
@@ -125,11 +170,11 @@ const OtherProfileScreen = ({route}) => {
     async function doItAllPosts() {
         const docRef = doc(db, "users", userID);
         const picIDArray = await getPicIDPosts(docRef);
-        console.log("ARRAY length",picIDArray.length);
+        //console.log("ARRAY length",picIDArray.length);
         if(picIDArray.length>0){
             
             const GlobalPicPathsPosts = await getPicPathPosts(picIDArray);
-            console.log("We here! - ", GlobalPicPathsPosts.length);
+            //console.log("We here! - ", GlobalPicPathsPosts.length);
             const picURLs = await getPicUrlPosts(GlobalPicPathsPosts);
             if (!(picURLs.every(item => globalPostUrls.indexOf(item)>-1))) {
                 setGlobalPostUrls(picURLs);
@@ -141,7 +186,7 @@ const OtherProfileScreen = ({route}) => {
     // Get Follower/Following/Name Information to display / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
     const [followingCount, setFollowingCount] = useState(0);
     const [followerCount, setFollowerCount] = useState(0);
-    //const [firstName, setFirstName] = useState(username);
+    const [firstName, setFirstName] = useState(username);
 
     async function getFollowingCount(docRef) {
         var count = 0;
@@ -162,16 +207,16 @@ const OtherProfileScreen = ({route}) => {
         setFollowerCount(count);
     }
 
-    /*async function getFirstName(docRef) {
+    async function getFirstName(docRef) {
         const docSnap = await getDoc(docRef);
         setFirstName(docSnap.data().firstName);
-    }*/
+    }
 
     // Printing to console / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
     const printData = () => {
         console.log("Profile Screen username: ", username, "profile screen userID: ", userID, "profile screen picID: ", picID);
     }
-    printData();
+    //printData();
 
     return (
         <SafeAreaView style={styles.container}>
@@ -219,13 +264,14 @@ const OtherProfileScreen = ({route}) => {
 
             <View style={styles.profileInfo}>
                 <View style={{flexDirection: 'row'}}>
-                    <Text style={styles.textName}>Harry,</Text>
+                    <Text style={styles.textName}>{firstName}</Text>
                     <Text style={{color: '#3A6496', fontSize: 18, textAlignVertical: 'bottom'}}>31</Text>
                 </View>
                 <Text style={{fontSize: 13, color: '#3A6496', opacity: .7}}>Maryland</Text>  
             </View>
-            <TouchableOpacity style={styles.editProfile}>
-                <Text style={{color: 'white'}}>Edit Profile</Text>
+            <TouchableOpacity style={styles.editProfile}
+            onPress={() => followText=='Follow' ? followAccount() : unFollowAccount()}>
+                <Text style={{color: 'white'}}>{followText}</Text>
             </TouchableOpacity>
 
             <View style={styles.travelBuddies}>
