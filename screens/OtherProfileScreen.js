@@ -40,15 +40,19 @@ const OtherProfileScreen = ({route}) => {
         const userRef = doc(db, "users", realUserID);
         const q = query(collection(userRef, "following"), where("userID", "==", userID));
         const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach(async (docu) => {
             //This deleted the account from users collection -----------------------------
-            //deleteDoc(userRef, 'following', doc.id);
+            //await deleteDoc(userRef, 'following', doc.id);
+            const docRef = doc(userRef, 'following', docu.id);
+            await deleteDoc(docRef);
         });
         const otherUserRef = doc(db, "users", userID);
-        const q2 = query(collection(otherUserRef, "following"), where("userID", "==", realUserID));
+        const q2 = query(collection(otherUserRef, "followers"), where("userID", "==", realUserID));
         const querySnapshot2 = await getDocs(q2);
-        querySnapshot2.forEach((doc) => {
-            //deleteDoc(userRef, 'followers', doc.id);
+        querySnapshot2.forEach(async (docu) => {
+            //await deleteDoc(otherUserRef, 'followers', doc.id);
+            const docRef = doc(otherUserRef, 'followers', docu.id);
+            await deleteDoc(docRef);
         });
     }
 
