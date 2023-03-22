@@ -12,6 +12,7 @@ import ExploreScreen from './screens/ExploreScreen';
 import CreateAccount1 from './screens/CreateAccount1'
 import CreateAccount2 from './screens/CreateAccount2'
 import ProfileScreen from './screens/ProfileScreen';
+import OtherProfileScreen from './screens/OtherProfileScreen';
 // import CommentScreen from './screens/CommentScreen';
 import Comments from './screens/CommentScreen';
 import MessageScreen from './screens/MessageScreen';
@@ -53,6 +54,8 @@ export default function App({navigation}) {
           <Stack.Screen options={{ headerShown: false }} name="Create Account 2" component={CreateAccount2} />
           
           <Stack.Screen options={{ headerShown: false }} name="Profile" component={ProfileScreen} />
+
+          <Stack.Screen options={{ headerShown: false }} name="OtherProfileScreen" component={OtherProfileScreen} />
 
           <Stack.Screen 
             options={{ 
