@@ -22,6 +22,7 @@ import {useNavigation} from '@react-navigation/native'
 import { useState, useEffect } from "react";
 import { db } from "./firebase-config";
 import { collection, getDocs } from "firebase/firestore";
+import PostScreen from './screens/PostScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,7 @@ export default function App({navigation}) {
   return (
     <NavigationContainer>
         <Stack.Navigator>
+          
           <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
 
           <Stack.Screen options={{ headerShown: false }} name="Reset Password" component={ResetPasswordScreen} />
@@ -56,7 +58,7 @@ export default function App({navigation}) {
           <Stack.Screen options={{ headerShown: false }} name="Profile" component={ProfileScreen} />
 
           <Stack.Screen options={{ headerShown: false }} name="OtherProfileScreen" component={OtherProfileScreen} />
-
+          <Stack.Screen options={{ headerShown: false }} name="PostScreen" component={PostScreen} />
           <Stack.Screen 
             options={{ 
               title: 'Comments',

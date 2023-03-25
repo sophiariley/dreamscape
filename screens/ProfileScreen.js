@@ -9,6 +9,7 @@ import { db, storage } from "../firebase-config";
 import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual, getCountFromServer } from "firebase/firestore";
 import {EvilIcons} from 'react-native-vector-icons';
 import EditProfile from '../components/EditProfile';
+import Locations from '../components/Locations';
 // import {useNavigation} from '@react-navigation/core'
 // import SettingsScreen from "./SettingsScreen";
 
@@ -181,11 +182,21 @@ const ProfileScreen = ({route, navigation}) => {
     //printData();
 
     const [modalVisible, setModalVisible] = useState(false);
+    const [showPhotoGrid, setShowPhotoGrid] = useState(true);
+    const [activeButton, setActiveButton] = useState('Photos');
     const handleSavePress= () => {
         setModalVisible(false);
     }
     const handleCancelPress= () => {
         setModalVisible(false);
+    }
+    const handleLocationsPress = () => {
+        setShowPhotoGrid(false);
+        setActiveButton('Locations');
+    }
+    const handlePhotosPress = () => {
+        setShowPhotoGrid(true);
+        setActiveButton('Photos');
     }
     return (
         <SafeAreaView style={styles.container}>
@@ -252,37 +263,29 @@ const ProfileScreen = ({route, navigation}) => {
                 <EditProfile onSave={handleSavePress} onCancel={handleCancelPress}/>
             </Modal>
             <View style={styles.travelBuddies}>
-                <Text style={{fontSize: 13, color: '#3A6496'}}>Travel Buddies</Text>
-                <View style={{flexDirection: 'row', alignItems: 'center', paddingVertical: 10, justifyContent: 'space-evenly'}}>
-                    <View style={{alignItems: 'center'}}>
-                        <Image source={require("../assets/travel_buddy1.jpg")} style={styles.travelBuddyImage}/>
-                        <Text style={{color: '#3A6496', fontSize: 12, fontWeight: 'bold'}}>john_travels</Text>
-                    </View>
-                    <View style={{alignItems: 'center'}}>
-                        <Image source={require("../assets/travel_buddy2.jpg")} style={styles.travelBuddyImage}/>
-                        <Text style={{color: '#3A6496', fontSize: 12, fontWeight: 'bold'}}>em_adventures</Text>
-                    </View>
-                    <View style={{alignItems: 'center'}}>
-                        <Image source={require("../assets/travel_buddy3.jpg")} style={styles.travelBuddyImage}/>
-                        <Text style={{color: '#3A6496', fontSize: 12, fontWeight: 'bold'}}>denise_012</Text>
-                    </View>
-                </View>
+                
             </View>
 
             <View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-around', marginVertical: 10}}>
-                    <TouchableOpacity style={{opacity: .5}}>
+                    <TouchableOpacity style={{opacity: activeButton === 'Locations' ? 1 : 0.5, alignItems: 'center'}} onPress={handleLocationsPress}>
                         <Feather name='map-pin' size={30} color='#3A6496'></Feather>
+                        <Text style={{color: '#3A6496', fontSize: 12}}>Locations</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity style={{opacity: activeButton === 'Photos' ? 1 : 0.5,alignItems: 'center'}} onPress={handlePhotosPress}>
                         <Feather name='image' size={30} color='#3A6496'></Feather>
+                        <Text style={{color: '#3A6496', fontSize: 12}}>Photos</Text>
                     </TouchableOpacity>
                 </View>
             </View>
             {/* Photo Grid View */}
-            <View style={{flex: 1, marginBottom: 60}}>
-                <PhotoGrid PostUrls={globalPostUrls}/>
-            </View>
+            {showPhotoGrid ? (
+                <View style={{ flex: 1, marginBottom: 60 }}>
+                    <PhotoGrid PostUrls={globalPostUrls} navigation={navigation} />
+                </View>
+            ) : (
+                <Locations />
+            )}
             <SafeAreaView style={styles.footer}>
                 <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>
             </SafeAreaView>
@@ -359,18 +362,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#D28A8E',
         borderRadius: 5
     },
-    travelBuddies: {
-        marginHorizontal: 10,
-        padding: 1
-    },
-    travelBuddyImage: {
-        width: 50,
-        height: 50,
-        borderRadius: 50,
-        overflow: 'hidden'
-    },
     icon:{
         left: 140,
         top: 5
-    }
+    },
 })
