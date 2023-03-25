@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Image 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function EditProfile({onClose}) {
+export default function EditProfile({onSave, onCancel}) {
   const [profilePicture, setProfilePicture] = useState(null);
 
   const handleProfilePicturePress = async () => {
@@ -26,7 +26,10 @@ export default function EditProfile({onClose}) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
-        <TouchableOpacity onPress={onClose} style={styles.buttonContainer}>
+        <TouchableOpacity onPress={onCancel} style={styles.cancelContainer}>
+          <Text style={styles.buttonText}>Cancel</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onSave} style={styles.saveContainer}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
         <Text style={styles.text}>Edit Profile</Text>
@@ -85,12 +88,20 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: 'black',
     },
-    buttonContainer: {
+    saveContainer: {
         justifyContent: 'center',
         width: 50,
         height: 50,
         position: 'absolute',
         left: 0,
+        top: 0,
+    },
+    cancelContainer: {
+        justifyContent: 'center',
+        width: 50,
+        height: 50,
+        position: 'absolute',
+        right: 10,
         top: 0,
     },
     profileName: {

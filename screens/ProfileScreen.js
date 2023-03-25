@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, Dimensions} from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, Dimensions, Modal} from "react-native";
 import NavigationBar from "../components/navigationBar";
 import { Feather } from 'react-native-vector-icons';
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -8,6 +8,7 @@ import { getStorage, ref, getDownloadURL, } from "firebase/storage"
 import { db, storage } from "../firebase-config";
 import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual, getCountFromServer } from "firebase/firestore";
 import {EvilIcons} from 'react-native-vector-icons';
+import EditProfile from '../components/EditProfile';
 // import {useNavigation} from '@react-navigation/core'
 // import SettingsScreen from "./SettingsScreen";
 
@@ -179,6 +180,13 @@ const ProfileScreen = ({route, navigation}) => {
     }
     //printData();
 
+    const [modalVisible, setModalVisible] = useState(false);
+    const handleSavePress= () => {
+        setModalVisible(false);
+    }
+    const handleCancelPress= () => {
+        setModalVisible(false);
+    }
     return (
         <SafeAreaView style={styles.container}>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
@@ -237,10 +245,12 @@ const ProfileScreen = ({route, navigation}) => {
                 </View>
                 <Text style={{fontSize: 13, color: '#3A6496', opacity: .7}}>Maryland</Text>  
             </View>
-            <TouchableOpacity style={styles.editProfile}>
+            <TouchableOpacity style={styles.editProfile} onPress={()=> setModalVisible(true)}>
                 <Text style={{color: 'white'}}>Edit Profile</Text>
             </TouchableOpacity>
-
+            <Modal visible={modalVisible}>
+                <EditProfile onSave={handleSavePress} onCancel={handleCancelPress}/>
+            </Modal>
             <View style={styles.travelBuddies}>
                 <Text style={{fontSize: 13, color: '#3A6496'}}>Travel Buddies</Text>
                 <View style={{flexDirection: 'row', alignItems: 'center', paddingVertical: 10, justifyContent: 'space-evenly'}}>
