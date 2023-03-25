@@ -13,9 +13,14 @@ const PostScreen = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.buttonContainer}>
-                    <Ionicons name='chevron-back' size={35} />
-            </TouchableOpacity>
+            <View style={{marginTop:20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',  borderBottomWidth: 1,
+                borderColor: '#f0f0f0'}}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.buttonContainer}>
+                        <Ionicons name='chevron-back' size={30} />
+                </TouchableOpacity>
+                <Text style={styles.header}>Post</Text>
+                <View style={{ width: 30 }} />
+            </View>
             <ScrollView>
                 {/*Profile container*/}
                 <View style={styles.accountContainer}>
@@ -57,9 +62,6 @@ const PostScreen = ({navigation}) => {
                 {/*Date posted*/}
                 <Text style={{fontWeight: '200', fontSize: 12,textAlign: 'right', margin: 5}}>Posted on ...</Text>
             </ScrollView>
-            <SafeAreaView style={styles.footer}>
-                <NavigationBar/>
-            </SafeAreaView>
         </SafeAreaView>
     )
 }
@@ -72,6 +74,13 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 1,
         justifyContent: 'flex-start',
+    },
+    header: {
+        fontSize: 20,
+        marginBottom: 10,
+        marginTop: 10,
+        textAlign: 'center',
+        flex: 1,
     },
     accountContainer: {
         flexDirection: 'row',
