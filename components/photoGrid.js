@@ -3,7 +3,7 @@ import { getStorage, ref, getDownloadURL, } from "firebase/storage"
 import { db, storage } from "../firebase-config";
 import {View, Text, Image, StyleSheet, TouchableOpacity, Dimensions, FlatList } from "react-native";
 import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual, getCountFromServer } from "firebase/firestore";
-
+import PostScreen from '../screens/PostScreen';
 // const Images = [
 //     {url: require('../assets/posts/image1.jpg')},
 //     {url: require('../assets/posts/image2.jpg')},
@@ -21,7 +21,7 @@ import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, do
 
 let { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-export default function photoGrid({PostUrls}) {
+export default function photoGrid({PostUrls, navigation}) {
 // shouldComponentUpdate() {
 //     return false; // Will cause component to never re-render.
 // }
@@ -112,7 +112,7 @@ export default function photoGrid({PostUrls}) {
             renderItem = {item => {
                 return (
                     <View style={{flex: 1, marginBottom: 2}}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('PostScreen')}>
                         <Image 
                             source={{uri: item.item}}
                             style={{

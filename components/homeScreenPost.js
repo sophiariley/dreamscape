@@ -1,76 +1,112 @@
 import React from "react";
 import { useState } from "react";
-import {StyleSheet, Text, View, TouchableOpacity, Pressable} from "react-native";
+import {StyleSheet, Text, View, TouchableOpacity, Pressable, Image, Dimensions, ScrollView} from "react-native";
 import {FontAwesome, Ionicons} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/core'
 
 export default function CommentLikeDislike({}) {
-    const navigation = useNavigation();
-    const [thumbsUp, setThumbsUp] = useState(false);
-    const [thumbsDown, setThumbsDown] = useState(false);
-    const [mustDo, setMustDo] = useState(false);
-    
+    const navigation = useNavigation();   
+    const [isLiked, setIsLiked] = useState(false);
+    const handleLikePress = () => {
+        setIsLiked(prevIsLiked => !prevIsLiked);
+    };
+
     return (
-        <View style={styles.container}>
-                {/* <Comments/> */}
-                <View style={styles.buttons}>
-                    <TouchableOpacity
-                    onPress={() =>  navigation.navigate('Comment Screen')}>
-                        <FontAwesome name='comment-o' size={30} color='#3A6496'/>
+        <ScrollView>
+                {/*Profile container*/}
+                <View style={styles.accountContainer}>
+                    <View style={styles.profileImage}>
+                        <Image style={styles.image}
+                            source={require('../assets/profile_photo.jpg')}
+                        />
+                    </View>
+                    <View style={{marginLeft: 7}}>
+                        <Text style={styles.profileName}>john_travels</Text>
+                        <Text style={styles.location}>Location</Text>
+                    </View>
+                </View>
+                {/*image*/}
+                <View style={{width: Dimensions.get('screen').width}}> 
+                    <Image style={styles.post}
+                    source={require('../assets/posts/image10.jpg')}
+                    /> 
+                </View>
+                {/*Like button*/}
+                <View style={{flexDirection: 'row', margin: 5, alignItems: 'center', flex: 2, justifyContent: 'space-between'}}>
+                    <TouchableOpacity onPress={handleLikePress}>
+                        <FontAwesome name={isLiked ? 'heart' : 'heart-o'} size={35} color={isLiked ? 'red' : 'black'}style={{marginRight: 15,marginBottom:-5}}/>
+                    </TouchableOpacity>
+                    {/*Comment button*/}
+                    <TouchableOpacity onPress={() => navigation.navigate('Comments')}>
+                        <FontAwesome name='comment-o' size={35} style={{}}/>
                     </TouchableOpacity>
                 </View>
-
-                <View style={styles.buttons}>
-                    <Pressable onPress={() => setMustDo((isMustDo) => !isMustDo)}>
-                        <Text 
-                            style={[{color: mustDo ? "white" : "#3A6496"},
-                            {backgroundColor: mustDo ? "#3A6496" : "white"},
-                            {borderColor: mustDo ? "white" : "#3A6496"},
-                            {borderRadius: 5},
-                            {borderWidth: 2},
-                            styles.text]}> Must do!</Text>
-                    </Pressable>
-                </View>
-
-                <View style={styles.buttons}>
-                    <Pressable onPress={() => setThumbsUp((isThumbsUp) => !isThumbsUp)}>
-                        <Ionicons
-                            name={thumbsUp ? "thumbs-up" : "thumbs-up-outline"}
-                            size={30}
-                            color={thumbsUp ? "#3A6496" : "#3A6496"}
-                        />
-                    </Pressable>
-                </View>
-
-                <View style={styles.buttons}>
-                    <Pressable onPress={() => setThumbsDown((isThumbsDown) => !isThumbsDown)}>
-                        <Ionicons
-                            name={thumbsDown ? "thumbs-down" : "thumbs-down-outline"}
-                            size={30}
-                            color={thumbsDown ? "#3A6496" : "#3A6496"}
-                        />
-                    </Pressable>
-                </View>
-        </View>
-        
+                {/*Caption*/}
+                <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+                        <Text style={[styles.profileName, {marginLeft: 5, marginTop: 5, marginRight: 5}]}>john_travels</Text>
+                        <Text style={styles.caption}>Caption</Text>
+                </View> 
+                {/*View comments button*/}    
+                <TouchableOpacity onPress={() => navigation.navigate('Comments')}>
+                    <Text style={{fontWeight: '200', marginLeft: 5, marginTop: 15, alignSelf: 'center'}}>View comments</Text>
+                </TouchableOpacity>
+                {/*Date posted*/}
+                <Text style={{fontWeight: '200', fontSize: 12,textAlign: 'right', margin: 5}}>Posted on ...</Text>
+            </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        height: 60,
+container: {
+        backgroundColor: 'white',
+        flex: 1,
+        padding: 1,
+        justifyContent: 'flex-start',
+    },
+    accountContainer: {
         flexDirection: 'row',
-        justifyContent: 'flex-end',
-        width: '100%'
+        alignItems: 'center',
+        
+        marginTop: 10,
+        marginLeft: 15,
+        marginRight: 10,
+        marginBottom: 10
     },
-    text: {
-        alignSelf: 'center',
-        fontSize: 15,
-        padding: 5,
-        paddingTop: 7
+    profileImage: {
+        width: 40,
+        height: 40,
+        borderRadius: 100,
+        overflow: 'hidden'
     },
-    buttons: {
-        padding: 5
+    post: {
+        width: '100%',
+        height: undefined,
+        alignItems: 'center',
+        aspectRatio: 1,
+    },
+    profileName: {
+        color: '#3A6496', 
+        fontSize: 13, 
+        fontWeight: 'bold',
+    },
+    location: {
+        color: '#3A6496', 
+        fontSize: 11, 
+    },
+    image: {
+        flex: 1,
+        width: undefined,
+        height: undefined,
+    },
+    caption:
+    {
+        fontSize: 13,
+
+    },
+    footer: {
+        position:'absolute',
+        bottom: 0,
+        alignItems: 'center'
     }
 })
 

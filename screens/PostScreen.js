@@ -41,7 +41,7 @@ const PostScreen = ({navigation}) => {
                         <FontAwesome name={isLiked ? 'heart' : 'heart-o'} size={35} color={isLiked ? 'red' : 'black'}style={{marginRight: 15,marginBottom:-5}}/>
                     </TouchableOpacity>
                     {/*Comment button*/}
-                    <TouchableOpacity onPress={() => navigation.navigate('CommentsScreen')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Comments')}>
                         <FontAwesome name='comment-o' size={35} style={{}}/>
                     </TouchableOpacity>
                 </View>
@@ -51,7 +51,7 @@ const PostScreen = ({navigation}) => {
                         <Text style={styles.caption}>Caption</Text>
                 </View> 
                 {/*View comments button*/}    
-                <TouchableOpacity onPress={() => navigation.navigate('CommentsScreen')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Comments')}>
                     <Text style={{fontWeight: '200', marginLeft: 5, marginTop: 15, alignSelf: 'center'}}>View comments</Text>
                 </TouchableOpacity>
                 {/*Date posted*/}
