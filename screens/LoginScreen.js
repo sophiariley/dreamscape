@@ -1,22 +1,18 @@
 import React, { useState, useEffect} from "react";
-import { ImageBackground, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView } from "react-native";
+import { ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import {useNavigation} from '@react-navigation/core'
-//import firestore from '@react-native-firebase/firestore';
-import { collection, query, where, onSnapshot, getDocs, setDoc, doc } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase-config";
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { faAlignCenter } from "@fortawesome/free-solid-svg-icons";
-
-
+import { KeyboardAvoidingView } from "react-native";
+import { TouchableWithoutFeedback } from "react-native";
+import { Keyboard } from "react-native";
 
 const image = { uri: "https://media4.giphy.com/media/3og0ISzBpn0nNJE3Ac/giphy.gif?cid=ecf05e47kxc23rf9ldw36iuch1geujlfdvraxnb7gm18sznm&rid=giphy.gif&ct=g" };
-
 
 const LoginScreen = ({navigation}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [isTrue, setIsTrue] = useState(false);
-    const [userID, setUserID] = useState('');
+
 
     async function auth(username, password) {
         const q = query(collection(db, "users"), where("username", "==", username), where("password", "==", password));
@@ -24,23 +20,11 @@ const LoginScreen = ({navigation}) => {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             console.log(doc.id, " => ", doc.data());
-            setUserID(doc.id);
-            setIsTrue(true);
             verified = true;
         });
-        if (verified) {
-            console.log("true")
-            return Promise.resolve(true);
-        } else {
-            console.log("false");
-            return Promise.resolve(false);
-        }
+        return verified;
     }
 
-    function refreshPage() {
-        window.location.reload(false);
-    }
-    
     return (
         <View style={styles.container}>
             <ImageBackground 
@@ -80,19 +64,21 @@ const LoginScreen = ({navigation}) => {
                             onPress={() => {
                                 auth(username, password).then(
                                     function(value) {
-                                        if (value) {navigation.navigate('Home', {
-                                            username: username,
-                                            password: password,
-                                        })} 
-                                        }
+                                        if (value) {
+                                            navigation.navigate('Home', {
+                                                username: username,
+                                                password: password,
+                                            })
+                                        } 
+                                    }
                                 );
                             }}
                             style={styles.loginButton}
                         > 
                             <Text style={styles.login}> Login! </Text>
-                            </TouchableOpacity>
-                        </View>
+                        </TouchableOpacity>
                     </View>
+                </View>
                         
                 <View style={styles.noAccountContainer}>
                     <Text style={styles.noAccountText}>────────   Don't have an account?   ────────</Text>
@@ -102,6 +88,7 @@ const LoginScreen = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
             </ImageBackground>
+            <View style={styles.footer} />
         </View>
     )
 }

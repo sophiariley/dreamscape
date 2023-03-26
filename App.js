@@ -1,12 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
-import Constants from 'expo-constants';
+import React from 'react';
+import { StyleSheet, Text, View, Button, TouchableOpacity, Modal } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import ResetPasswordScreen from './screens/ResetPasswordScreen';
-import CreatePost from './screens/CreatePost';
 import CreatePost2 from './screens/CreatePost2';
 import ExploreScreen from './screens/ExploreScreen';
 import CreateAccount1 from './screens/CreateAccount1'
@@ -16,33 +14,23 @@ import OtherProfileScreen from './screens/OtherProfileScreen';
 import MessageScreen from './screens/MessageScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import {FontAwesome5, AntDesign} from 'react-native-vector-icons';
-import {useNavigation} from '@react-navigation/native'
-import { useState, useEffect } from "react";
-import { db } from "./firebase-config";
-import { collection, getDocs } from "firebase/firestore";
 import PostScreen from './screens/PostScreen';
 import Comments from './screens/comments';
 import Trips from './screens/Trips';
 import TripScreen from './screens/TripScreen';
+import CreateTrip from './screens/CreateTrip';
+import { Entypo } from '@expo/vector-icons';
+
 const Stack = createNativeStackNavigator();
 
-
-// TO DO: Change size of back button
 export default function App({navigation}) {
-  // const navigation = useNavigation();
-
-  /*const [users, setUsers] = useState([]);
-  const usersCollectionRef = collection(db, "users");
-  useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(usersCollectionRef);
-      setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id })));
-    };
-
-    getUsers();
-  })*/
-
-  
+  const [modalVisible, setModalVisible] = React.useState(false);
+    const handleSavePress= () => {
+        setModalVisible(false);
+    }
+    const handleCancelPress= () => {
+        setModalVisible(false);
+    }
   return (
     <NavigationContainer>
         <Stack.Navigator>
@@ -60,11 +48,14 @@ export default function App({navigation}) {
           <Stack.Screen options={{ headerShown: false }} name="OtherProfileScreen" component={OtherProfileScreen} />
 
           <Stack.Screen options={{ headerShown: false }} name="PostScreen" component={PostScreen} />
+
           <Stack.Screen options={{ headerShown: false }} name="TripScreen" component={TripScreen} />
           
           <Stack.Screen options={{ headerShown: false }} name="Comments" component={Comments} />
+
+          <Stack.Screen options={{ headerShown: false }} name="CreateTrip" component={CreateTrip} />
           <Stack.Screen 
-            options={{
+             options={() => ({
               title: 'Trips',
               headerTitleStyle: {
                 color: '#F6F6F6',
@@ -74,8 +65,18 @@ export default function App({navigation}) {
               headerBackVisible: false,
               headerStyle: {
                 backgroundColor: '#D28A8E',
-              }
-            }} name="Trips" component={Trips} />
+              },
+               headerRight: () => (
+                <View>
+                  <TouchableOpacity onPress={() =>  setModalVisible(true)}>
+                    <Entypo name='plus' size={35} color='#F6F6F6'/>
+                  </TouchableOpacity>
+                <Modal visible={modalVisible}>
+                <CreateTrip onSave={handleSavePress} onCancel={handleCancelPress}/>
+            </Modal>
+                </View>
+              )
+            })} name="Trips" component={Trips} />
           <Stack.Screen 
             options={({ navigation }) => ({
               title: 'Dreamscape',
