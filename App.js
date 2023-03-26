@@ -61,6 +61,8 @@ export default function App({navigation}) {
 
           <Stack.Screen options={{ headerShown: false }} name="PostScreen" component={PostScreen} />
           <Stack.Screen options={{ headerShown: false }} name="TripScreen" component={TripScreen} />
+          
+          <Stack.Screen options={{ headerShown: false }} name="Comments" component={Comments} />
           <Stack.Screen 
             options={{
               title: 'Trips',
