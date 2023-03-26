@@ -62,7 +62,7 @@ export default function NavigationBar({toNavBarUsername, toNavBarUserID}) {
                 </TouchableOpacity>
 
                 {/* trips button */}
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Trips')}>
                     <FontAwesome5 name='calendar-alt' size={40} color='#3A6496'/>
                 </TouchableOpacity>
 
