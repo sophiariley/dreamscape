@@ -17,104 +17,50 @@ import PostScreen from '../screens/PostScreen';
 //     {url: require('../assets/posts/image10.jpg')}
 // ]
 
-
-
 let { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-export default function photoGrid({PostUrls, navigation}) {
-// shouldComponentUpdate() {
-//     return false; // Will cause component to never re-render.
-// }
-    // async function getPicID(docRef) {
-    //     updatePicIDArray([]);
-    //     const images = await getDocs(collection(docRef, "userPosts"));
-    //     const snapshot = await getCountFromServer(collection(docRef, "userPosts"));
-    //     console.log('count: ', snapshot.data().count);
-    //     // images.forEach(async (doc) => {
-    //     //     console.log(doc.id, " => ", doc.data());
-    //     //     updatePicIDArray( arr => [...arr, doc.id]);
-    //     //     setCount(10);
-    //     // });
+
+export default function photoGrid({postIDData, postUrls, userID, navigation}) {
+
+    //const [PostUrls, setPostUrls] = postIDData;
+
+    async function getURL(PostID) {
+        console.log("POST ID: ", PostID);
+        const docRef = doc(db, "users", userID);
+        const pic = doc(docRef, "userPosts", PostID);
+        const picSnap = await getDoc(pic);
+        const mypath = picSnap.data().image;
+
+        const imagesRef = ref(storage, "images");
+        const pathRef = ref(imagesRef,mypath);
+        const downloadUrl = await getDownloadURL(pathRef)
+            .catch((error) => {
+            });
+                      
+        return 'https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2F2d6961e8-dafc-48bb-aa1c-56efe6e57b93.jpeg?alt=media&token=696456ea-1c7c-49ec-8135-1c947e17fe54';
+    }
+    async function runIt() {
+       console.log(postUrls[0].url, " AAAAAAAAAAAAAAAAAAA");
+    }
+    runIt();
+    // function getPostID() {
+    //     console.log("HERE!");
+    //     return "";
     // }
-    
-    // async function getPicPath(userID) {
-    //     const docRef = doc(db, "users", userID);
-    //     const docSnap = await getDoc(docRef);
-    //     setGlobalPicPaths([]);
-    //     picIDArray.map(async (picID) => {
-            
-    //         console.log("GetPicPath PICID: ", picID);
-    //         const pic = doc(docRef, "images", picID);
-    //         const picSnap = await getDoc(pic);
-    //         const mypath = picSnap.data().image;
-    //         //take parenthases away
-    //         var strpath = mypath;
-    //         var result = strpath.substring(8, strpath.length-1); //changes 1 to 8 to takeout images/
-    //         const newmypath = result;
-    //         console.log("getPicPath: ", newmypath);
-    //         setGlobalPicPaths(arr => [...arr, newmypath]);
-    //     });
-    // }
-
-    // //url of pic in firebase store - originally set to default profile pic
-    // //const [picID, setPicID] = useState(''); //2Zz3JGFco2dG0n6CMsE1
-    // //const [picIDArray, updatePicIDArray] = useState([]);
-    // const [picIDArray, updatePicIDArray] = useState([]);
-    // const [globalPicPaths, setGlobalPicPaths] = useState([]);
-    // const [globalUrls, setGlobalUrls] = useState([]);
-   
-
-    // const [count, setCount] = useState(0);
-    
-
-    // async function getPicUrl() {
-    //     //console.log("is there quotes? ", picpath);
-    //     const imagesRef = ref(storage, "images");
-    //     globalPicPaths.map(async (picpath) => {
-    //         const pathRef = ref(imagesRef,picpath);
-    //         const downloadUrl = await getDownloadURL(pathRef)
-    //             .catch((error) => {
-    //               });
-    //         console.log('Image URL: ', downloadUrl);
-    //         setGlobalUrls(arr => [...arr, downloadUrl]);
-    //     });
-    // }
-
-    // async function doItAll() {
-    //     const docRef = doc(db, "users", userID);
-    //     await getPicID(docRef);
-    //     console.log("User ID: ", userID);
-    //     console.log(picIDArray.length);
-        
-    //     if(count>0){
-    //         console.log("count: ", count);
-    //         //await getPicPath(userID); 
-    //         picIDArray.map((data) => {
-    //             console.log("hello ", data.length);
-    //         });
-    //         // console.log("We here! - ", globalPicPaths);
-    //         // await getPicUrl();
-    //     } // else say "no posts yet" or "create a post with the plus button"
-    //     setCount(0);
-    // }
-    //doItAll();
-
-    // async function runIt() {
-    //     PostUrls.map((url) => {
-    //         console.log("URL!!!!!!!!!!!!!!!!!!!!!! ", url);
-    //     });
-    // // }
-    // runIt();
     return (
     <View>
         <FlatList 
-            data={PostUrls}
+            data={postUrls}
             renderItem = {item => {
                 return (
                     <View style={{flex: 1, marginBottom: 2}}>
-                        <TouchableOpacity onPress={() => navigation.navigate('PostScreen')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('PostScreen', {
+                        postID: item.item.postID,
+                        userID: userID,
+                    })}>
                         <Image 
-                            source={{uri: item.item}}
+                            source={{uri: item.item.url
+                            }}
                             style={{
                                 height: screenWidth/3,
                                 width: screenWidth/3 - 2

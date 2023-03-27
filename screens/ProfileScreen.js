@@ -18,7 +18,7 @@ const ProfileScreen = ({route, navigation}) => {
     async function getPicID(docRef) {
         const images = await getDocs(collection(docRef, "images"));
         images.forEach((doc) => {
-            //console.log(doc.id, " => ", doc.data());
+            // console.log(doc.id, " => !!!!!!!!!!!!!!!!!!!!!!! ", doc.data());
             setPicID(doc.id);
             setCount(10);
         });
@@ -80,8 +80,8 @@ const ProfileScreen = ({route, navigation}) => {
     doItAll();
 
         // Generating Post Pictures / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
-        const [globalPostUrls, setGlobalPostUrls] = useState(['https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2F2d6961e8-dafc-48bb-aa1c-56efe6e57b93.jpeg?alt=media&token=696456ea-1c7c-49ec-8135-1c947e17fe54']);
-        //const PostURLS = [];
+        const [globalPostUrls, setGlobalPostUrls] = useState([{url: 'https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2F2d6961e8-dafc-48bb-aa1c-56efe6e57b93.jpeg?alt=media&token=696456ea-1c7c-49ec-8135-1c947e17fe54', postID: ''}]);
+        const [postIDs, setPostIDs] = useState(['']);
     
         async function getPicIDPosts(docRef) {
             const picIDArray = [];
@@ -103,6 +103,7 @@ const ProfileScreen = ({route, navigation}) => {
                 const pic = doc(docRef, "userPosts", picIDArray[i]);
                 const picSnap = await getDoc(pic);
                 const mypath = picSnap.data().image;
+                console.log("myPaTH", mypath);
                 //console.log("------------ THIS IS WHAT I WANT TO LOOK AT: ", mypath);
                 //var strpath = mypath;
                 //var result = strpath.substring(8, strpath.length-1);
@@ -113,7 +114,7 @@ const ProfileScreen = ({route, navigation}) => {
             return picPathArray;
         }
     
-        async function getPicUrlPosts(GlobalPicPathsPosts) {
+        async function getPicUrlPosts(GlobalPicPathsPosts, picIDArray) {
             const imagesRef = ref(storage, "images");
             const globURLs = [];
     
@@ -122,23 +123,42 @@ const ProfileScreen = ({route, navigation}) => {
                 const downloadUrl = await getDownloadURL(pathRef)
                     .catch((error) => {
                       });
-                //console.log('Image URL: ', downloadUrl);
-                globURLs.push(downloadUrl);
+                //console.log('ID ', picIDArray[i]);
+                globURLs.push({url: downloadUrl, postID: picIDArray[i]});
             }
+
+            
             return globURLs;
         }
     
         async function doItAllPosts() {
             const docRef = doc(db, "users", userID);
             const picIDArray = await getPicIDPosts(docRef);
+            //console.log('heree');
+            // if (!(picIDArray.every(item => postIDs.indexOf(item)>-1))) {
+            //     setPostIDs(postIDs);
+            //    // console.log("hi");
+            // }
+            // for (let i = 0; i <picIDArray.length; i++) {
+            //     console.log(picIDArray[i]);
+            // }
+            
             //console.log("ARRAY length",picIDArray.length);
             if(picIDArray.length>0){
     
                 const GlobalPicPathsPosts = await getPicPathPosts(picIDArray);
                 //console.log("We here! - ", GlobalPicPathsPosts.length);
-                const picURLs = await getPicUrlPosts(GlobalPicPathsPosts);
-                if (!(picURLs.every(item => globalPostUrls.indexOf(item)>-1))) {
+                for (let i = 0; i <picIDArray.length; i++) {
+                    console.log(picIDArray[i]);
+                }
+                const picURLs = await getPicUrlPosts(GlobalPicPathsPosts, picIDArray);
+                for(let j = 0; j < picURLs.length; j++) {
+
+                    console.log(picURLs[j]);
+                }
+                if (!(JSON.stringify(picURLs) == JSON.stringify(globalPostUrls))) {
                     setGlobalPostUrls(picURLs);
+                    console.log(!(picURLs.every(item => globalPostUrls.indexOf(item.url)>-1)));
                 }
     
             } // else say "no posts yet" or "create a post with the plus button"
@@ -281,7 +301,7 @@ const ProfileScreen = ({route, navigation}) => {
             {/* Photo Grid View */}
             {showPhotoGrid ? (
                 <View style={{ flex: 1, marginBottom: 60 }}>
-                    <PhotoGrid PostUrls={globalPostUrls} navigation={navigation} />
+                    <PhotoGrid postIDData={postIDs} postUrls={globalPostUrls} userID={userID} navigation={navigation} />
                 </View>
             ) : (
                 <Locations />
