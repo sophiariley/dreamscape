@@ -21,6 +21,7 @@ const PostScreen = ({navigation, route}) => {
     const [postPic, setPostPic] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5');
     const [posterPic, setPosterPic] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5');
     const [cap, setCap] = useState('no caption');
+    const [location, setLocation] = useState('The milkyway');
 
     // PostID and UserID of poster
     const postID = route.params.postID;
@@ -33,8 +34,8 @@ const PostScreen = ({navigation, route}) => {
         const docSnap = await getDoc(docRef);
         try {
             await getPostPic(docRef);
-            //await getPosterPic(docRef);
-            await getCap(docRef);
+            await getPosterPic(docRef);
+            await getPostInfo(docRef);
             setPosterUsername(docSnap.data().username);
             
         } catch (error) {
@@ -72,27 +73,40 @@ const PostScreen = ({navigation, route}) => {
             const dref = doc(docRef, "images", picID);
             const docSnap = await getDoc(dref);
             if(docSnap.exists()) {
-                const mypath = docSnap.data().url;
+                const docRef2 = doc(db, "users", userID);
+                const pic = doc(docRef2, "images", picID);
+
+                const picSnap = await getDoc(pic);
+                const mypath = picSnap.data().url;
+
+                //take parenthases away
+                var strpath = mypath;
+                var result = strpath.substring(8, strpath.length-1); //changes 1 to 8 to takeout images/
+                const newmypath = result;
+                //console.log("getPicPath: ", newmypath);
+
                 const imagesRef = ref(storage, "images");
-                const pathRef = ref(imagesRef,mypath);
-                    const downloadUrl = await getDownloadURL(pathRef)
-                    .catch((error) => {
-                    });
-                console.log(downloadUrl);
+                const pathRef = ref(imagesRef,newmypath);
+                const downloadUrl = await getDownloadURL(pathRef)
+                .catch((error) => {
+                });
+                //console.log('Image URL: ', downloadUrl);
                 setPosterPic(downloadUrl);
+            
             } else {
                 console.log("Document does not exist")
             }
         });
     }
 
-    async function getCap(docRef) {
+    async function getPostInfo(docRef) {
         const dref = doc(docRef, "userPosts", postID);
         const docSnap = await getDoc(dref);
         if(docSnap.exists()) {
             const mypath = docSnap.data().caption;
             console.log("cap ", mypath);
             setCap(mypath);
+            setLocation(docSnap.data().location)
         } else {
             console.log("Document does not exist")
         }
@@ -124,7 +138,7 @@ const PostScreen = ({navigation, route}) => {
                     </View>
                     <View style={{marginLeft: 7}}>
                         <Text style={styles.profileName}>{posterUsername}</Text>
-                        <Text style={styles.location}>Location</Text>
+                        <Text style={styles.location}>{location}</Text>
                     </View>
                 </View>
                 {/*image*/}
