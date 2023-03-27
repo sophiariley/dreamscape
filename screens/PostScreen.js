@@ -18,7 +18,9 @@ const PostScreen = ({navigation, route}) => {
     // Getting post information from database / / / / / / / / / / / / / / / / / / /
     
     //const [picID, setPicID] = useState(''); //2Zz3JGFco2dG0n6CMsE1
-    const [globalUrl, setGlobalUrl] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5');
+    const [postPic, setPostPic] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5');
+    const [posterPic, setPosterPic] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5');
+    const [cap, setCap] = useState('no caption');
 
     // PostID and UserID of poster
     const postID = route.params.postID;
@@ -30,34 +32,70 @@ const PostScreen = ({navigation, route}) => {
         const docRef = doc(db, "users", posterID);
         const docSnap = await getDoc(docRef);
         try {
-            await getPostInfo(docRef);
-        
+            await getPostPic(docRef);
+            //await getPosterPic(docRef);
+            await getCap(docRef);
             setPosterUsername(docSnap.data().username);
+            
         } catch (error) {
             console.log(error);
         }
     }
 
-    async function getPostInfo(docRef) {
-
-        // Get Post Picture / / / / / / / / / / / / / / 
+    async function getPostPic(docRef) {
         const dref = doc(docRef, "userPosts", postID);
         const docSnap = await getDoc(dref);
         if(docSnap.exists()) {
-            const mypath = docSnap.data().image;
             
+            const mypath = docSnap.data().image;
+            console.log("url ", mypath);
+
             const imagesRef = ref(storage, "images");
             const pathRef = ref(imagesRef,mypath);
                 const downloadUrl = await getDownloadURL(pathRef)
                     .catch((error) => {
                       });
             console.log(downloadUrl);
-            setGlobalUrl(downloadUrl);
+            setPostPic(downloadUrl);
+
+
         } else {
             console.log("Document does not exist")
         }
+    }
 
-        // get firstName
+    async function getPosterPic(docRef) {
+        const images = await getDocs(collection(docRef, "images"));
+
+        images.forEach(async (data) => {
+            const picID = data.id;
+            const dref = doc(docRef, "images", picID);
+            const docSnap = await getDoc(dref);
+            if(docSnap.exists()) {
+                const mypath = docSnap.data().url;
+                const imagesRef = ref(storage, "images");
+                const pathRef = ref(imagesRef,mypath);
+                    const downloadUrl = await getDownloadURL(pathRef)
+                    .catch((error) => {
+                    });
+                console.log(downloadUrl);
+                setPosterPic(downloadUrl);
+            } else {
+                console.log("Document does not exist")
+            }
+        });
+    }
+
+    async function getCap(docRef) {
+        const dref = doc(docRef, "userPosts", postID);
+        const docSnap = await getDoc(dref);
+        if(docSnap.exists()) {
+            const mypath = docSnap.data().caption;
+            console.log("cap ", mypath);
+            setCap(mypath);
+        } else {
+            console.log("Document does not exist")
+        }
     }
 
 
@@ -81,7 +119,7 @@ const PostScreen = ({navigation, route}) => {
                 <View style={styles.accountContainer}>
                     <View style={styles.profileImage}>
                         <Image style={styles.image}
-                            source={require('../assets/profile_photo.jpg')}
+                            source={{uri: posterPic}}
                         />
                     </View>
                     <View style={{marginLeft: 7}}>
@@ -92,7 +130,7 @@ const PostScreen = ({navigation, route}) => {
                 {/*image*/}
                 <View style={{width: Dimensions.get('screen').width}}> 
                     <Image style={styles.post}
-                    source={{uri: globalUrl}}
+                    source={{uri: postPic}}
                     /> 
                 </View>
                 {/*Like button*/}
@@ -107,8 +145,8 @@ const PostScreen = ({navigation, route}) => {
                 </View>
                 {/*Caption*/}
                 <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-                        <Text style={[styles.profileName, {marginLeft: 5, marginTop: 5, marginRight: 5}]}>john_travels</Text>
-                        <Text style={styles.caption}>Caption</Text>
+                        <Text style={[styles.profileName, {marginLeft: 5, marginTop: 5, marginRight: 5}]}>{posterUsername}</Text>
+                        <Text style={styles.caption}>{cap}</Text>
                 </View> 
                 {/*View comments button*/}    
                 <TouchableOpacity onPress={() => navigation.navigate('Comments')}>
