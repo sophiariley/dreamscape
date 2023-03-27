@@ -19,23 +19,28 @@ const PostScreen = ({navigation, route}) => {
     
     //const [picID, setPicID] = useState(''); //2Zz3JGFco2dG0n6CMsE1
     const [globalUrl, setGlobalUrl] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5');
-    const [globalPicPath, setGlobalPicPath] = useState('default.jpg');
-    const [count, setCount] = useState(0);
 
     // PostID and UserID of poster
     const postID = route.params.postID;
+    const posterID = route.params.posterID;
     const userID = route.params.userID;
-    
+    const [posterUsername, setPosterUsername] = useState('Username');
+
     async function doItAll() {
-        const docRef = doc(db, "users", userID);
+        const docRef = doc(db, "users", posterID);
+        const docSnap = await getDoc(docRef);
         try {
             await getPostInfo(docRef);
+        
+            setPosterUsername(docSnap.data().username);
         } catch (error) {
             console.log(error);
         }
     }
 
     async function getPostInfo(docRef) {
+
+        // Get Post Picture / / / / / / / / / / / / / / 
         const dref = doc(docRef, "userPosts", postID);
         const docSnap = await getDoc(dref);
         if(docSnap.exists()) {
@@ -51,18 +56,11 @@ const PostScreen = ({navigation, route}) => {
         } else {
             console.log("Document does not exist")
         }
+
+        // get firstName
     }
 
-    async function getPicUrl(picpath) {
-        //console.log("is there quotes? ", picpath);
-        const imagesRef = ref(storage, "images");
-        const pathRef = ref(imagesRef,picpath);
-        const downloadUrl = await getDownloadURL(pathRef)
-            .catch((error) => {
-              });
-            //console.log('Image URL: ', downloadUrl);
-            setGlobalUrl(downloadUrl);
-    }
+
 
 
     doItAll();
@@ -87,7 +85,7 @@ const PostScreen = ({navigation, route}) => {
                         />
                     </View>
                     <View style={{marginLeft: 7}}>
-                        <Text style={styles.profileName}>john_travels</Text>
+                        <Text style={styles.profileName}>{posterUsername}</Text>
                         <Text style={styles.location}>Location</Text>
                     </View>
                 </View>

@@ -56,7 +56,8 @@ export default function photoGrid({postIDData, postUrls, userID, navigation}) {
                     <View style={{flex: 1, marginBottom: 2}}>
                         <TouchableOpacity onPress={() => navigation.navigate('PostScreen', {
                         postID: item.item.postID,
-                        userID: userID,
+                        posterID: userID,
+                        userID: userID
                     })}>
                         <Image 
                             source={{uri: item.item.url
