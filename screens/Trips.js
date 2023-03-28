@@ -4,7 +4,11 @@ import NavigationBar from "../components/navigationBar";
 import { collection, query, where, onSnapshot, getDocs, setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase-config";
 
-const Trips = ({ navigation }) => {
+const Trips = ({ route, navigation }) => {
+
+    //username and userID of logged in account
+    const username = route.params.username;
+    const userID = route.params.userID;
 
     // Sample trip data
     const trips = [
@@ -33,7 +37,7 @@ const Trips = ({ navigation }) => {
                 </ScrollView>
             </View>
             <View style={styles.footer}>
-                <NavigationBar toNavBarUsername={'chrisnel'} toNavBarUserID={'password'}/>
+                <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>
             </View>
         </View>
     )
