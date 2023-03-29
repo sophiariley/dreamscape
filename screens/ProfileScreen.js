@@ -312,7 +312,7 @@ const ProfileScreen = ({route, navigation}) => {
             {/* Photo Grid View */}
             {showPhotoGrid ? (
                 <View style={{ flex: 1, marginBottom: 60 }}>
-                    <PhotoGrid postIDData={postIDs} postUrls={globalPostUrls} userID={userID} navigation={navigation} />
+                    <PhotoGrid postUrls={globalPostUrls} userID={userID} navigation={navigation} />
                 </View>
             ) : (
                 <Locations />

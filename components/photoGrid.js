@@ -20,7 +20,7 @@ import PostScreen from '../screens/PostScreen';
 let { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 
-export default function photoGrid({postIDData, postUrls, userID, navigation}) {
+export default function photoGrid({postUrls, userID, navigation}) {
 
     //const [PostUrls, setPostUrls] = postIDData;
 

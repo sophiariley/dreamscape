@@ -79,14 +79,14 @@ const PostScreen = ({navigation, route}) => {
                 const picSnap = await getDoc(pic);
                 const mypath = picSnap.data().url;
 
-                //take parenthases away
-                var strpath = mypath;
-                var result = strpath.substring(8, strpath.length-1); //changes 1 to 8 to takeout images/
-                const newmypath = result;
+                // //take parenthases away
+                // var strpath = mypath;
+                // var result = strpath.substring(8, strpath.length-1); //changes 1 to 8 to takeout images/
+                // const newmypath = result;
                 //console.log("getPicPath: ", newmypath);
 
                 const imagesRef = ref(storage, "images");
-                const pathRef = ref(imagesRef,newmypath);
+                const pathRef = ref(imagesRef,mypath);
                 const downloadUrl = await getDownloadURL(pathRef)
                 .catch((error) => {
                 });

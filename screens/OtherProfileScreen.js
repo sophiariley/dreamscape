@@ -8,7 +8,7 @@ import { getStorage, ref, getDownloadURL, } from "firebase/storage"
 import { db, storage } from "../firebase-config";
 import { collection, query, where, onSnapshot, getDocs, getDoc, addDoc, doc, deleteDoc, getCountFromServer } from "firebase/firestore";
 
-const OtherProfileScreen = ({route}) => {
+const OtherProfileScreen = ({route, navigation}) => {
 
     //realUsername & realUserID are logged in account, username and userID are other account
     const username = route.params.otherUsername;
@@ -148,15 +148,18 @@ const OtherProfileScreen = ({route}) => {
             const pic = doc(docRef, "userPosts", picIDArray[i]);
             const picSnap = await getDoc(pic);
             const mypath = picSnap.data().image;
-            var strpath = mypath;
-            var result = strpath.substring(8, strpath.length-1);
-            const newmypath = result;
-            picPathArray.push(newmypath);
+            console.log("myPaTH", mypath);
+            //console.log("------------ THIS IS WHAT I WANT TO LOOK AT: ", mypath);
+            //var strpath = mypath;
+            //var result = strpath.substring(8, strpath.length-1);
+            //const newmypath = result;
+            //picPathArray.push(newmypath);
+            picPathArray.push(mypath)
         }
         return picPathArray;
     }
 
-    async function getPicUrlPosts(GlobalPicPathsPosts) {
+    async function getPicUrlPosts(GlobalPicPathsPosts, picIDArray) {
         const imagesRef = ref(storage, "images");
         const globURLs = [];
 
@@ -165,25 +168,31 @@ const OtherProfileScreen = ({route}) => {
             const downloadUrl = await getDownloadURL(pathRef)
                 .catch((error) => {
                   });
-            //console.log('Image URL: ', downloadUrl);
-            globURLs.push(downloadUrl);
+            globURLs.push({url: downloadUrl, postID: picIDArray[i]});
         }
+
         return globURLs;
     }
 
     async function doItAllPosts() {
         const docRef = doc(db, "users", userID);
         const picIDArray = await getPicIDPosts(docRef);
-        //console.log("ARRAY length",picIDArray.length);
         if(picIDArray.length>0){
-            
+
             const GlobalPicPathsPosts = await getPicPathPosts(picIDArray);
-            //console.log("We here! - ", GlobalPicPathsPosts.length);
-            const picURLs = await getPicUrlPosts(GlobalPicPathsPosts);
-            if (!(picURLs.every(item => globalPostUrls.indexOf(item)>-1))) {
-                setGlobalPostUrls(picURLs);
+            for (let i = 0; i <picIDArray.length; i++) {
+                console.log(picIDArray[i]);
             }
-            
+            const picURLs = await getPicUrlPosts(GlobalPicPathsPosts, picIDArray);
+            for(let j = 0; j < picURLs.length; j++) {
+
+                console.log(picURLs[j].url, " HERO TO ZERO ", picURLs[j].postID);
+            }
+            if (!(JSON.stringify(picURLs) == JSON.stringify(globalPostUrls))) {
+                setGlobalPostUrls(picURLs);
+                //console.log(!(picURLs.every(item => globalPostUrls.indexOf(item.url)>-1)));
+            }
+
         } // else say "no posts yet" or "create a post with the plus button"
     }
 
@@ -308,7 +317,7 @@ const OtherProfileScreen = ({route}) => {
             </View>
             {/* Photo Grid View */}
             <View style={{flex: 1, marginBottom: 60}}>
-                <PhotoGrid PostUrls={globalPostUrls}/>
+            <PhotoGrid postUrls={globalPostUrls} userID={userID} navigation={navigation} />
             </View>
             <SafeAreaView style={styles.footer}>
                 <NavigationBar toNavBarUsername={realUsername} toNavBarUserID={realUserID}/>
