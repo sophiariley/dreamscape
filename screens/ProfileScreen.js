@@ -74,6 +74,7 @@ const ProfileScreen = ({route, navigation}) => {
         doItAllPosts();
         getFollowingCount(docRef);
         getFollowerCount(docRef);
+        getTripCount(docRef);
         getFirstName(docRef);
     }
 
@@ -168,6 +169,7 @@ const ProfileScreen = ({route, navigation}) => {
         // Get Follower/Following/Name Information to display / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
         const [followingCount, setFollowingCount] = useState(0);
         const [followerCount, setFollowerCount] = useState(0);
+        const [tripCount, setTripCount] = useState(0);
         const [firstName, setFirstName] = useState(username);
     
         async function getFollowingCount(docRef) {
@@ -187,6 +189,15 @@ const ProfileScreen = ({route, navigation}) => {
                 count++;
             });
             setFollowerCount(count);
+        }
+
+        async function getTripCount(docRef) {
+            var count = 0;
+            const trips = await getDocs(collection(docRef, "trips"));
+            trips.forEach((doc) => {
+                count++;
+            })
+            setTripCount(count);
         }
     
         async function getFirstName(docRef) {
@@ -236,7 +247,7 @@ const ProfileScreen = ({route, navigation}) => {
                 <View style={{flexDirection: 'row', marg: 'center'}}>
                     <View style={{alignItems: 'center'}}>
                         <Text style={styles.number}>
-                            11
+                            {tripCount}
                         </Text>
                         <Text style={styles.numberDescription}>
                             Trips
