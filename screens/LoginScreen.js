@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Dimensions } from "react-native";
 import {useNavigation} from '@react-navigation/core'
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase-config";
@@ -25,70 +25,77 @@ const LoginScreen = ({navigation}) => {
         return verified;
     }
 
+    const windowHeight = Dimensions.get('window').height;
+    const windowWidth = Dimensions.get('window').width;
+
     return (
         <View style={styles.container}>
-            <ImageBackground 
-            source={image}
-            style={styles.backgroundImage}>
-                <View style={styles.dreamscapeContainer}>
-                    <Text style={styles.dreamscape}>Dreamscape</Text>
+            <ScrollView style={{flex:1}}>
+                <View style={{width:windowWidth, height:windowHeight }}>
+                    <ImageBackground 
+                    source={image}
+                    style={styles.backgroundImage}>
+                        <View style={styles.dreamscapeContainer}>
+                            <Text style={styles.dreamscape}>Dreamscape</Text>
+                        </View>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.text}>Enter Username</Text>
+                                <TextInput 
+                                    style={styles.inputText} 
+                                    placeholder="Username"
+                                    value={username}
+                                    onChangeText={text => setUsername(text)}
+                                />
+                            <Text style={styles.text}>Enter Password</Text>
+                                <TextInput 
+                                    style={styles.inputText} 
+                                    placeholder="Password"
+                                    secureTextEntry //hides password
+                                    value={password}
+                                    onChangeText={text => setPassword(text)}
+                                />
+                        </View>
+                                
+                        <View style={styles.forgotPasswordContainer}>
+                            <TouchableOpacity 
+                                onPress={() => {navigation.navigate('Reset Password')}}>
+                                <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                            </TouchableOpacity>
+                        </View>
+                                
+                        <View style={styles.container}>
+                            <View style={styles.loginButtonContainer}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        auth(username, password).then(
+                                            function(value) {
+                                                if (value) {
+                                                    navigation.navigate('Home', {
+                                                        username: username,
+                                                        password: password,
+                                                    })
+                                                } 
+                                            }
+                                        );
+                                    }}
+                                    style={styles.loginButton}
+                                > 
+                                    <Text style={styles.login}> Login! </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                                
+                        <View style={styles.noAccountContainer}>
+                            <Text style={styles.noAccountText}>────────   Don't have an account?   ────────</Text>
+                                <TouchableOpacity 
+                                    onPress={() => {navigation.navigate('Create Account 1')}}>
+                                <Text style={styles.createText}>Create one here!</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
+                    <View style={styles.footer} />
                 </View>
-                <View style={styles.textContainer}>
-                    <Text style={styles.text}>Enter Username</Text>
-                        <TextInput 
-                            style={styles.inputText} 
-                            placeholder="Username"
-                            value={username}
-                            onChangeText={text => setUsername(text)}
-                        />
-                    <Text style={styles.text}>Enter Password</Text>
-                        <TextInput 
-                            style={styles.inputText} 
-                            placeholder="Password"
-                            secureTextEntry //hides password
-                            value={password}
-                            onChangeText={text => setPassword(text)}
-                        />
-                </View>
-                        
-                <View style={styles.forgotPasswordContainer}>
-                    <TouchableOpacity 
-                        onPress={() => {navigation.navigate('Reset Password')}}>
-                        <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-                    </TouchableOpacity>
-                </View>
-                        
-                <View style={styles.container}>
-                    <View style={styles.loginButtonContainer}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                auth(username, password).then(
-                                    function(value) {
-                                        if (value) {
-                                            navigation.navigate('Home', {
-                                                username: username,
-                                                password: password,
-                                            })
-                                        } 
-                                    }
-                                );
-                            }}
-                            style={styles.loginButton}
-                        > 
-                            <Text style={styles.login}> Login! </Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                        
-                <View style={styles.noAccountContainer}>
-                    <Text style={styles.noAccountText}>────────   Don't have an account?   ────────</Text>
-                        <TouchableOpacity 
-                            onPress={() => {navigation.navigate('Create Account 1')}}>
-                        <Text style={styles.createText}>Create one here!</Text>
-                    </TouchableOpacity>
-                </View>
-            </ImageBackground>
-            <View style={styles.footer} />
+            </ScrollView>
         </View>
     )
 }

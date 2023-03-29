@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, ScrollView, Dimensions } from "react-native";
 import {AntDesign} from 'react-native-vector-icons';
 //import { getDatabase, ref, set } from "firebase/database";
 import { doc, setDoc, collection, addDoc } from "firebase/firestore"; 
@@ -27,58 +27,65 @@ const CreateAccount2 = ({route, navigation}) => {
      runit();
     }
 
-    return (
-        <KeyboardAvoidingView behavior='padding' style={styles.container}>
-            <Text style={styles.createNewAccount}>Create New Account</Text>
-            <View style={styles.textContainer}>
-                <Text style={styles.text}>Enter Username</Text>
-                    <TextInput 
-                        style={styles.inputText} 
-                        placeholder=""
-                        value={username}
-                        onChangeText={text => setUsername(text)}
-                    />
-                <Text style={styles.text}>Enter Password</Text>
-                    <TextInput 
-                        style={styles.inputText} 
-                        placeholder=""
-                        secureTextEntry //hides password
-                        value={password}
-                        onChangeText={text => setPassword(text)}
-                    />
-                <Text style={styles.text}>Re-enter Password</Text>
-                    <TextInput 
-                        style={styles.inputText} 
-                        placeholder=""
-                        secureTextEntry //hides password
-                        value={password}
-                        onChangeText={text => setPassword(text)}
-                    />
-            </View>
-            <View style={styles.nextButtonContainer}>
-                <TouchableOpacity 
-                    onPress={() => { createUser(firstName, lastName, email, username, password); navigation.navigate('Home', {
-                        username: username,
-                        password: password,
-                    }) } }
-                    // change to Login later
+    const windowHeight = Dimensions.get('window').height;
+    const windowWidth = Dimensions.get('window').width;
 
-                    style={styles.nextButton}
-                > 
-                    <Text style={styles.next}>Next</Text>
-                    <AntDesign name='arrowright' size={20} color='#F6F6F6'/>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.prevButtonContainer}>
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('Create Account 1')}
-                    style={styles.prevButton}
-                > 
-                    <AntDesign name='arrowleft' size={20} color='#F6F6F6'/>
-                    <Text style={styles.prev}>Previous</Text>
-                </TouchableOpacity>
-            </View>
-        </KeyboardAvoidingView>
+    return (
+        <View style={styles.container}>
+            <ScrollView style={{flex:1}}>
+                <View style={{width:windowWidth, height:windowHeight }}>
+                    <Text style={styles.createNewAccount}>Create New Account</Text>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.text}>Enter Username</Text>
+                            <TextInput 
+                                style={styles.inputText} 
+                                placeholder=""
+                                value={username}
+                                onChangeText={text => setUsername(text)}
+                            />
+                        <Text style={styles.text}>Enter Password</Text>
+                            <TextInput 
+                                style={styles.inputText} 
+                                placeholder=""
+                                secureTextEntry //hides password
+                                value={password}
+                                onChangeText={text => setPassword(text)}
+                            />
+                        <Text style={styles.text}>Re-enter Password</Text>
+                            <TextInput 
+                                style={styles.inputText} 
+                                placeholder=""
+                                secureTextEntry //hides password
+                                value={password}
+                                onChangeText={text => setPassword(text)}
+                            />
+                    </View>
+                    <View style={styles.nextButtonContainer}>
+                        <TouchableOpacity 
+                            onPress={() => { createUser(firstName, lastName, email, username, password); navigation.navigate('Home', {
+                                username: username,
+                                password: password,
+                            }) } }
+                            // change to Login later
+
+                            style={styles.nextButton}
+                        > 
+                            <Text style={styles.next}>Next</Text>
+                            <AntDesign name='arrowright' size={20} color='#F6F6F6'/>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.prevButtonContainer}>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('Create Account 1')}
+                            style={styles.prevButton}
+                        > 
+                            <AntDesign name='arrowleft' size={20} color='#F6F6F6'/>
+                            <Text style={styles.prev}>Previous</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </ScrollView>
+        </View>
     )
 }
 
@@ -92,7 +99,8 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         top: 200,
-        position: 'absolute'
+        position: 'absolute',
+        alignSelf: 'center'
     },
     nextButtonContainer: {
         width: '70%',
@@ -102,7 +110,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         bottom: 80,
-        position: 'absolute'
+        position: 'absolute',
+        alignSelf: 'center'
     },
     prevButtonContainer: {
         width: '70%',
@@ -113,12 +122,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         position: 'absolute',
         bottom: 10,
+        alignSelf: 'center'
     },
     createNewAccount: {
         color: '#F8C98A',
         fontSize: 35,
         top: 100,
-        position: 'absolute'
+        position: 'absolute',
+        alignSelf: 'center'
     },
     inputText: {
         fontSize: 20,

@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, Dimensions, ScrollView } from "react-native";
 import {AntDesign} from 'react-native-vector-icons';
 import { db } from "../firebase-config";
 import { collection, addDoc } from "firebase/firestore";
@@ -18,54 +18,61 @@ const CreateAccount1 = ({navigation}) => {
       runit();
     }
     
+    const windowHeight = Dimensions.get('window').height;
+    const windowWidth = Dimensions.get('window').width;
+
 
     return (
         <View style={styles.container}>
-            <Text style={styles.createNewAccount}>Create New Account</Text>
-            <View style={styles.inputContainer}>
-                <Text style={styles.text}>Enter First Name</Text>
-                    <TextInput 
-                        style={styles.inputText} 
-                        placeholder=""
-                        value={firstName}
-                        onChangeText={text => setFirstName(text)}
-                    />
-                <Text style={styles.text}>Enter Last Name</Text>
-                    <TextInput 
-                        style={styles.inputText} 
-                        placeholder=""
-                        value={lastName}
-                        onChangeText={text => setLastName(text)}
-                    />
-                <Text style={styles.text}>Enter Email</Text>
-                    <TextInput 
-                        style={styles.inputText} 
-                        placeholder=""
-                        value={email}
-                        onChangeText={text => setEmail(text)}
-                    />
-                <Text style={styles.text}>Confirm Email</Text>
-                    <TextInput 
-                        style={styles.inputText} 
-                        placeholder=""
-                    />
-            </View>
-            <View style={styles.nextButtonContainer}>
-                <TouchableOpacity
-                    //onPress={() => createUser(firstName, lastName, email)} //navigation.navigate('Create Account 2')}
-                    onPress={() => navigation.navigate('Create Account 2', {firstName: firstName, lastName: lastName, email: email})}
-                    style={styles.nextButton}
-                > 
-                    <Text style={styles.next}>Next</Text>
-                    <AntDesign name='arrowright' size={20} color='#F6F6F6'/>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.accountExistsContainer}>
-                <Text style={styles.accountExistsText}>────────   Already have an account?   ────────</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                    <Text style={styles.signInText}>Sign in here!</Text>
-                </TouchableOpacity>
-            </View>
+            <ScrollView style={{flex:1}}>
+                <View style={{width:windowWidth, height:windowHeight }}>
+                    <Text style={styles.createNewAccount}>Create New Account</Text>
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.text}>Enter First Name</Text>
+                            <TextInput 
+                                style={styles.inputText} 
+                                placeholder=""
+                                value={firstName}
+                                onChangeText={text => setFirstName(text)}
+                            />
+                        <Text style={styles.text}>Enter Last Name</Text>
+                            <TextInput 
+                                style={styles.inputText} 
+                                placeholder=""
+                                value={lastName}
+                                onChangeText={text => setLastName(text)}
+                            />
+                        <Text style={styles.text}>Enter Email</Text>
+                            <TextInput 
+                                style={styles.inputText} 
+                                placeholder=""
+                                value={email}
+                                onChangeText={text => setEmail(text)}
+                            />
+                        <Text style={styles.text}>Confirm Email</Text>
+                            <TextInput 
+                                style={styles.inputText} 
+                                placeholder=""
+                            />
+                    </View>
+                    <View style={styles.nextButtonContainer}>
+                        <TouchableOpacity
+                            //onPress={() => createUser(firstName, lastName, email)} //navigation.navigate('Create Account 2')}
+                            onPress={() => navigation.navigate('Create Account 2', {firstName: firstName, lastName: lastName, email: email})}
+                            style={styles.nextButton}
+                        > 
+                            <Text style={styles.next}>Next</Text>
+                            <AntDesign name='arrowright' size={20} color='#F6F6F6'/>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.accountExistsContainer}>
+                        <Text style={styles.accountExistsText}>────────   Already have an account?   ────────</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                            <Text style={styles.signInText}>Sign in here!</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </ScrollView>
         </View>
     )
 }
@@ -80,7 +87,8 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         top: 190,
-        position: 'absolute'
+        position: 'absolute',
+        alignSelf: 'center'
     },
     nextButtonContainer: {
         width: '70%',
@@ -90,18 +98,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         bottom: 90,
-        position: 'absolute'
+        position: 'absolute',
+        alignSelf: 'center'
     },
     accountExistsContainer: {
         flexDirection: 'column',
         bottom: 20,
-        position: 'absolute'
+        position: 'absolute',
+        alignSelf: 'center'
     },
     createNewAccount: {
         color: '#F8C98A',
         fontSize: 35,
         top: 100,
-        position: 'absolute'
+        position: 'absolute',
+        alignSelf: 'center'
     },
     inputText: {
         fontSize: 20,
