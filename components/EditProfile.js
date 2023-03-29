@@ -3,9 +3,19 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import { db, storage } from "../firebase-config";
+import { collection, addDoc, setDoc, query, where, getDocs, doc } from "firebase/firestore";
 
-export default function EditProfile({onSave, onCancel}) {
+export default function EditProfile({onSave, onCancel, myuserID}) {
+  const userID = myuserID;
   const [profilePicture, setProfilePicture] = useState(null);
+  const [picName, setPicName] = useState('');
+  const [profilePicExists, setProfilePicExists] = useState(false);
+
+  const metadata = {
+    contentType: 'image/jpeg'
+};
 
   const handleProfilePicturePress = async () => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -21,15 +31,73 @@ export default function EditProfile({onSave, onCancel}) {
     }
     console.log(pickerResult.assets[0].uri);
     setProfilePicture(pickerResult.assets[0].uri);
+
+    const uri = pickerResult.assets[0].uri;
+    console.log("---------uri ", uri);
+    const picname = uri.substring(uri.lastIndexOf('/') + 1);
+    setPicName(picname);
   };
+
+  async function uploadImageAsync(uri) {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function(e) {
+        console.log(e);
+        reject(new TypeError('Network request failed'));
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', uri, true);
+      xhr.send(null);
+    });
+  
+    const storageRef = ref(storage, 'images/' + picName);
+    const snapshot = await uploadBytes(storageRef, blob, metadata);
+  
+    // We're done with the blob, close and release it
+    blob.close();
+  
+    //const fileRef = ref(storage, 'images/' + name);
+    const snapShotURL =  await getDownloadURL(storageRef)
+    .catch((error) => {
+
+    });
+    addToFirestore(picName);
+    //setImageURL(snapShotURL);
+    //console.log("UpDown URL: ", snapShotURL);
+  }
+
+  async function addToFirestore(url) {
+    var count = 0;
+    const userRef = doc(db, "users", userID);
+    //console.log("------------userid ", userID);
+    //const q = query(collection(userRef, "images"), where(url), "!=", '');
+    const q = collection(userRef, "images");
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((docu) => {
+      count = count +1;
+    });
+    if(count == 0) {
+      setProfilePicExists(true);
+      const newDoc = await addDoc(collection(userRef, "images"), {url});
+    }
+    else {
+      querySnapshot.forEach((docu) => {
+        setProfilePicExists(true);
+        const docRef = setDoc(doc(userRef, "images", docu.id), {url});
+    });
+    }
+}
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
         <TouchableOpacity onPress={onCancel} style={styles.cancelContainer}>
-          <Text style={styles.buttonText}>Cancel</Text>
+          <Text style={styles.buttonText}>Exit</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={onSave} style={styles.saveContainer}>
+        <TouchableOpacity onPress={ () => { profilePicture ? (uploadImageAsync(profilePicture), onSave) : onCancel}} style={styles.saveContainer}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
         <Text style={styles.text}>Edit Profile</Text>

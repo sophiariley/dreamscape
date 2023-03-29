@@ -35,10 +35,10 @@ const ProfileScreen = ({route, navigation}) => {
         const mypath = picSnap.data().url;
         //take parenthases away
         var strpath = mypath;
-        var result = strpath.substring(8, strpath.length-1); //changes 1 to 8 to takeout images/
+        var result = strpath.substring(8, strpath.length-1); 
         const newmypath = result;
-        //console.log("getPicPath: ", newmypath);
-        setGlobalPicPath(newmypath);
+        console.log("getPicPath: ", mypath);
+        setGlobalPicPath(mypath); //changes 1 to 8 to takeout images/ ------- CHANGING THIS NOW ONLY SELF UPLOADED PROFILEPICS WILL
     }
 
     //url of pic in firebase store - originally set to default profile pic
@@ -280,7 +280,7 @@ const ProfileScreen = ({route, navigation}) => {
                 <Text style={{color: 'white'}}>Edit Profile</Text>
             </TouchableOpacity>
             <Modal visible={modalVisible}>
-                <EditProfile onSave={handleSavePress} onCancel={handleCancelPress}/>
+                <EditProfile onSave={handleSavePress} onCancel={handleCancelPress} myuserID={userID}/>
             </Modal>
             <View style={styles.travelBuddies}>
                 
