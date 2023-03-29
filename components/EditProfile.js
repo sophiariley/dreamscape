@@ -5,13 +5,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { db, storage } from "../firebase-config";
-import { collection, addDoc, setDoc, query, where, getDocs, doc } from "firebase/firestore";
+import { collection, addDoc, setDoc, updateDoc, getDocs, doc } from "firebase/firestore";
 
 export default function EditProfile({onSave, onCancel, myuserID}) {
   const userID = myuserID;
   const [profilePicture, setProfilePicture] = useState(null);
   const [picName, setPicName] = useState('');
   const [profilePicExists, setProfilePicExists] = useState(false);
+  const [newUsername, setNewUsername] = useState('');
 
   const metadata = {
     contentType: 'image/jpeg'
@@ -91,13 +92,30 @@ export default function EditProfile({onSave, onCancel, myuserID}) {
     }
 }
 
+async function changeUsername(newUsername) {
+  const userRef = doc(db, "users", userID);
+  await updateDoc(userRef, {
+    username: newUsername
+  });
+}
+
+function updateThings(profilePic, newUsername) {
+  if(profilePic) {
+    uploadImageAsync(profilePic);
+  }
+  if(newUsername!='') {
+    changeUsername(newUsername);
+  }
+}
+
+  //Save button worked for profile pic as onPress={ () => { profilePicture ? (uploadImageAsync(profilePicture), onSave) : onCancel}} style={styles.saveContainer}
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
         <TouchableOpacity onPress={onCancel} style={styles.cancelContainer}>
           <Text style={styles.buttonText}>Exit</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={ () => { profilePicture ? (uploadImageAsync(profilePicture), onSave) : onCancel}} style={styles.saveContainer}>
+        <TouchableOpacity onPress={ () => { updateThings(profilePicture, newUsername); onSave }} style={styles.saveContainer}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
         <Text style={styles.text}>Edit Profile</Text>
@@ -121,7 +139,12 @@ export default function EditProfile({onSave, onCancel, myuserID}) {
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Username</Text>
-          <TextInput style={styles.input} />
+          <TextInput 
+          style={styles.input}
+          placeholder=""
+          value={newUsername}
+          onChangeText={text => setNewUsername(text)}
+          />
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Birthday</Text>
