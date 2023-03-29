@@ -92,7 +92,7 @@ const OtherProfileScreen = ({route, navigation}) => {
         var result = strpath.substring(8, strpath.length-1); //changes 1 to 8 to takeout images/
         const newmypath = result;
         //console.log("getPicPath: ", newmypath);
-        setGlobalPicPath(newmypath);
+        setGlobalPicPath(mypath);
     }
 
     async function getPicUrl(picpath) {
