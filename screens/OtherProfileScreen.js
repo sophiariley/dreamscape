@@ -121,6 +121,7 @@ const OtherProfileScreen = ({route, navigation}) => {
         getFollowingCount(docRef);
         getFollowerCount(docRef);
         getFirstName(docRef);
+        getTripCount(docRef);
         loadFollowData();
     }
 
@@ -199,6 +200,7 @@ const OtherProfileScreen = ({route, navigation}) => {
     // Get Follower/Following/Name Information to display / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
     const [followingCount, setFollowingCount] = useState(0);
     const [followerCount, setFollowerCount] = useState(0);
+    const [tripCount, setTripCount] = useState(0);
     const [firstName, setFirstName] = useState(username);
 
     async function getFollowingCount(docRef) {
@@ -218,6 +220,15 @@ const OtherProfileScreen = ({route, navigation}) => {
             count++;
         });
         setFollowerCount(count);
+    }
+
+    async function getTripCount(docRef) {
+        var count = 0;
+        const trips = await getDocs(collection(docRef, "trips"));
+        trips.forEach((doc) => {
+            count++;
+        })
+        setTripCount(count);
     }
 
     async function getFirstName(docRef) {
@@ -242,7 +253,7 @@ const OtherProfileScreen = ({route, navigation}) => {
                 <View style={{flexDirection: 'row', marg: 'center'}}>
                     <View style={{alignItems: 'center'}}>
                         <Text style={styles.number}>
-                            11
+                            {tripCount}
                         </Text>
                         <Text style={styles.numberDescription}>
                             Trips
@@ -278,7 +289,6 @@ const OtherProfileScreen = ({route, navigation}) => {
             <View style={styles.profileInfo}>
                 <View style={{flexDirection: 'row'}}>
                     <Text style={styles.textName}>{firstName}</Text>
-                    <Text style={{color: '#3A6496', fontSize: 18, textAlignVertical: 'bottom'}}>31</Text>
                 </View>
                 <Text style={{fontSize: 13, color: '#3A6496', opacity: .7}}>Maryland</Text>  
             </View>

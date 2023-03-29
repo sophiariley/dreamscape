@@ -282,8 +282,7 @@ const ProfileScreen = ({route, navigation}) => {
 
             <View style={styles.profileInfo}>
                 <View style={{flexDirection: 'row'}}>
-                    <Text style={styles.textName}>{firstName},</Text>
-                    <Text style={{color: '#3A6496', fontSize: 18, textAlignVertical: 'bottom'}}>31</Text>
+                    <Text style={styles.textName}>{firstName}</Text>
                 </View>
                 <Text style={{fontSize: 13, color: '#3A6496', opacity: .7}}>Maryland</Text>  
             </View>
