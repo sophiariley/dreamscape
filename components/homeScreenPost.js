@@ -4,7 +4,11 @@ import {StyleSheet, Text, View, TouchableOpacity, Pressable, Image, Dimensions, 
 import {FontAwesome, Ionicons} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/core'
 
-export default function CommentLikeDislike({}) {
+export default function CommentLikeDislike({username, url, caption, location}) {
+    const myusername = username;
+    const myurl = url;
+    const mycaption = caption;
+    const mylocation = location;
     const navigation = useNavigation();   
     const [isLiked, setIsLiked] = useState(false);
     const handleLikePress = () => {
@@ -12,7 +16,7 @@ export default function CommentLikeDislike({}) {
     };
 
     return (
-        <ScrollView>
+        <View>
                 {/*Profile container*/}
                 <View style={styles.accountContainer}>
                     <View style={styles.profileImage}>
@@ -21,8 +25,8 @@ export default function CommentLikeDislike({}) {
                         />
                     </View>
                     <View style={{marginLeft: 7}}>
-                        <Text style={styles.profileName}>john_travels</Text>
-                        <Text style={styles.location}>Location</Text>
+                        <Text style={styles.profileName}>{myusername}</Text>
+                        <Text style={styles.location}>{mylocation}</Text>
                     </View>
                 </View>
                 {/*image*/}
@@ -43,8 +47,8 @@ export default function CommentLikeDislike({}) {
                 </View>
                 {/*Caption*/}
                 <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-                        <Text style={[styles.profileName, {marginLeft: 5, marginTop: 5, marginRight: 5}]}>john_travels</Text>
-                        <Text style={styles.caption}>Caption</Text>
+                        <Text style={[styles.profileName, {marginLeft: 5, marginTop: 5, marginRight: 5}]}>{myusername}</Text>
+                        <Text style={styles.caption}>{mycaption}</Text>
                 </View> 
                 {/*View comments button*/}    
                 <TouchableOpacity onPress={() => navigation.navigate('Comments')}>
@@ -52,7 +56,7 @@ export default function CommentLikeDislike({}) {
                 </TouchableOpacity>
                 {/*Date posted*/}
                 <Text style={{fontWeight: '200', fontSize: 12,textAlign: 'right', margin: 5}}>Posted on ...</Text>
-            </ScrollView>
+            </View>
     )
 }
 
@@ -109,4 +113,3 @@ container: {
         alignItems: 'center'
     }
 })
-
