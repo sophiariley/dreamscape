@@ -327,7 +327,7 @@ const OtherProfileScreen = ({route, navigation}) => {
             </View>
             {/* Photo Grid View */}
             <View style={{flex: 1, marginBottom: 60}}>
-            <PhotoGrid postUrls={globalPostUrls} userID={userID} navigation={navigation} />
+            <PhotoGrid postUrls={globalPostUrls} userID={realUserID} posterPic={globalUrl} posterID={userID} navigation={navigation} username={realUsername}/>
             </View>
             <SafeAreaView style={styles.footer}>
                 <NavigationBar toNavBarUsername={realUsername} toNavBarUserID={realUserID}/>

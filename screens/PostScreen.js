@@ -19,7 +19,7 @@ const PostScreen = ({navigation, route}) => {
     
     //const [picID, setPicID] = useState(''); //2Zz3JGFco2dG0n6CMsE1
     const [postPic, setPostPic] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5');
-    const [posterPic, setPosterPic] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5');
+    // const [posterPic, setPosterPic] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5');
     const [cap, setCap] = useState('no caption');
     const [location, setLocation] = useState('The milkyway');
 
@@ -27,6 +27,8 @@ const PostScreen = ({navigation, route}) => {
     const postID = route.params.postID;
     const posterID = route.params.posterID;
     const userID = route.params.userID;
+    const username = route.params.username; 
+    const posterPic = route.params.posterPic;
     const [posterUsername, setPosterUsername] = useState('Username');
 
     async function doItAll() {
@@ -34,7 +36,7 @@ const PostScreen = ({navigation, route}) => {
         const docSnap = await getDoc(docRef);
         try {
             await getPostPic(docRef);
-            await getPosterPic(docRef);
+            //await getPosterPic(docRef);
             await getPostInfo(docRef);
             setPosterUsername(docSnap.data().username);
             
@@ -163,7 +165,14 @@ const PostScreen = ({navigation, route}) => {
                         <Text style={styles.caption}>{cap}</Text>
                 </View> 
                 {/*View comments button*/}    
-                <TouchableOpacity onPress={() => navigation.navigate('Comments')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Comments', {
+                    postID: postID,
+                    posterID: posterID,
+                    posterUsername: posterUsername,
+                    caption: cap,
+                    userID: userID,
+                    username: username
+                })}>
                     <Text style={{fontWeight: '200', marginLeft: 5, marginTop: 15, alignSelf: 'center'}}>View comments</Text>
                 </TouchableOpacity>
                 {/*Date posted*/}

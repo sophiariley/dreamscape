@@ -20,29 +20,29 @@ import PostScreen from '../screens/PostScreen';
 let { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 
-export default function photoGrid({postUrls, userID, navigation}) {
+export default function photoGrid({postUrls, posterPic, userID, posterID, username, navigation}) {
 
     //const [PostUrls, setPostUrls] = postIDData;
 
-    async function getURL(PostID) {
-        console.log("POST ID: ", PostID);
-        const docRef = doc(db, "users", userID);
-        const pic = doc(docRef, "userPosts", PostID);
-        const picSnap = await getDoc(pic);
-        const mypath = picSnap.data().image;
+    // async function getURL(PostID) {
+    //     console.log("POST ID: ", PostID);
+    //     const docRef = doc(db, "users", userID);
+    //     const pic = doc(docRef, "userPosts", PostID);
+    //     const picSnap = await getDoc(pic);
+    //     const mypath = picSnap.data().image;
 
-        const imagesRef = ref(storage, "images");
-        const pathRef = ref(imagesRef,mypath);
-        const downloadUrl = await getDownloadURL(pathRef)
-            .catch((error) => {
-            });
+    //     const imagesRef = ref(storage, "images");
+    //     const pathRef = ref(imagesRef,mypath);
+    //     const downloadUrl = await getDownloadURL(pathRef)
+    //         .catch((error) => {
+    //         });
                       
-        return 'https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2F2d6961e8-dafc-48bb-aa1c-56efe6e57b93.jpeg?alt=media&token=696456ea-1c7c-49ec-8135-1c947e17fe54';
-    }
-    async function runIt() {
-       console.log(postUrls[0].url, " AAAAAAAAAAAAAAAAAAA");
-    }
-    runIt();
+    //     return 'https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2F2d6961e8-dafc-48bb-aa1c-56efe6e57b93.jpeg?alt=media&token=696456ea-1c7c-49ec-8135-1c947e17fe54';
+    // }
+    // async function runIt() {
+    //    console.log(postUrls[0].url, " AAAAAAAAAAAAAAAAAAA");
+    // }
+    // runIt();
     // function getPostID() {
     //     console.log("HERE!");
     //     return "";
@@ -56,8 +56,10 @@ export default function photoGrid({postUrls, userID, navigation}) {
                     <View style={{flex: 1, marginBottom: 2}}>
                         <TouchableOpacity onPress={() => navigation.navigate('PostScreen', {
                         postID: item.item.postID,
-                        posterID: userID,
-                        userID: userID
+                        posterID: posterID,
+                        posterPic: posterPic,
+                        userID: userID,
+                        username: username
                     })}>
                         <Image 
                             source={{uri: item.item.url
