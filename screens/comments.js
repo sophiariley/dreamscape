@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/core';
 
 import { db, storage } from "../firebase-config";
 import { getStorage, ref, getDownloadURL, } from "firebase/storage"
-import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual, getCountFromServer, addDoc } from "firebase/firestore";
+import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual, getCountFromServer, addDoc, serverTimestamp, orderBy } from "firebase/firestore";
 
 const Comments = ({route}) => {
   const [comments, setComments] = useState([]);
@@ -37,7 +37,7 @@ const Comments = ({route}) => {
     await addDoc(collection(docRef, 'comments'), {
         username: username,
         comment: newComment,
-        //timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        timestamp: serverTimestamp()
     });
   }
 
@@ -56,7 +56,7 @@ const Comments = ({route}) => {
     
     const posterDoc = doc(db, "users", posterID);
     const docRef = doc(posterDoc, "userPosts", postID);
-    const commentCollection = await getDocs(collection(docRef, "comments"));
+    const commentCollection = await getDocs(query(collection(docRef, "comments"), orderBy('timestamp')));
     commentCollection.forEach(async (doc) => {
       commentArr.push({username: doc.data().username, comment: doc.data().comment});
     });
