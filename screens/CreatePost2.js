@@ -23,8 +23,6 @@ const CreatePost2 = ({navigation, route}) => {
         contentType: 'image/jpeg'
     };
 
-    //START CHANGES
-
     const handleImage = async () => {
         let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     
@@ -50,28 +48,6 @@ const CreatePost2 = ({navigation, route}) => {
         const picname = uri.substring(uri.lastIndexOf('/') + 1);
         setName(picname);
       };
-
-    // END CHANGES
-
-    // Original code:
-    // const handleImage = async () => {
-    //     let result = await ImagePicker.launchImageLibraryAsync({
-    //         mediaTypes: ImagePicker.MediaTypeOptions.All,
-    //         allowsEditing: true,
-    //         aspect: [4, 3],
-    //         quality: 1,
-    //     })
-
-    //     console.log(result);
-
-    //     if (!result.canceled) { // cancelled
-    //         setImage(result.assets[0].uri);
-    //         const uri = result.assets[0].uri;
-    //         console.log("upload uri: ", uri);
-    //         const picname = uri.substring(uri.lastIndexOf('/') + 1);
-    //         setName(picname);
-    //     }
-    // };
 
     async function uploadImageAsync(uri) {
         const blob = await new Promise((resolve, reject) => {
