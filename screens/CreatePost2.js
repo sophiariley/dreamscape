@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, Pressable, Image} from "react-native";
+import {StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, Dimensions, ScrollView, Pressable, Image} from "react-native";
 import {Ionicons} from 'react-native-vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
@@ -23,24 +23,55 @@ const CreatePost2 = ({navigation, route}) => {
         contentType: 'image/jpeg'
     };
 
-    const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
+    //START CHANGES
+
+    const handleImage = async () => {
+        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    
+        if (permissionResult.granted === false) {
+          alert('Permission to access camera roll is required!');
+          return;
+        }
+    
+        let pickerResult = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
         })
-
-        console.log(result);
-
-        if (!result.canceled) { // cancelled
-            setImage(result.assets[0].uri);
-            const uri = result.assets[0].uri;
-            console.log("upload uri: ", uri);
-            const picname = uri.substring(uri.lastIndexOf('/') + 1);
-            setName(picname);
+        if (pickerResult.canceled === true) {
+          return;
         }
-    };
+        console.log(pickerResult.assets[0].uri);
+        setImage(pickerResult.assets[0].uri);
+    
+        const uri = pickerResult.assets[0].uri;
+        console.log("---------uri ", uri);
+        const picname = uri.substring(uri.lastIndexOf('/') + 1);
+        setName(picname);
+      };
+
+    // END CHANGES
+
+    // Original code:
+    // const handleImage = async () => {
+    //     let result = await ImagePicker.launchImageLibraryAsync({
+    //         mediaTypes: ImagePicker.MediaTypeOptions.All,
+    //         allowsEditing: true,
+    //         aspect: [4, 3],
+    //         quality: 1,
+    //     })
+
+    //     console.log(result);
+
+    //     if (!result.canceled) { // cancelled
+    //         setImage(result.assets[0].uri);
+    //         const uri = result.assets[0].uri;
+    //         console.log("upload uri: ", uri);
+    //         const picname = uri.substring(uri.lastIndexOf('/') + 1);
+    //         setName(picname);
+    //     }
+    // };
 
     async function uploadImageAsync(uri) {
         const blob = await new Promise((resolve, reject) => {
@@ -78,15 +109,20 @@ const CreatePost2 = ({navigation, route}) => {
         const docRef = await addDoc(collection(userRef, "userPosts"), {image, caption, location});
     }
 
+    const windowHeight = Dimensions.get('window').height;
+    const windowWidth = Dimensions.get('window').width;
+
     return (
         <View style={styles.container}>
+            <ScrollView style={{flex:1}}>
+                <View style={{width:windowWidth, height:windowHeight }}>
             
             <View style={styles.photoContainer}>
                 {image && <Image source={{ uri: image }} style={{ width: 370, height: 320 }} />}
             </View>
             
             <View style={styles.chooseImageButtonContainer}>
-                <Pressable onPress={pickImage}>
+                <Pressable onPress={handleImage}>
                     <Text style={styles.chooseImageText}>Choose image</Text>
                 </Pressable>
             </View>
@@ -123,6 +159,8 @@ const CreatePost2 = ({navigation, route}) => {
             
             </View>
         </View>
+        </ScrollView>
+        </View>
     )
 }
 
@@ -143,7 +181,7 @@ const styles = StyleSheet.create({
         width: '90%',
         height: '20%',
         borderRadius: 5,
-        bottom: 15
+        bottom: -20
     },
     photoContainer: {
         backgroundColor: '#F6F6F6',
@@ -152,7 +190,7 @@ const styles = StyleSheet.create({
         width: '90%',
         height: '50%',
         borderRadius: 5,
-        top: -50
+        top: 10
     },
     captionText: {
         fontSize: 20,
@@ -171,7 +209,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignSelf: 'flex-end',
         position: 'absolute',
-        bottom: 40,
+        top: 560,
         right: 20
     },
     postButton: {
@@ -192,7 +230,7 @@ const styles = StyleSheet.create({
         paddingBottom: 30,
         paddingTop: 20,
         position: 'absolute',
-        bottom: -10,
+        top: 540,
         alignSelf: "flex-start",
         left: 10
     },
@@ -216,6 +254,6 @@ const styles = StyleSheet.create({
         height: '5%',
         alignSelf: 'center',
         borderRadius: 5,
-        bottom: 30
+        bottom: -15
     }
 })
