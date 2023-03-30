@@ -107,6 +107,14 @@ function updateThings(profilePic, newUsername) {
     changeUsername(newUsername);
   }
 }
+ const handleLocationsPress = () => {
+        setShowPhotoGrid(false);
+        setActiveButton('Locations');
+    }
+    const handlePhotosPress = () => {
+        setShowPhotoGrid(true);
+        setActiveButton('Photos');
+    }
 
   //Save button worked for profile pic as onPress={ () => { profilePicture ? (uploadImageAsync(profilePicture), onSave) : onCancel}} style={styles.saveContainer}
   return (
@@ -134,10 +142,6 @@ function updateThings(profilePic, newUsername) {
             </TouchableOpacity>
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>Name</Text>
-          <TextInput style={styles.input} />
-        </View>
-        <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Username</Text>
           <TextInput 
           style={styles.input}
@@ -145,10 +149,6 @@ function updateThings(profilePic, newUsername) {
           value={newUsername}
           onChangeText={text => setNewUsername(text)}
           />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>Birthday</Text>
-          <TextInput style={styles.input} />
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Location</Text>

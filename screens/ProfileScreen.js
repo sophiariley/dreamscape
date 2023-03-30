@@ -10,8 +10,6 @@ import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, do
 import {EvilIcons} from 'react-native-vector-icons';
 import EditProfile from '../components/EditProfile';
 import Locations from '../components/Locations';
-// import {useNavigation} from '@react-navigation/core'
-// import SettingsScreen from "./SettingsScreen";
 
 const ProfileScreen = ({route, navigation}) => {
 
