@@ -13,7 +13,32 @@ const TripScreen = ({navigation}) => {
                 <Text style={styles.header}>Paris</Text>
                 <View style={{ width: 30 }} />
             </View>
-            <ScrollView>
+            <ScrollView style={styles.scrollView}>
+                <View style={styles.tripInfoContainer}>
+                <Text style={styles.tripInfoLabel}>Start Date:</Text>
+                <Text style={styles.tripInfoValue}>April 15, 2023</Text>
+                </View>
+                <View style={styles.tripInfoContainer}>
+                <Text style={styles.tripInfoLabel}>End Date:</Text>
+                <Text style={styles.tripInfoValue}>April 23, 2023</Text>
+                </View>
+                <View style={styles.tripInfoContainer}>
+                <Text style={styles.tripInfoLabel}>Flight Information:</Text>
+                <Text style={styles.tripInfoValue}>Delta Airlines Flight 123</Text>
+                </View>
+                <View style={styles.tripInfoContainer}>
+                <Text style={styles.tripInfoLabel}>Hotel Information:</Text>
+                <Text style={styles.tripInfoValue}>Hilton Paris Opera</Text>
+                </View>
+                <View style={styles.itineraryInfoContainer}>
+                <Text style={styles.itineraryInfoLabel}>Itinerary:</Text>
+                <ScrollView>
+                    <Text style={styles.itineraryInfoValue}>
+                        Day 1: Eiffel Tower, Day 2: Louvre Museum, Day 3: Versailles Palace,
+                        Day 4: Notre-Dame Cathedral
+                    </Text>
+                </ScrollView>
+                </View>
             </ScrollView>
         </SafeAreaView>
     )
@@ -22,62 +47,68 @@ const TripScreen = ({navigation}) => {
 export default TripScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: 'white',
-        flex: 1,
-        padding: 1,
-        justifyContent: 'flex-start',
-    },
-    header: {
-        fontSize: 20,
-        marginBottom: 10,
-        marginTop: 10,
-        textAlign: 'center',
-        flex: 1,
-    },
-    accountContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        
-        marginTop: 10,
-        marginLeft: 15,
-        marginRight: 10,
-        marginBottom: 10
-    },
-    profileImage: {
-        width: 40,
-        height: 40,
-        borderRadius: 100,
-        overflow: 'hidden'
-    },
-    post: {
-        width: '100%',
-        height: undefined,
-        alignItems: 'center',
-        aspectRatio: 1,
-    },
-    profileName: {
-        color: '#3A6496', 
-        fontSize: 13, 
-        fontWeight: 'bold',
-    },
-    location: {
-        color: '#3A6496', 
-        fontSize: 11, 
-    },
-    image: {
-        flex: 1,
-        width: undefined,
-        height: undefined,
-    },
-    caption:
-    {
-        fontSize: 13,
+  container: {
+    backgroundColor: "white",
+    flex: 1,
+    padding: 1,
+    justifyContent: "flex-start",
+  },
+  header: {
+    fontSize: 20,
+    marginBottom: 10,
+    marginTop: 10,
+    textAlign: "center",
+    flex: 1,
+  },
+  buttonContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+  },
+  scrollView: {
+    paddingHorizontal: 5,
+  },
+  tripInfoContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20,
+    borderBottomColor: '#D3D3D3',
+    padding: 10,
+    borderBottomWidth: 1,
+  },
+  tripInfo: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  tripInfoLabel: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginRight: 10,
+    width: 130,
+  },
+  tripInfoValue: {
+    fontSize: 16,
+    flexWrap: 'wrap',
 
-    },
-    footer: {
-        position:'absolute',
-        bottom: 0,
-        alignItems: 'center'
-    }
-})
+  },
+    itineraryInfoLabel: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginRight: 10,
+    width: 100,
+  },
+  itineraryInfoValue: {
+    fontSize: 16,
+    flexWrap: 'wrap',
+  },
+  itineraryInfoContainer: {
+    flex: 1,
+    flexDirection: "row",
+    marginTop: 20,
+    borderBottomColor: '#D3D3D3',
+    padding: 10,
+    borderBottomWidth: 1,
+  }
+});

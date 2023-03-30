@@ -107,6 +107,14 @@ function updateThings(profilePic, newUsername) {
     changeUsername(newUsername);
   }
 }
+ const handleLocationsPress = () => {
+        setShowPhotoGrid(false);
+        setActiveButton('Locations');
+    }
+    const handlePhotosPress = () => {
+        setShowPhotoGrid(true);
+        setActiveButton('Photos');
+    }
 
   //Save button worked for profile pic as onPress={ () => { profilePicture ? (uploadImageAsync(profilePicture), onSave) : onCancel}} style={styles.saveContainer}
   return (
@@ -141,6 +149,10 @@ function updateThings(profilePic, newUsername) {
           value={newUsername}
           onChangeText={text => setNewUsername(text)}
           />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputLabel}>Location</Text>
+          <TextInput style={styles.input} />
         </View>
       </ScrollView>
     </SafeAreaView>
