@@ -6,14 +6,37 @@ import { Ionicons } from "@expo/vector-icons";
 import { db, storage } from "../firebase-config";
 
 import { getStorage, ref, getDownloadURL, } from "firebase/storage"
-import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual, getCountFromServer } from "firebase/firestore";
+import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual, getCountFromServer, deleteDoc } from "firebase/firestore";
 
 const PostScreen = ({navigation, route}) => {
     const [isLiked, setIsLiked] = useState(false);
 
     const handleLikePress = () => {
-        setIsLiked(prevIsLiked => !prevIsLiked);
+        setIsLiked(!isLiked);
+        addLike();
+        if (isLiked) {
+            addLike();
+        } else {
+            removeLike();
+        }
     };
+
+    async function getLike() {
+        const posterDoc = doc(db, "users", posterID);
+        const docRef = doc(posterDoc, "userPosts", postID);
+       // const likesCollection = await getDocs((collection(docRef, "likes")));
+
+        const q = query(collection(docRef, "likes"), where("userID", "==", userID));
+        const querySnapshot = await getDocs(q);
+
+        querySnapshot.forEach((doc) => {
+            console.log("NEATO");
+            if (isLiked == false) {
+                setIsLiked(true);
+            }
+        });
+    }
+
 
     // Getting post information from database / / / / / / / / / / / / / / / / / / /
     
@@ -43,6 +66,9 @@ const PostScreen = ({navigation, route}) => {
         } catch (error) {
             console.log(error);
         }
+
+        // Did they like this?
+        getLike();
     }
 
     async function getPostPic(docRef) {
@@ -114,10 +140,41 @@ const PostScreen = ({navigation, route}) => {
         }
     }
 
-
-
+   
 
     doItAll();
+
+    
+    // Adding and removing Likes / / / / / / / / / / / / / / / / / / / / / / / / / /
+
+    
+    const addLike = async () => {
+     // const posterDoc = doc(db, "users", posterID);
+        const docRef = doc(doc(db, "users", posterID), "userPosts", postID);
+        await addDoc(collection(docRef, 'likes'), {
+            userID: userID
+        });
+        console.log("ADDDED");
+    }
+
+    const removeLike = async () => {
+        const posterDoc = doc(db, "users", posterID);
+        const docRef = doc(posterDoc, "userPosts", postID);
+        const likesCollection = await getDocs((collection(docRef, "likes")));
+
+        const q = query(likesCollection, where("userID", "==", userID));
+        const querySnapshot = await getDocs(q);
+
+        querySnapshot.forEach((doc) => {
+            console.log("IM HEREE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+            const docRef = doc(likesCollection, "likes", doc.id);
+            deleteDoc(docRef);
+        });
+
+
+    }
+
 
     // Return / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
     return (
@@ -155,7 +212,14 @@ const PostScreen = ({navigation, route}) => {
                         <FontAwesome name={isLiked ? 'heart' : 'heart-o'} size={35} color={isLiked ? 'red' : 'black'}style={{marginRight: 15,marginBottom:-5}}/>
                     </TouchableOpacity>
                     {/*Comment button*/}
-                    <TouchableOpacity onPress={() => navigation.navigate('Comments')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Comments', {
+                    postID: postID,
+                    posterID: posterID,
+                    posterUsername: posterUsername,
+                    caption: cap,
+                    userID: userID,
+                    username: username
+                })}>
                         <FontAwesome name='comment-o' size={35} style={{}}/>
                     </TouchableOpacity>
                 </View>

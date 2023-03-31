@@ -323,7 +323,13 @@ const OtherProfileScreen = ({route, navigation}) => {
             {/* Photo Grid View */}
             {showPhotoGrid ? (
                 <View style={{ flex: 1, marginBottom: 60 }}>
-                    <PhotoGrid postUrls={globalPostUrls} userID={userID} navigation={navigation} />
+                    <PhotoGrid postUrls={globalPostUrls} 
+                               posterID={userID} 
+                               userID={realUserID} 
+                               posterPic={globalUrl}
+                               username={realUsername}
+                               navigation={navigation} 
+                    />
                 </View>
             ) : (
                 <Locations />
