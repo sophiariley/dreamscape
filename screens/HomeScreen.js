@@ -36,6 +36,7 @@ const HomeScreen = ({route}) => {
                 setUserID(doc.id);
             });
         }
+        getUserID(username,password);
         const getEachFollowedAccount = async () => {
             const followingArray = [];
             if(userID!=='') {
@@ -46,7 +47,8 @@ const HomeScreen = ({route}) => {
                     console.log("Followed accounts: ", docu.data());
                     const userRef2 = doc(db, "users", docu.data().userID);
                     const docSnap = await getDoc(userRef2);
-                    const acctUsername = docSnap.data().username;
+                    //const acctUsername = docSnap.data().username;
+                    const acctUsername = 'Rat';
                     const postsSnapshot = await getDocs(collection(userRef2, "userPosts"));
                     postsSnapshot.forEach((docu2) => {
                         console.log("ME DATA IS: ", docu2.data());
