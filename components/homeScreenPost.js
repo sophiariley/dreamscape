@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {StyleSheet, Text, View, TouchableOpacity, Pressable, Image, Dimensions, ScrollView} from "react-native";
 import {FontAwesome, Ionicons} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/core'
@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/core'
 export default function CommentLikeDislike({username, url, caption, location}) {
     const myusername = username;
     const myurl = url;
+    //const [myurl, setmyurl] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2F2d6961e8-dafc-48bb-aa1c-56efe6e57b93.jpeg?alt=media&token=696456ea-1c7c-49ec-8135-1c947e17fe54');
     const mycaption = caption;
     const mylocation = location;
     const navigation = useNavigation();   
@@ -14,6 +15,12 @@ export default function CommentLikeDislike({username, url, caption, location}) {
     const handleLikePress = () => {
         setIsLiked(prevIsLiked => !prevIsLiked);
     };
+
+    /*useEffect(() => {
+        if(url!=''){
+            setmyurl(url);
+        }
+    })*/
 
     return (
         <View>
@@ -32,7 +39,7 @@ export default function CommentLikeDislike({username, url, caption, location}) {
                 {/*image*/}
                 <View style={{width: Dimensions.get('screen').width}}> 
                     <Image style={styles.post}
-                    source={require('../assets/posts/image10.jpg')}
+                    source={{uri: myurl}}
                     /> 
                 </View>
                 {/*Like button*/}
