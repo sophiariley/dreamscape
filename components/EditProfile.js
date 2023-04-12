@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { db, storage } from "../firebase-config";
-import { collection, addDoc, setDoc, updateDoc, getDocs, doc } from "firebase/firestore";
+import { collection, addDoc, setDoc, updateDoc, getDocs, doc, getDoc } from "firebase/firestore";
 
 export default function EditProfile({onSave, onCancel, myuserID}) {
   const userID = myuserID;
@@ -13,6 +13,7 @@ export default function EditProfile({onSave, onCancel, myuserID}) {
   const [picName, setPicName] = useState('');
   const [profilePicExists, setProfilePicExists] = useState(false);
   const [newUsername, setNewUsername] = useState('');
+  const [newLocation, setNewLocation] = useState('');
 
   const metadata = {
     contentType: 'image/jpeg'
@@ -99,12 +100,33 @@ async function changeUsername(newUsername) {
   });
 }
 
-function updateThings(profilePic, newUsername) {
+/*email: docSnap.data().email,
+    firstName: docSnap.data().firstName,
+    lastName: docSnap.data().lastName,
+    password: docSnap.data().password,
+    username: docSnap.data().username*/
+async function changeLocation(newLocation) {
+  const userRef = doc(db, "users", userID);
+  const docSnap = await getDoc(userRef);
+  if(docSnap.data().location){
+    await updateDoc(userRef, {
+      location: newLocation
+    });
+  }
+  else {
+    await setDoc(userRef, {location: newLocation}, { merge: true });
+  }
+}
+
+function updateThings(profilePic, newUsername, newLocation) {
   if(profilePic) {
     uploadImageAsync(profilePic);
   }
   if(newUsername!='') {
     changeUsername(newUsername);
+  }
+  if(newLocation!='') {
+    changeLocation(newLocation);
   }
   onSave();
 }
@@ -124,7 +146,7 @@ function updateThings(profilePic, newUsername) {
         <TouchableOpacity onPress={onCancel} style={styles.cancelContainer}>
           <Text style={styles.buttonText}>Exit</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={ () => updateThings(profilePicture, newUsername) } style={styles.saveContainer}>
+        <TouchableOpacity onPress={ () => updateThings(profilePicture, newUsername, newLocation) } style={styles.saveContainer}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
         <Text style={styles.text}>Edit Profile</Text>
@@ -153,7 +175,12 @@ function updateThings(profilePic, newUsername) {
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Location</Text>
-          <TextInput style={styles.input} />
+          <TextInput 
+          style={styles.input}
+          placeholder=""
+          value={newLocation}
+          onChangeText={text => setNewLocation(text)}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

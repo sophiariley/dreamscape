@@ -122,6 +122,7 @@ const OtherProfileScreen = ({route, navigation}) => {
         getFollowingCount(docRef);
         getFollowerCount(docRef);
         getFirstName(docRef);
+        getLocation(docRef);
         getTripCount(docRef);
         loadFollowData();
     }
@@ -203,6 +204,7 @@ const OtherProfileScreen = ({route, navigation}) => {
     const [followerCount, setFollowerCount] = useState(0);
     const [tripCount, setTripCount] = useState(0);
     const [firstName, setFirstName] = useState(username);
+    const [location, setLocation] = useState('Set Your Location');
 
     async function getFollowingCount(docRef) {
         var count = 0;
@@ -235,6 +237,13 @@ const OtherProfileScreen = ({route, navigation}) => {
     async function getFirstName(docRef) {
         const docSnap = await getDoc(docRef);
         setFirstName(docSnap.data().firstName);
+    }
+
+    async function getLocation(docRef) {
+        const docSnap = await getDoc(docRef);
+        if(docSnap.data().location) {
+            setLocation(docSnap.data().location);
+        }
     }
 
     // Printing to console / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
@@ -302,7 +311,7 @@ const OtherProfileScreen = ({route, navigation}) => {
                 <View style={{flexDirection: 'row'}}>
                     <Text style={styles.textName}>{firstName}</Text>
                 </View>
-                <Text style={{fontSize: 13, color: '#3A6496', opacity: .7}}>Maryland</Text>  
+                <Text style={{fontSize: 13, color: '#3A6496', opacity: .7}}>{location}</Text>  
             </View>
             <TouchableOpacity style={styles.editProfile}
             onPress={() => followText=='Follow' ? followAccount() : unFollowAccount()}>
