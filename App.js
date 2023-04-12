@@ -20,10 +20,12 @@ import Trips from './screens/Trips';
 import TripScreen from './screens/TripScreen';
 import CreateTrip from './screens/CreateTrip';
 import { Entypo } from '@expo/vector-icons';
+import { DataContext } from './DataContext';
 
 const Stack = createNativeStackNavigator();
 
 export default function App({navigation}) {
+  const [uID, setUID] = React.useState('');
   const [modalVisible, setModalVisible] = React.useState(false);
     const handleSavePress= () => {
         setModalVisible(false);
@@ -31,7 +33,9 @@ export default function App({navigation}) {
     const handleCancelPress= () => {
         setModalVisible(false);
     }
+  console.log("App.js userID: ", uID);
   return (
+    <DataContext.Provider value={{ uID, setUID }}>
     <NavigationContainer>
         <Stack.Navigator>
           
@@ -68,11 +72,11 @@ export default function App({navigation}) {
               },
                headerRight: () => (
                 <View>
-                  <TouchableOpacity onPress={() =>  setModalVisible(true)}>
+                  <TouchableOpacity onPress={() => {setModalVisible(true)}}>
                     <Entypo name='plus' size={35} color='#F6F6F6'/>
                   </TouchableOpacity>
                 <Modal visible={modalVisible}>
-                <CreateTrip onSave={handleSavePress} onCancel={handleCancelPress}/>
+                <CreateTrip uID={uID} onSave={handleSavePress} onCancel={handleCancelPress}/>
             </Modal>
                 </View>
               )
@@ -157,6 +161,7 @@ export default function App({navigation}) {
         </Stack.Navigator>
 
     </NavigationContainer>
+    </DataContext.Provider>
   );
 }
 

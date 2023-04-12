@@ -2,7 +2,13 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const TripScreen = ({navigation}) => {
+const TripScreen = ({route,navigation}) => {
+  const city = route.params.city;
+  const startDate = route.params.startDate;
+  const endDate = route.params.endDate;
+  const flightInfo = route.params.flightInfo;
+  const hotelInfo = route.params.hotelInfo;
+  const itenerary = route.params.itenerary;
     return (
         <SafeAreaView style={styles.container}>
             <View style={{marginTop:20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',  borderBottomWidth: 1,
@@ -10,32 +16,31 @@ const TripScreen = ({navigation}) => {
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.buttonContainer}>
                         <Ionicons name='chevron-back' size={30} />
                 </TouchableOpacity>
-                <Text style={styles.header}>Paris</Text>
+                <Text style={styles.header}>{city}</Text>
                 <View style={{ width: 30 }} />
             </View>
             <ScrollView style={styles.scrollView}>
                 <View style={styles.tripInfoContainer}>
                 <Text style={styles.tripInfoLabel}>Start Date:</Text>
-                <Text style={styles.tripInfoValue}>April 15, 2023</Text>
+                <Text style={styles.tripInfoValue}>{startDate}</Text>
                 </View>
                 <View style={styles.tripInfoContainer}>
                 <Text style={styles.tripInfoLabel}>End Date:</Text>
-                <Text style={styles.tripInfoValue}>April 23, 2023</Text>
+                <Text style={styles.tripInfoValue}>{endDate}</Text>
                 </View>
                 <View style={styles.tripInfoContainer}>
                 <Text style={styles.tripInfoLabel}>Flight Information:</Text>
-                <Text style={styles.tripInfoValue}>Delta Airlines Flight 123</Text>
+                <Text style={styles.tripInfoValue}>{flightInfo}</Text>
                 </View>
                 <View style={styles.tripInfoContainer}>
                 <Text style={styles.tripInfoLabel}>Hotel Information:</Text>
-                <Text style={styles.tripInfoValue}>Hilton Paris Opera</Text>
+                <Text style={styles.tripInfoValue}>{hotelInfo}</Text>
                 </View>
                 <View style={styles.itineraryInfoContainer}>
                 <Text style={styles.itineraryInfoLabel}>Itinerary:</Text>
                 <ScrollView>
                     <Text style={styles.itineraryInfoValue}>
-                        Day 1: Eiffel Tower, Day 2: Louvre Museum, Day 3: Versailles Palace,
-                        Day 4: Notre-Dame Cathedral
+                        {itenerary}
                     </Text>
                 </ScrollView>
                 </View>

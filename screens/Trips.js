@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, ScrollView, Text, TouchableOpacity } from "react-native";
 import NavigationBar from "../components/navigationBar";
 import { collection, query, where, onSnapshot, getDocs, setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase-config";
+import { DataContext } from "../DataContext";
 
 const Trips = ({ route, navigation }) => {
 
@@ -10,29 +11,51 @@ const Trips = ({ route, navigation }) => {
     const username = route.params.username;
     const userID = route.params.userID;
 
-    // Sample trip data
-    const trips = [
-        {city: "New York", date: "April 2023"},
-        {city: "Paris", date: "May 2023"},
-        {city: "Tokyo", date: "June 2023"},
-        {city: "London", date: "July 2023"},
-        {city: "Sydney", date: "August 2023"},
-        {city: "Cairo", date: "September 2023"},
-        {city: "Rio de Janeiro", date: "November 2023"},
-        {city: "Mumbai", date: "December 2023"},
-    ];
+    const {uID, setUID} = useContext(DataContext);
+    setUID(userID);
+    console.log("DataContext UID: ", uID);
+
+    // Get trip data to display
+    const [trips, setTrips] = useState([]);
+    const getTrips = async () => {
+        const newtrips = [];
+        const userRef = doc(db,"users", userID);
+        const tripsSnapshot = await getDocs(collection(userRef, 'trips'));
+        tripsSnapshot.forEach((docu) => {
+            console.log(docu.data());
+            const trip = {city: docu.data().city, startDate: docu.data().startDate, endDate: docu.data().endDate, flightInfo: docu.data().flightInfo, hotelInfo: docu.data().hotelInfo, itenerary: docu.data().itenerary};
+            newtrips.push(trip);
+        });
+        return newtrips;
+    }
+
+    useEffect(() => {
+        const aysncrun = async () => {
+            const mytrips = await getTrips();
+            setTrips(mytrips);
+        }
+        aysncrun();
+    }, []);
+
 
     return (
         <View style={styles.container}>
             <View style={styles.scrollViewContainer}>
                 <ScrollView>
                     {trips.map((trip, index) => (
-                        <TouchableOpacity key={index} style={styles.tripBox} onPress={() => navigation.navigate('TripScreen')}>
-                            <View style={styles.tripDetails}>
-                                <Text style={styles.tripCity}>{trip.city}</Text>
-                            </View>
-                            <Text style={styles.tripDate}>{trip.date}</Text>
-                        </TouchableOpacity>
+                    <TouchableOpacity key={index} style={styles.tripBox} onPress={() => navigation.navigate('TripScreen', {
+                        city: trip.city,
+                        startDate: trip.startDate,
+                        endDate: trip.endDate,
+                        flightInfo: trip.flightInfo,
+                        hotelInfo: trip.hotelInfo,
+                        itenerary: trip.itenerary
+                    })}>
+                        <View style={styles.tripDetails}>
+                            <Text style={styles.tripCity}>{trip.city}</Text>
+                        </View>
+                        <Text style={styles.tripDate}>{trip.startDate}</Text>
+                    </TouchableOpacity>
                     ))}
                 </ScrollView>
             </View>
