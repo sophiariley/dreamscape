@@ -106,6 +106,7 @@ function updateThings(profilePic, newUsername) {
   if(newUsername!='') {
     changeUsername(newUsername);
   }
+  onSave();
 }
  const handleLocationsPress = () => {
         setShowPhotoGrid(false);
@@ -123,7 +124,7 @@ function updateThings(profilePic, newUsername) {
         <TouchableOpacity onPress={onCancel} style={styles.cancelContainer}>
           <Text style={styles.buttonText}>Exit</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={ () => { updateThings(profilePicture, newUsername); onSave }} style={styles.saveContainer}>
+        <TouchableOpacity onPress={ () => updateThings(profilePicture, newUsername) } style={styles.saveContainer}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
         <Text style={styles.text}>Edit Profile</Text>
