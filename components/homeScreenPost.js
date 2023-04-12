@@ -4,8 +4,8 @@ import {StyleSheet, Text, View, TouchableOpacity, Pressable, Image, Dimensions, 
 import {FontAwesome, Ionicons} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/core'
 
-export default function CommentLikeDislike({username, url, caption, location}) {
-    const myusername = username;
+export default function CommentLikeDislike({userID, userUsername, posterID, postID, username, url, caption, location, posterPFP}) {
+    const posterUsername = username;
     const myurl = url;
     //const [myurl, setmyurl] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2F2d6961e8-dafc-48bb-aa1c-56efe6e57b93.jpeg?alt=media&token=696456ea-1c7c-49ec-8135-1c947e17fe54');
     const mycaption = caption;
@@ -28,18 +28,18 @@ export default function CommentLikeDislike({username, url, caption, location}) {
                 <View style={styles.accountContainer}>
                     <View style={styles.profileImage}>
                         <Image style={styles.image}
-                            source={require('../assets/profile_photo.jpg')}
+                            source={{uri: posterPFP}}
                         />
                     </View>
                     <View style={{marginLeft: 7}}>
-                        <Text style={styles.profileName}>{myusername}</Text>
+                        <Text style={styles.profileName}>{posterUsername}</Text>
                         <Text style={styles.location}>{mylocation}</Text>
                     </View>
                 </View>
                 {/*image*/}
                 <View style={{width: Dimensions.get('screen').width}}> 
                     <Image style={styles.post}
-                    source={{uri: myurl}}
+                    source={{uri: url}}
                     /> 
                 </View>
                 {/*Like button*/}
@@ -48,22 +48,36 @@ export default function CommentLikeDislike({username, url, caption, location}) {
                         <FontAwesome name={isLiked ? 'heart' : 'heart-o'} size={35} color={isLiked ? 'red' : 'black'}style={{marginRight: 15,marginBottom:-5}}/>
                     </TouchableOpacity>
                     {/*Comment button*/}
-                    <TouchableOpacity onPress={() => navigation.navigate('Comments')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Comments', {
+                        postID: postID,
+                        posterID: posterID,
+                        posterUsername: posterUsername,
+                        caption: caption,
+                        userID: userID,
+                        username: userUsername
+                    })}>
                         <FontAwesome name='comment-o' size={35} style={{}}/>
                     </TouchableOpacity>
                 </View>
                 {/*Caption*/}
                 <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-                        <Text style={[styles.profileName, {marginLeft: 5, marginTop: 5, marginRight: 5}]}>{myusername}</Text>
+                        <Text style={[styles.profileName, {marginLeft: 5, marginTop: 5, marginRight: 5}]}>{posterUsername}</Text>
                         <Text style={styles.caption}>{mycaption}</Text>
                 </View> 
                 {/*View comments button*/}    
-                <TouchableOpacity onPress={() => navigation.navigate('Comments')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Comments', {
+                        postID: postID,
+                        posterID: posterID,
+                        posterUsername: posterUsername,
+                        caption: caption,
+                        userID: userID,
+                        username: userUsername
+                    })}>
                     <Text style={{fontWeight: '200', marginLeft: 5, marginTop: 15, alignSelf: 'center'}}>View comments</Text>
                 </TouchableOpacity>
                 {/*Date posted*/}
                 <Text style={{fontWeight: '200', fontSize: 12,textAlign: 'right', margin: 5}}>Posted on ...</Text>
-            </View>
+        </View>
     )
 }
 

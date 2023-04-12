@@ -12,15 +12,17 @@ const image = { uri: "https://media4.giphy.com/media/3og0ISzBpn0nNJE3Ac/giphy.gi
 const LoginScreen = ({navigation}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+   // const [userID, setUserID] = useState('');
 
 
     async function auth(username, password) {
         const q = query(collection(db, "users"), where("username", "==", username), where("password", "==", password));
-        let verified = false;
+        let verified = [false, ''];
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             console.log(doc.id, " => ", doc.data());
-            verified = true;
+            //setUserID(doc.id);
+            verified = [true, doc.id];
         });
         return verified;
     }
@@ -69,10 +71,11 @@ const LoginScreen = ({navigation}) => {
                                     onPress={() => {
                                         auth(username, password).then(
                                             function(value) {
-                                                if (value) {
+                                                if (value[0]) {
+                                                    //console.log("KACHOWS",value[0]);
                                                     navigation.navigate('Home', {
-                                                        username: username,
-                                                        password: password,
+                                                        userID: value[1],
+                                                        username: username
                                                     })
                                                 } 
                                             }

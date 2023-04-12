@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/core';
 
 import { db, storage } from "../firebase-config";
 import { getStorage, ref, getDownloadURL, } from "firebase/storage"
-import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual, getCountFromServer, addDoc } from "firebase/firestore";
+import { collection, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual, getCountFromServer, addDoc,serverTimestamp } from "firebase/firestore";
 
 const Comments = ({route}) => {
   const [comments, setComments] = useState([]);
@@ -38,6 +38,7 @@ const Comments = ({route}) => {
         username: username,
         comment: newComment,
         //timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        timestamp: serverTimestamp()
     });
   }
 
