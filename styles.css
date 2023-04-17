@@ -160,13 +160,13 @@ sup {
 }
 
 a {
-  color: #ff214f;
+  color: #3A6496;
   text-decoration: none;
   background-color: transparent;
 }
 
 a:hover {
-  color: #d4002c;
+  color: #F8C98A;
   text-decoration: underline;
 }
 
@@ -11673,6 +11673,7 @@ pre .code {
 
 .footer {
   padding: 85px 0 70px 0;
+  color: #D28A8E;
 }
 
 .footer .logo {
@@ -11692,7 +11693,7 @@ pre .code {
 }
 
 .footer a {
-  color: #eaf0fc;
+  color: #D28A8E;
   padding-bottom: 5px;
   opacity: .7;
 }
@@ -11784,7 +11785,7 @@ pre .code {
 .header {
   height: 100%;
   min-height: 600px;
-  background: no-repeat center center fixed;
+  background: url(website-images/header-img.jpg) no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -11887,9 +11888,9 @@ section .py-md {
 }
 
 section.has-bg-img {
-  background: rgba(33, 37, 41, 0.95);
+  background: #6783a1;
   position: relative;
-  color: #fff;
+  color: #D28A8E;
 }
 
 section.has-bg-img:after {
@@ -11930,6 +11931,7 @@ section .section-subtitle {
 
 section .section-title {
   font-size: calc(28px + (35 - 28) * ((100vw - 320px) / (1200 - 320)));
+  color: #D28A8E;
 }
 
 @media (min-width: 992px) {
