@@ -4568,7 +4568,7 @@
     -webkit-justify-content: space-between;
         -ms-flex-pack: justify;
             justify-content: space-between;
-    /* padding: 1rem 1rem; */
+    padding: 1rem 1rem;
   }
   
   .navbar > .container,
@@ -4596,8 +4596,8 @@
     padding-bottom: 0.3125rem;
     margin-right: 1rem;
     font-size: 1.25rem;
-    /* line-height: inherit;
-    white-space: nowrap; */
+    line-height: inherit;
+    white-space: nowrap;
   }
   
   .navbar-brand:hover, .navbar-brand:focus {
