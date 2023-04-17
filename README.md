@@ -1,6 +1,7 @@
 theme: jekyll-theme-minimal
-title: Octocat's homepage
+title: Dreamscape
 description: Bookmark this to keep an eye on my project updates!
+
 # Dreamscape
 
 Dreamscape is an Android social media app focused on the user's love of traveling.
