@@ -1,6 +1,6 @@
-theme: jekyll-theme-minimal
+theme: jekyll-theme-cayman
 title: Dreamscape
-description: Bookmark this to keep an eye on my project updates!
+<!-- description: Bookmark this to keep an eye on my project updates! -->
 
 # Dreamscape
 
