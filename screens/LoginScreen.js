@@ -6,12 +6,17 @@ import { db } from "../firebase-config";
 import { KeyboardAvoidingView } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
 import { Keyboard } from "react-native";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const image = { uri: "https://media4.giphy.com/media/3og0ISzBpn0nNJE3Ac/giphy.gif?cid=ecf05e47kxc23rf9ldw36iuch1geujlfdvraxnb7gm18sznm&rid=giphy.gif&ct=g" };
 
 const LoginScreen = ({navigation}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [isChecked, setIsChecked] = useState(false);
+    const handleCheck = () => {
+        setIsChecked(!isChecked);
+    };
 
 
     async function auth(username, password) {
@@ -65,6 +70,13 @@ const LoginScreen = ({navigation}) => {
                             </TouchableOpacity>
                         </View>
                                 
+                        <View style={styles.checkboxContainer}>
+                            <TouchableOpacity onPress={handleCheck}>
+                                <MaterialCommunityIcons name={isChecked ? 'checkbox-marked' : 'checkbox-blank-outline'} size={35} color={isChecked ? '#F8C98A' : '#F8C98A'}/>
+                            </TouchableOpacity>
+                            <Text style={styles.rememberMe}>Remember me</Text>
+                        </View>
+
                         <View style={styles.container}>
                             <View style={styles.loginButtonContainer}>
                                 <TouchableOpacity
@@ -122,7 +134,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        top: -10
+        top: 0
     },
     // the styling for the area where text is inputted ("Username","Password")
     inputText: {
@@ -181,7 +193,7 @@ const styles = StyleSheet.create({
     },
     // the styling for the "Dreamscape" text
     dreamscape: {
-        marginTop: 90,
+        marginTop: 80,
         flex: 1,
         fontSize: 60,
         color: '#F8C98A' // yellow color
@@ -202,5 +214,18 @@ const styles = StyleSheet.create({
         color: '#F8C98A',
         fontSize: 20,
         padding: 10
-    }
+    },
+    checkboxContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignContent: 'center',
+        // bottom: 40
+        top: 30
+    },
+    rememberMe: {
+        fontSize: 15,
+        color: '#DADADA',
+        alignSelf: 'center',
+        paddingLeft: 10
+    },
 })
