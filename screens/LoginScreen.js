@@ -35,9 +35,11 @@ const LoginScreen = ({navigation}) => {
                     <ImageBackground 
                     source={image}
                     style={styles.backgroundImage}>
+
                         <View style={styles.dreamscapeContainer}>
                             <Text style={styles.dreamscape}>Dreamscape</Text>
                         </View>
+                        
                         <View style={styles.textContainer}>
                             <Text style={styles.text}>Enter Username</Text>
                                 <TextInput 

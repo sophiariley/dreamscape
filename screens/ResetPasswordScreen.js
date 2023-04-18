@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { ImageBackground, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ScrollView, Dimensions, ImageBackground, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import {useNavigation} from '@react-navigation/core'
 import LoginScreen from "./LoginScreen";
 import { collection, query, where, onSnapshot, getDocs, setDoc, doc, updateDoc } from "firebase/firestore";
@@ -37,48 +37,53 @@ const ResetPasswordScreen = ({navigation}) => {
         });
     }
 
+    const windowHeight = Dimensions.get('window').height;
+    const windowWidth = Dimensions.get('window').width;
+
     return (
         <View style={styles.container}>
-            <Text style={styles.resetPassword}> Reset Password </Text>
+            <ScrollView style={{flex:1}}>
+                <View style={{width:windowWidth, height:windowHeight }}>
+                    <Text style={styles.resetPassword}> Reset Password </Text>
 
-            <View style={styles.emailContainer}>
-                <Text style={styles.miscText}>Enter the email associated with your</Text>
-                <Text style={styles.miscText}>account:</Text>
-                <TextInput 
-                    style={styles.inputText} 
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={text => findEmailMatch(text)}
-                />
-            </View>
+                    <View style={styles.inputContainer}>
+                            <Text style={styles.miscText}>Enter the email associated with your</Text>
+                            <Text style={styles.miscText}>account:</Text>
+                            <TextInput 
+                                style={styles.inputText} 
+                                placeholder="Email"
+                                value={email}
+                                onChangeText={text => findEmailMatch(text)}
+                            />
 
-            <View style={styles.newPasswordContainer}>
-                <Text style={styles.miscText}>Enter new password</Text>
-                <TextInput 
-                    style={styles.inputText} 
-                    placeholder="New password"
-                    value={newPassword}
-                    onChangeText={text => setNewPassword(text)}
-                />
-            </View>
+                            <Text style={styles.miscText}>Enter new password</Text>
+                            <TextInput 
+                                style={styles.inputText} 
+                                placeholder="New password"
+                                value={newPassword}
+                                onChangeText={text => setNewPassword(text)}
+                            />
+                    </View>
 
-            <View style={styles.resetPasswordButtonContainer}>
-                <TouchableOpacity
-                    onPress={() => {updatePassword(newPassword); navigation.navigate('Login')}}
-                    style={styles.resetPasswordButton}
-                > 
-                <Text style={styles.resetPasswordButtonText}>Reset Password</Text>
-                </TouchableOpacity>
-            </View>
+                    <View style={styles.resetPasswordButtonContainer}>
+                        <TouchableOpacity
+                            onPress={() => {updatePassword(newPassword); navigation.navigate('Login')}}
+                            style={styles.resetPasswordButton}
+                        > 
+                        <Text style={styles.resetPasswordButtonText}>Reset Password</Text>
+                        </TouchableOpacity>
+                    </View>
 
-            <View>
-                <TouchableOpacity
-                    onPress={() => {{navigation.navigate('Login')}}}
-                >
-                    <Text style={styles.returnToLogin}>Return to login</Text>
-                </TouchableOpacity>
-            </View>
+                    <View>
+                        <TouchableOpacity
+                            onPress={() => {{navigation.navigate('Login')}}}
+                        >
+                            <Text style={styles.returnToLogin}>Return to login</Text>
+                        </TouchableOpacity>
+                    </View>
 
+                </View>
+            </ScrollView>
         </View>
     )
 }
@@ -95,19 +100,19 @@ const styles = StyleSheet.create ({
     },  
     emailContainer: {
         justifyContent: 'center',
-        alignItems: 'center',
-        top: 175
+        alignItems: 'center'
+        // top: 175
     },
     newPasswordContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        top: 75
+        // top: 75
     },
     resetPassword: {
         color: '#F8C98A',
         fontSize: 40,
         alignSelf: 'center',
-        top: 200
+        top: 150
     },
     resetPasswordButtonContainer: {
         width: '70%',
@@ -150,5 +155,11 @@ const styles = StyleSheet.create ({
         color: '#3A6496',
         bottom: 100,
         fontSize: 20
+    },
+    inputContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 200
     }
 })
