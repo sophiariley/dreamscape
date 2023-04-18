@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        top: -20
+        top: -10
     },
     // the styling for the area where text is inputted ("Username","Password")
     inputText: {
@@ -135,7 +135,8 @@ const styles = StyleSheet.create({
         paddingLeft: 10
     },
     forgotPasswordContainer: {
-        right: 40
+        right: 40,
+        top: 8
     },
     forgotPasswordText: {
         fontSize: 15,
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
     },
     // the styling for the "Dreamscape" text
     dreamscape: {
-        marginTop: 100,
+        marginTop: 90,
         flex: 1,
         fontSize: 60,
         color: '#F8C98A' // yellow color
