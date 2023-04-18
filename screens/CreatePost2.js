@@ -94,7 +94,8 @@ const CreatePost2 = ({navigation, route}) => {
                 <View style={{width:windowWidth, height:windowHeight }}>
             
             <View style={styles.photoContainer}>
-                {image && <Image source={{ uri: image }} style={{ width: 370, height: 320 }} />}
+                {image && <Image source={{ uri: image }} style={{ width: "100%", height: "100%" }} resizeMode="cover" />}
+                {/* {video && <Video source={{ uri: video }} style={{ width: "100%", height: "100%" }} resizeMode="cover" />} */}
             </View>
             
             <View style={styles.chooseImageButtonContainer}>
