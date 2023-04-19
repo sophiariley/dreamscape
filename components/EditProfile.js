@@ -128,7 +128,7 @@ function updateThings(profilePic, newUsername, newLocation) {
   if(newLocation!='') {
     changeLocation(newLocation);
   }
-  onSave();
+  onSave(newUsername);
 }
  const handleLocationsPress = () => {
         setShowPhotoGrid(false);

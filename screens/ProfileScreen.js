@@ -46,7 +46,8 @@ const ProfileScreen = ({route, navigation}) => {
     const [count, setCount] = useState(0);
     
     //username and userID of logged in account
-    const username = route.params.username;
+    //const username = route.params.username;
+    const [username, setUsername] = useState(route.params.username);
     const userID = route.params.userID;
 
     async function getPicUrl(picpath) {
@@ -222,7 +223,10 @@ const ProfileScreen = ({route, navigation}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [showPhotoGrid, setShowPhotoGrid] = useState(true);
     const [activeButton, setActiveButton] = useState('Photos');
-    const handleSavePress= () => {
+    const handleSavePress= (username) => {
+        if(username!='') {
+            setUsername(username);
+        }
         setModalVisible(false);
     }
     const handleCancelPress= () => {
