@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, View, ScrollView, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, ScrollView, Text, TouchableOpacity, LogBox } from "react-native";
 import NavigationBar from "../components/navigationBar";
 import { collection, query, where, onSnapshot, getDocs, setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase-config";
 import { DataContext } from "../DataContext";
+
+LogBox.ignoreAllLogs();
 
 const Trips = ({ route, navigation }) => {
 
