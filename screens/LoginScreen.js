@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Dimensions } from "react-native";
+import { ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Dimensions, Alert } from "react-native";
 import {useNavigation} from '@react-navigation/core'
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase-config";
@@ -33,21 +33,11 @@ const LoginScreen = ({navigation}) => {
     const windowHeight = Dimensions.get('window').height;
     const windowWidth = Dimensions.get('window').width;
 
-    // Alert for empty fields
-    const emptyAlert = (navigation) =>
-    Alert.alert(
-        'Empty Field',
-        'Please make sure all fields are filled out!',
-        [
-        {text: 'Ok', style: 'cancel'}
-        ]
-    );
-
     // Alert for incorrect fields
     const wrongAlert = (navigation) =>
     Alert.alert(
         'Error',
-        'Your username or password don\'t match.',
+        'Your username and password are invalid.',
         [
         {text: 'Ok', style: 'cancel'}
         ]
@@ -108,6 +98,9 @@ const LoginScreen = ({navigation}) => {
                                                         username: username,
                                                         password: password,
                                                     })
+                                                }
+                                                else {
+                                                    wrongAlert();
                                                 } 
                                             }
                                         );

@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, ScrollView, Dimensions } from "react-native";
+import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, ScrollView, Dimensions, Alert } from "react-native";
 import {AntDesign} from 'react-native-vector-icons';
 //import { getDatabase, ref, set } from "firebase/database";
 import { doc, setDoc, collection, addDoc } from "firebase/firestore"; 
@@ -9,6 +9,7 @@ const CreateAccount2 = ({route, navigation}) => {
     const { firstName, lastName, email } = route.params;
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [password2, setPassword2] = useState('');
     const [userID, setUserID] = useState(''); //CAN BE USED TO PASS UID THROUGH INSTEAD OF FINDING IT LATER
     //const res = db.collection('users');
 
@@ -31,7 +32,7 @@ const CreateAccount2 = ({route, navigation}) => {
     const windowWidth = Dimensions.get('window').width;
 
     // Alert for empty fields
-    const emptyAlert = (navigation) =>
+    const emptyAlert = () =>
     Alert.alert(
         'Empty Field',
         'Please make sure all fields are filled out!',
@@ -41,7 +42,7 @@ const CreateAccount2 = ({route, navigation}) => {
     );
 
     // Alert for mismatch passwords
-    const wrongPasswordAlert = (navigation) =>
+    const wrongPasswordAlert = () =>
     Alert.alert(
         'Error',
         'Your password does\'t match.',
@@ -49,6 +50,14 @@ const CreateAccount2 = ({route, navigation}) => {
         {text: 'Ok', style: 'cancel'}
         ]
     );
+
+    const doBoth = () => {
+        createUser(firstName, lastName, email, username, password); 
+        navigation.navigate('Home', {
+            username: username,
+            password: password,
+        });
+    }
 
     return (
         <View style={styles.container}>
@@ -76,16 +85,13 @@ const CreateAccount2 = ({route, navigation}) => {
                                 style={styles.inputText} 
                                 placeholder=""
                                 secureTextEntry //hides password
-                                value={password}
-                                onChangeText={text => setPassword(text)}
+                                value={password2}
+                                onChangeText={text => setPassword2(text)}
                             />
                     </View>
                     <View style={styles.nextButtonContainer}>
                         <TouchableOpacity 
-                            onPress={() => { createUser(firstName, lastName, email, username, password); navigation.navigate('Home', {
-                                username: username,
-                                password: password,
-                            }) } }
+                            onPress={() => { username=='' || password=='' || password2=='' ? emptyAlert() : password!=password2 ? wrongPasswordAlert() : doBoth() } }
                             // change to Login later
 
                             style={styles.nextButton}

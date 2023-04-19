@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, Dimensions, ScrollView } from "react-native";
+import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, Dimensions, ScrollView, Alert } from "react-native";
 import {AntDesign} from 'react-native-vector-icons';
 import { db } from "../firebase-config";
 import { collection, addDoc } from "firebase/firestore";
@@ -8,6 +8,7 @@ const CreateAccount1 = ({navigation}) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
+    const [email2, setEmail2] = useState('');
 
     function createUser(firstName, lastName, email) {
          const runit = async () => await addDoc(collection(db, "users"), {
@@ -22,10 +23,19 @@ const CreateAccount1 = ({navigation}) => {
     const windowWidth = Dimensions.get('window').width;
 
     // Alert for empty fields
-    const emptyAlert = (navigation) =>
+    const emptyAlert = () =>
     Alert.alert(
         'Empty Field',
         'Please make sure all fields are filled out!',
+        [
+        {text: 'Ok', style: 'cancel'}
+        ]
+    );
+
+    const wrongAlert = () =>
+    Alert.alert(
+        'Error',
+        'Your email and confirm email don\'t match.',
         [
         {text: 'Ok', style: 'cancel'}
         ]
@@ -63,12 +73,14 @@ const CreateAccount1 = ({navigation}) => {
                             <TextInput 
                                 style={styles.inputText} 
                                 placeholder=""
+                                value={email2}
+                                onChangeText={text => setEmail2(text)}
                             />
                     </View>
                     <View style={styles.nextButtonContainer}>
                         <TouchableOpacity
                             //onPress={() => createUser(firstName, lastName, email)} //navigation.navigate('Create Account 2')}
-                            onPress={() => navigation.navigate('Create Account 2', {firstName: firstName, lastName: lastName, email: email})}
+                            onPress={() => firstName=='' || lastName=='' || email=='' || email2=='' ? emptyAlert() : (email!=email2 ? wrongAlert() : navigation.navigate('Create Account 2', {firstName: firstName, lastName: lastName, email: email}))}
                             style={styles.nextButton}
                         > 
                             <Text style={styles.next}>Next</Text>
