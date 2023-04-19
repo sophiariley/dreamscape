@@ -68,7 +68,14 @@ const LoginScreen = ({navigation}) => {
                             />
                     </View>
 
-                {/** Start LoginButton.test */}
+                    <View style={styles.forgotPasswordContainer}>
+                        <TouchableOpacity
+                            testID="forgotPassword" 
+                            onPress={() => {navigation.navigate('Reset Password')}}>
+                            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                        </TouchableOpacity>
+                    </View>
+
                 <View style={styles.container}>
                     <View style={styles.loginButtonContainer}
                     testID = "loginButton">
@@ -87,7 +94,6 @@ const LoginScreen = ({navigation}) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-                {/** End LoginButton.test */}
 
                 <View style={styles.noAccountContainer}>
                     <Text style={styles.noAccountText}>────────   Don't have an account?   ────────</Text>
@@ -194,5 +200,14 @@ const styles = StyleSheet.create({
         color: '#F8C98A',
         fontSize: 20,
         padding: 10
+    },
+    forgotPasswordContainer: {
+        right: 40,
+        top: 8
+    },
+    forgotPasswordText: {
+        fontSize: 15,
+        color: '#DADADA',
+        alignSelf: 'flex-end'
     }
 })

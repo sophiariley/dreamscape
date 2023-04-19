@@ -91,6 +91,37 @@ describe('Testing password input', () => {
     })
 });
 
+
+// Testing forgot password pressable
+
+describe('Testing forgot password', () => {
+  it('should find forgot password via testId', () => {
+  const testIdName = 'forgotPassword';
+  const {getByTestId} = render(<LoginScreen />);
+  const foundButton = getByTestId(testIdName);
+  expect(foundButton).toBeTruthy();
+  });
+
+  it('Forgot password is pressable', () => {
+    const navigation = {navigate: () =>{}}
+    const page = render(<LoginScreen navigation={navigation}/>);
+    const forgotPassword = page.getByTestId('forgotPassword');
+    fireEvent.press(forgotPassword);
+  });
+  
+  it('Forgot password navigates to reset password screen', () => {
+    const navigation = {navigate: () =>{}}
+    const page = render(<LoginScreen navigation={navigation}/>);
+    jest.spyOn(navigation, 'navigate')
+    const forgotPassword = page.getByTestId('forgotPassword');
+    fireEvent.press(forgotPassword);
+    expect(navigation.navigate).toHaveBeenCalledWith("Reset Password")
+  });
+})
+
+
+// Testing create account pressable
+
 describe('Testing create account', () => {
   it('should find create account via testId', () => {
   const testIdName = 'createAccount';

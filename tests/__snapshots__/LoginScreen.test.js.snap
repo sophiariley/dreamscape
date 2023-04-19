@@ -148,6 +148,62 @@ exports[`Testing login button button should say login 1`] = `
     <View
       style={
         {
+          "right": 40,
+          "top": 8,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "opacity": 1,
+          }
+        }
+        testID="forgotPassword"
+      >
+        <Text
+          style={
+            {
+              "alignSelf": "flex-end",
+              "color": "#DADADA",
+              "fontSize": 15,
+            }
+          }
+        >
+          Forgot Password?
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        {
           "alignItems": "center",
           "flex": 1,
           "justifyContent": "center",
@@ -435,6 +491,62 @@ exports[`renders correctly across screens 1`] = `
         testID="passwordInput"
         value=""
       />
+    </View>
+    <View
+      style={
+        {
+          "right": 40,
+          "top": 8,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "opacity": 1,
+          }
+        }
+        testID="forgotPassword"
+      >
+        <Text
+          style={
+            {
+              "alignSelf": "flex-end",
+              "color": "#DADADA",
+              "fontSize": 15,
+            }
+          }
+        >
+          Forgot Password?
+        </Text>
+      </View>
     </View>
     <View
       style={
