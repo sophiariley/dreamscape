@@ -1,5 +1,5 @@
-import { doc, setDoc, collection, addDoc,deleteDoc } from "firebase/firestore"; 
-import { db } from "../firebase-config";
+// import { doc, setDoc, collection, addDoc,deleteDoc } from "firebase/firestore"; 
+// import { db } from "../firebase-config";
 
 function createUser(firstName, lastName, email, username, password, add) {
   //console.log('Ran method');

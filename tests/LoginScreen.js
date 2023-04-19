@@ -51,6 +51,7 @@ const LoginScreen = ({navigation}) => {
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>Enter Username</Text>
                             <TextInput 
+                                testID = "usernameInput"
                                 style={styles.inputText} 
                                 placeholder="Username"
                                 value={username}
@@ -58,6 +59,7 @@ const LoginScreen = ({navigation}) => {
                             />
                         <Text style={styles.text}>Enter Password</Text>
                             <TextInput 
+                                testID = "passwordInput"
                                 style={styles.inputText} 
                                 placeholder="Password"
                                 secureTextEntry //hides password
@@ -69,7 +71,7 @@ const LoginScreen = ({navigation}) => {
                 {/** Start LoginButton.test */}
                 <View style={styles.container}>
                     <View style={styles.loginButtonContainer}
-                    testID = "loginButton"> {/**used for first test in LoginButton.test.js */}
+                    testID = "loginButton">
                         <TouchableOpacity
                             onPress={() => {
                                 auth(username, password).then(
@@ -89,8 +91,9 @@ const LoginScreen = ({navigation}) => {
 
                 <View style={styles.noAccountContainer}>
                     <Text style={styles.noAccountText}>────────   Don't have an account?   ────────</Text>
-                    <TouchableOpacity 
-                        onPress={() => {navigation.navigate('Create Account 1')}}>
+                    <TouchableOpacity
+                        onPress={() => {navigation.navigate('Create Account 1')}}
+                        testID = "createAccount">
                         <Text style={styles.createText}>Create one here!</Text>
                     </TouchableOpacity>
                 </View>
