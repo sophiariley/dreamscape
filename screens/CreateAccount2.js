@@ -30,6 +30,26 @@ const CreateAccount2 = ({route, navigation}) => {
     const windowHeight = Dimensions.get('window').height;
     const windowWidth = Dimensions.get('window').width;
 
+    // Alert for empty fields
+    const emptyAlert = (navigation) =>
+    Alert.alert(
+        'Empty Field',
+        'Please make sure all fields are filled out!',
+        [
+        {text: 'Ok', style: 'cancel'}
+        ]
+    );
+
+    // Alert for mismatch passwords
+    const wrongPasswordAlert = (navigation) =>
+    Alert.alert(
+        'Error',
+        'Your password does\'t match.',
+        [
+        {text: 'Ok', style: 'cancel'}
+        ]
+    );
+
     return (
         <View style={styles.container}>
             <ScrollView style={{flex:1}}>

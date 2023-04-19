@@ -33,6 +33,26 @@ const LoginScreen = ({navigation}) => {
     const windowHeight = Dimensions.get('window').height;
     const windowWidth = Dimensions.get('window').width;
 
+    // Alert for empty fields
+    const emptyAlert = (navigation) =>
+    Alert.alert(
+        'Empty Field',
+        'Please make sure all fields are filled out!',
+        [
+        {text: 'Ok', style: 'cancel'}
+        ]
+    );
+
+    // Alert for incorrect fields
+    const wrongAlert = (navigation) =>
+    Alert.alert(
+        'Error',
+        'Your username or password don\'t match.',
+        [
+        {text: 'Ok', style: 'cancel'}
+        ]
+    );
+
     return (
         <View style={styles.container}>
             <ScrollView style={{flex:1}}>
