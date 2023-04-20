@@ -81,6 +81,7 @@ export default function App({navigation}) {
                 </View>
               )
             })} name="Trips" component={Trips} />
+
           <Stack.Screen 
             options={({ navigation }) => ({
               title: 'Dreamscape',
@@ -93,14 +94,14 @@ export default function App({navigation}) {
                 color: '#F6F6F6',
                 fontSize: 25
               },
-              headerRight: () => (
-                <View>
-                  <TouchableOpacity 
-                    onPress={() =>  navigation.navigate('Messages')}>
-                    <FontAwesome5 name='envelope' size={35} color='#F6F6F6'/>
-                  </TouchableOpacity>
-                </View>
-              )
+              // headerRight: () => (
+              //   <View>
+              //     <TouchableOpacity 
+              //       onPress={() =>  navigation.navigate('Messages')}>
+              //       <FontAwesome5 name='envelope' size={35} color='#F6F6F6'/>
+              //     </TouchableOpacity>
+              //   </View>
+              // )
             })} name="Home" component={HomeScreen} />
             
             <Stack.Screen 

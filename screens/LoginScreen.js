@@ -80,12 +80,12 @@ const LoginScreen = ({navigation}) => {
                             </TouchableOpacity>
                         </View>
                                 
-                        <View style={styles.checkboxContainer}>
+                        {/* <View style={styles.checkboxContainer}>
                             <TouchableOpacity onPress={handleCheck}>
                                 <MaterialCommunityIcons name={isChecked ? 'checkbox-marked' : 'checkbox-blank-outline'} size={35} color={isChecked ? '#F8C98A' : '#F8C98A'}/>
                             </TouchableOpacity>
                             <Text style={styles.rememberMe}>Remember me</Text>
-                        </View>
+                        </View> */}
 
                         <View style={styles.container}>
                             <View style={styles.loginButtonContainer}>
