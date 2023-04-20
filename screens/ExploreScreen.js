@@ -1,3 +1,5 @@
+// The screen the user interacts with in order to search Dreamscape.
+
 import React, { useState} from "react";
 import { StyleSheet, TextInput, View, KeyboardAvoidingView, Text } from "react-native";
 import NavigationBar from "../components/navigationBar";
@@ -40,6 +42,8 @@ const ExploreScreen = ({route}) => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
+
+            {/* The searchbar, which the user can interact with in order to search the app */}
             <KeyboardAvoidingView style={styles.searchBar}
             behavior="padding">
                 <Foundation name='magnifying-glass' size={25} color='#3A6496' style={styles.icon}/>
@@ -51,6 +55,8 @@ const ExploreScreen = ({route}) => {
                 />
             </KeyboardAvoidingView>
             </View>
+
+            {/* The navigation bar, which the user can use to navigate the app */}
             <KeyboardAvoidingView style={styles.footer}>
                 <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>
             </KeyboardAvoidingView>
@@ -61,7 +67,9 @@ const ExploreScreen = ({route}) => {
 
 export default ExploreScreen;
 
+// The styles used for this screen
 const styles = StyleSheet.create({
+    // A general container for components
     container: {
         backgroundColor: 'white',
         flex: 1,
@@ -81,6 +89,8 @@ const styles = StyleSheet.create({
         bottom: 0,
         alignItems:'center'
     },
+
+    // A container for the search bar
     searchBar: {
         backgroundColor: '#DADADA',
         opacity: .75,
@@ -89,6 +99,8 @@ const styles = StyleSheet.create({
         top: -280,
         flexDirection: 'row'
     },
+
+    // The styling for the text in the search bar
     searchBarText: {
         fontSize: 18,
         color: '#3A6496',
@@ -96,6 +108,8 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginBottom: 5
     },
+
+    // The styling for the icon in the search bar
     icon: {
         marginLeft: 10,
         marginTop: 5,

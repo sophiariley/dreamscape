@@ -1,3 +1,5 @@
+// The screen the user interacts with in order to reset their password
+
 import React, { useState, useEffect} from "react";
 import { ScrollView, Dimensions, ImageBackground, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import {useNavigation} from '@react-navigation/core'
@@ -48,6 +50,7 @@ const ResetPasswordScreen = ({navigation}) => {
 
                     <View style={styles.inputContainer}>
                             <Text style={styles.miscText}>Enter the email associated with your</Text>
+                            {/* The email input box */}
                             <Text style={styles.miscText}>account:</Text>
                             <TextInput 
                                 style={styles.inputText} 
@@ -55,7 +58,8 @@ const ResetPasswordScreen = ({navigation}) => {
                                 value={email}
                                 onChangeText={text => findEmailMatch(text)}
                             />
-
+                            
+                            {/* The new password input box */}
                             <Text style={styles.miscText}>Enter new password</Text>
                             <TextInput 
                                 style={styles.inputText} 
@@ -66,6 +70,7 @@ const ResetPasswordScreen = ({navigation}) => {
                     </View>
 
                     <View style={styles.resetPasswordButtonContainer}>
+                        {/* The "Reset Password" button, which updates the user's password and navigates to LoginScreen */}
                         <TouchableOpacity
                             onPress={() => {updatePassword(newPassword); navigation.navigate('Login')}}
                             style={styles.resetPasswordButton}
@@ -75,6 +80,7 @@ const ResetPasswordScreen = ({navigation}) => {
                     </View>
 
                     <View>
+                        {/* The "Return to login" button, which navigates to the LoginScreen */}
                         <TouchableOpacity
                             onPress={() => {{navigation.navigate('Login')}}}
                         >
@@ -90,7 +96,9 @@ const ResetPasswordScreen = ({navigation}) => {
 
 export default ResetPasswordScreen;
 
+// The styles used for this screen
 const styles = StyleSheet.create ({
+    // A general container for components
     container: {
         backgroundColor: 'white',
         height: '100%',
@@ -98,22 +106,30 @@ const styles = StyleSheet.create ({
         alignContent: 'center',
         justifyContent: 'center'
     },  
+
+    // A container for the email input box
     emailContainer: {
         justifyContent: 'center',
         alignItems: 'center'
         // top: 175
     },
+
+    // A container for the new password input box
     newPasswordContainer: {
         justifyContent: 'center',
         alignItems: 'center',
         // top: 75
     },
+
+    // The styling for the "Rest password" text
     resetPassword: {
         color: '#F8C98A',
         fontSize: 40,
         alignSelf: 'center',
         top: 150
     },
+
+    // A container for the "Reset password" button
     resetPasswordButtonContainer: {
         width: '70%',
         height: '20%',
@@ -122,6 +138,8 @@ const styles = StyleSheet.create ({
         justifyContent: 'center',
         top: -40
     },
+
+    // The styling for the "Reset password" button
     resetPasswordButton: {
         backgroundColor: '#D28A8E', // pink color
         width: '100%',
@@ -129,16 +147,22 @@ const styles = StyleSheet.create ({
         borderRadius: 5,
         alignItems: 'center',
     },
+
+    // The styling for the "Reset password" text in the "Rest password" button
     resetPasswordButtonText: {
         fontSize: 20,
         color: '#F6F6F6'
     },
+
+    // The styling for misc. text
     miscText: {
         color: '#3A6496',
         alignSelf: 'flex-start',
         left: 40,
         fontSize: 20
     },
+
+    // The styling for input text
     inputText: {
         fontSize: 20,
         backgroundColor: '#DADADA',
@@ -150,12 +174,16 @@ const styles = StyleSheet.create ({
         marginBottom: 10,
         paddingLeft: 10
     },
+
+    // The styling for the "Return to Login" text
     returnToLogin: {
         alignSelf: 'center',
         color: '#3A6496',
         bottom: 100,
         fontSize: 20
     },
+
+    // A container for the input boxes and their respective text
     inputContainer: {
         flex: 1,
         justifyContent: 'center',

@@ -1,3 +1,5 @@
+// The second page the user interacts with when creating a new account
+
 import React, { useState} from "react";
 import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, ScrollView, Dimensions, Alert } from "react-native";
 import {AntDesign} from 'react-native-vector-icons';
@@ -31,7 +33,7 @@ const CreateAccount2 = ({route, navigation}) => {
     const windowHeight = Dimensions.get('window').height;
     const windowWidth = Dimensions.get('window').width;
 
-    // Alert for empty fields
+     // Alert user if they left empty fields
     const emptyAlert = () =>
     Alert.alert(
         'Empty Field',
@@ -41,7 +43,7 @@ const CreateAccount2 = ({route, navigation}) => {
         ]
     );
 
-    // Alert for mismatch passwords
+    // Alerts user if input in confirmed password box doesn't match that in password box
     const wrongPasswordAlert = () =>
     Alert.alert(
         'Error',
@@ -64,15 +66,19 @@ const CreateAccount2 = ({route, navigation}) => {
             <ScrollView style={{flex:1}}>
                 <View style={{width:windowWidth, height:windowHeight }}>
                     <Text style={styles.createNewAccount}>Create New Account</Text>
+
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>Enter Username</Text>
+                            {/* Input box for user to enter their desired username */}
                             <TextInput 
                                 style={styles.inputText} 
                                 placeholder=""
                                 value={username}
                                 onChangeText={text => setUsername(text)}
                             />
+
                         <Text style={styles.text}>Enter Password</Text>
+                            {/* Input box for user to enter their desired password */}
                             <TextInput 
                                 style={styles.inputText} 
                                 placeholder=""
@@ -80,7 +86,9 @@ const CreateAccount2 = ({route, navigation}) => {
                                 value={password}
                                 onChangeText={text => setPassword(text)}
                             />
+
                         <Text style={styles.text}>Re-enter Password</Text>
+                            {/* Input box for user to confirm their password */}
                             <TextInput 
                                 style={styles.inputText} 
                                 placeholder=""
@@ -89,6 +97,8 @@ const CreateAccount2 = ({route, navigation}) => {
                                 onChangeText={text => setPassword2(text)}
                             />
                     </View>
+
+                    {/* Next button, which saves the user's input and navigates to HomeScreen */}
                     <View style={styles.nextButtonContainer}>
                         <TouchableOpacity 
                             onPress={() => { username=='' || password=='' || password2=='' ? emptyAlert() : password!=password2 ? wrongPasswordAlert() : doBoth() } }
@@ -100,6 +110,8 @@ const CreateAccount2 = ({route, navigation}) => {
                             <AntDesign name='arrowright' size={20} color='#F6F6F6'/>
                         </TouchableOpacity>
                     </View>
+
+                    {/* Previous button, which navigates to CreateAccount1Screen */}
                     <View style={styles.prevButtonContainer}>
                         <TouchableOpacity
                             onPress={() => navigation.navigate('Create Account 1')}
@@ -117,17 +129,23 @@ const CreateAccount2 = ({route, navigation}) => {
 
 export default CreateAccount2;
 
+// Styles used for this screen:s
 const styles = StyleSheet.create({
+    // A general container for components
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
     },
+
+    // A container for the input boxes and their respection text
     textContainer: {
         top: 200,
         position: 'absolute',
         alignSelf: 'center'
     },
+
+    // A container for the "Next" button
     nextButtonContainer: {
         width: '70%',
         height: '20%',
@@ -139,6 +157,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         alignSelf: 'center'
     },
+
+    // A container for the "Previous" button
     prevButtonContainer: {
         width: '70%',
         height: '20%',
@@ -150,6 +170,8 @@ const styles = StyleSheet.create({
         bottom: 10,
         alignSelf: 'center'
     },
+
+    // The styling for the "Create New Account" text
     createNewAccount: {
         color: '#F8C98A',
         fontSize: 35,
@@ -157,6 +179,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         alignSelf: 'center'
     },
+
+    // Styling for the input text
     inputText: {
         fontSize: 20,
         backgroundColor: '#DADADA',
@@ -165,12 +189,16 @@ const styles = StyleSheet.create({
         height: '20%',
         paddingLeft: 10
     },
+
+    // Styling for the text about the input boxes
     text: {
         color: '#3A6496',
         fontSize: 14,
         paddingTop: 10,
         paddingBottom: 5
     }, 
+
+    // Styling for the "Next" button
     nextButton: {
         backgroundColor: '#D28A8E', // pink color
         width: '100%',
@@ -180,11 +208,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row'
     },
+
+    // Styling for the "Next" text
     next: {
         fontSize: 20,
         color: '#F6F6F6',
         paddingRight: 10,
     },
+
+    // Styling for the "Previous" button
     prevButton: {
         backgroundColor: '#3A6496', // blue color
         width: '100%',
@@ -194,6 +226,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row'
     },
+
+    // Styling for the "Previous" text
     prev: {
         fontSize: 20,
         color: '#F6F6F6',
