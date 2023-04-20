@@ -21,11 +21,11 @@ const LoginScreen = ({navigation}) => {
 
     async function auth(username, password) {
         const q = query(collection(db, "users"), where("username", "==", username), where("password", "==", password));
-        let verified = false;
+        let verified = [false, ''];
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             console.log(doc.id, " => ", doc.data());
-            verified = true;
+            verified = [true, doc.id];
         });
         return verified;
     }
@@ -93,10 +93,10 @@ const LoginScreen = ({navigation}) => {
                                     onPress={() => {
                                         auth(username, password).then(
                                             function(value) {
-                                                if (value) {
+                                                if (value[0]) {
                                                     navigation.navigate('Home', {
+                                                        userID: value[1],
                                                         username: username,
-                                                        password: password,
                                                     })
                                                 }
                                                 else {
