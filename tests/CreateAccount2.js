@@ -1,16 +1,15 @@
 import React, { useState} from "react";
-import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, ScrollView, Dimensions, Alert } from "react-native";
-import {AntDesign} from 'react-native-vector-icons';
+import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, ScrollView, Dimensions } from "react-native";
+// import {AntDesign} from 'react-native-vector-icons';
 //import { getDatabase, ref, set } from "firebase/database";
-import { doc, setDoc, collection, addDoc } from "firebase/firestore"; 
-import { db } from "../firebase-config";
+// import { doc, setDoc, collection, addDoc } from "firebase/firestore"; 
+// import { db } from "../firebase-config";
 
 const CreateAccount2 = ({route, navigation}) => {
-    const { firstName, lastName, email } = route.params;
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [password2, setPassword2] = useState('');
-    const [userID, setUserID] = useState(''); //CAN BE USED TO PASS UID THROUGH INSTEAD OF FINDING IT LATER
+    // const { firstName, lastName, email } = route.params;
+    // const [username, setUsername] = useState('');
+    // const [password, setPassword] = useState('');
+    // const [userID, setUserID] = useState(''); //CAN BE USED TO PASS UID THROUGH INSTEAD OF FINDING IT LATER
     //const res = db.collection('users');
 
     function createUser(firstName, lastName, email, username, password) {
@@ -32,7 +31,7 @@ const CreateAccount2 = ({route, navigation}) => {
     const windowWidth = Dimensions.get('window').width;
 
     // Alert for empty fields
-    const emptyAlert = () =>
+    const emptyAlert = (navigation) =>
     Alert.alert(
         'Empty Field',
         'Please make sure all fields are filled out!',
@@ -42,7 +41,7 @@ const CreateAccount2 = ({route, navigation}) => {
     );
 
     // Alert for mismatch passwords
-    const wrongPasswordAlert = () =>
+    const wrongPasswordAlert = (navigation) =>
     Alert.alert(
         'Error',
         'Your password does\'t match.',
@@ -50,14 +49,6 @@ const CreateAccount2 = ({route, navigation}) => {
         {text: 'Ok', style: 'cancel'}
         ]
     );
-
-    const doBoth = () => {
-        createUser(firstName, lastName, email, username, password); 
-        navigation.navigate('Home', {
-            username: username,
-            password: password,
-        });
-    }
 
     return (
         <View style={styles.container}>
@@ -67,45 +58,53 @@ const CreateAccount2 = ({route, navigation}) => {
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>Enter Username</Text>
                             <TextInput 
+                                testID="username"
                                 style={styles.inputText} 
                                 placeholder=""
-                                value={username}
-                                onChangeText={text => setUsername(text)}
+                                // value={username}
+                                // onChangeText={text => setUsername(text)}
                             />
                         <Text style={styles.text}>Enter Password</Text>
-                            <TextInput 
+                            <TextInput
+                                testID="password" 
                                 style={styles.inputText} 
                                 placeholder=""
                                 secureTextEntry //hides password
-                                value={password}
-                                onChangeText={text => setPassword(text)}
+                                // value={password}
+                                // onChangeText={text => setPassword(text)}
                             />
                         <Text style={styles.text}>Re-enter Password</Text>
                             <TextInput 
+                                testID="repPassword" 
                                 style={styles.inputText} 
                                 placeholder=""
                                 secureTextEntry //hides password
-                                value={password2}
-                                onChangeText={text => setPassword2(text)}
+                                // value={password}
+                                // onChangeText={text => setPassword(text)}
                             />
                     </View>
                     <View style={styles.nextButtonContainer}>
                         <TouchableOpacity 
-                            onPress={() => { username=='' || password=='' || password2=='' ? emptyAlert() : password!=password2 ? wrongPasswordAlert() : doBoth() } }
+                            testID="nextButton" 
+                            // onPress={() => { createUser(firstName, lastName, email, username, password); navigation.navigate('Home', {
+                            //     username: username,
+                            //     password: password,
+                            // }) } }
                             // change to Login later
 
                             style={styles.nextButton}
                         > 
                             <Text style={styles.next}>Next</Text>
-                            <AntDesign name='arrowright' size={20} color='#F6F6F6'/>
+                            {/* <AntDesign name='arrowright' size={20} color='#F6F6F6'/> */}
                         </TouchableOpacity>
                     </View>
                     <View style={styles.prevButtonContainer}>
                         <TouchableOpacity
+                            testID="backButton" 
                             onPress={() => navigation.navigate('Create Account 1')}
                             style={styles.prevButton}
                         > 
-                            <AntDesign name='arrowleft' size={20} color='#F6F6F6'/>
+                            {/* <AntDesign name='arrowleft' size={20} color='#F6F6F6'/> */}
                             <Text style={styles.prev}>Previous</Text>
                         </TouchableOpacity>
                     </View>

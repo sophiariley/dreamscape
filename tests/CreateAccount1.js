@@ -1,14 +1,13 @@
 import React, { useState} from "react";
-import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, Dimensions, ScrollView, Alert } from "react-native";
-import {AntDesign} from 'react-native-vector-icons';
-import { db } from "../firebase-config";
-import { collection, addDoc } from "firebase/firestore";
+import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, Dimensions, ScrollView } from "react-native";
+// import {AntDesign} from 'react-native-vector-icons';
+// import { db } from "../firebase-config";
+// import { collection, addDoc } from "firebase/firestore";
 
 const CreateAccount1 = ({navigation}) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
-    const [email2, setEmail2] = useState('');
 
     function createUser(firstName, lastName, email) {
          const runit = async () => await addDoc(collection(db, "users"), {
@@ -23,19 +22,10 @@ const CreateAccount1 = ({navigation}) => {
     const windowWidth = Dimensions.get('window').width;
 
     // Alert for empty fields
-    const emptyAlert = () =>
+    const emptyAlert = (navigation) =>
     Alert.alert(
         'Empty Field',
         'Please make sure all fields are filled out!',
-        [
-        {text: 'Ok', style: 'cancel'}
-        ]
-    );
-
-    const wrongAlert = () =>
-    Alert.alert(
-        'Error',
-        'Your email and confirm email don\'t match.',
         [
         {text: 'Ok', style: 'cancel'}
         ]
@@ -50,6 +40,7 @@ const CreateAccount1 = ({navigation}) => {
                     <View style={styles.inputContainer}>
                         <Text style={styles.text}>Enter First Name</Text>
                             <TextInput 
+                                testID="firstName"
                                 style={styles.inputText} 
                                 placeholder=""
                                 value={firstName}
@@ -57,6 +48,7 @@ const CreateAccount1 = ({navigation}) => {
                             />
                         <Text style={styles.text}>Enter Last Name</Text>
                             <TextInput 
+                                testID="lastName"
                                 style={styles.inputText} 
                                 placeholder=""
                                 value={lastName}
@@ -64,32 +56,34 @@ const CreateAccount1 = ({navigation}) => {
                             />
                         <Text style={styles.text}>Enter Email</Text>
                             <TextInput 
+                                testID="email"
                                 style={styles.inputText} 
                                 placeholder=""
                                 value={email}
                                 onChangeText={text => setEmail(text)}
                             />
                         <Text style={styles.text}>Confirm Email</Text>
-                            <TextInput 
+                            <TextInput
+                                testID="confirmEmail" 
                                 style={styles.inputText} 
                                 placeholder=""
-                                value={email2}
-                                onChangeText={text => setEmail2(text)}
                             />
                     </View>
                     <View style={styles.nextButtonContainer}>
                         <TouchableOpacity
+                            testID="nextButton"
                             //onPress={() => createUser(firstName, lastName, email)} //navigation.navigate('Create Account 2')}
-                            onPress={() => firstName=='' || lastName=='' || email=='' || email2=='' ? emptyAlert() : (email!=email2 ? wrongAlert() : navigation.navigate('Create Account 2', {firstName: firstName, lastName: lastName, email: email}))}
+                            onPress={() => navigation.navigate('Create Account 2', {firstName: firstName, lastName: lastName, email: email})}
                             style={styles.nextButton}
                         > 
                             <Text style={styles.next}>Next</Text>
-                            <AntDesign name='arrowright' size={20} color='#F6F6F6'/>
+                            {/* <AntDesign name='arrowright' size={20} color='#F6F6F6'/> */}
                         </TouchableOpacity>
                     </View>
                     <View style={styles.accountExistsContainer}>
                         <Text style={styles.accountExistsText}>────────   Already have an account?   ────────</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Login')}
+                            testID="backButton">
                             <Text style={styles.signInText}>Sign in here!</Text>
                         </TouchableOpacity>
                     </View>
