@@ -1,3 +1,5 @@
+// This screen is out of commision due to time constraints
+
 import { StyleSheet, View } from "react-native";
 
 const MessageScreen = ({}) => {

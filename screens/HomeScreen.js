@@ -1,3 +1,5 @@
+// The screen where the user can see and interact with posts
+
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView, Text } from "react-native";
 import NavigationBar from "../components/navigationBar";
@@ -145,6 +147,8 @@ const HomeScreen = ({route}) => {
                     />
                 )) : <HomeScreenPost/>}
             </ScrollView>
+
+            {/* The navigation bar, which the user can use to navigate the app */}
             <View style={styles.footer}>
                 <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>
             </View>
@@ -156,20 +160,24 @@ const HomeScreen = ({route}) => {
 
 export default HomeScreen;
 
+// The styles used for this screen
 const styles = StyleSheet.create({
+    // A general container for components
     container: {
         backgroundColor: 'white',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
     },
-    // the styling of the header, used for the home bar
+
+    // The styling of the header, used for the home bar
     header: {
         position: 'absolute',
         bottom: 0,
         alignItems:'center'
     },
-    // the styling of the footer, used for the navigation bar
+
+    // The styling of the footer, used for the navigation bar
     footer: {
         position: 'absolute',
         bottom: 0,
