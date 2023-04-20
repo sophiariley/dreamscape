@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, Text } from "react-native";
 import NavigationBar from "../components/navigationBar";
 import { collection, query, where, onSnapshot, getDocs, getDoc, doc } from "firebase/firestore";
 import { db, storage } from "../firebase-config";
@@ -129,6 +129,9 @@ const HomeScreen = ({route}) => {
 
     return (
         <View style={styles.container}>
+            <View>
+                <Text style={styles.text}>Click the home button again to view posts!</Text>
+            </View>
             <ScrollView>
                 {finalArray ? 
                 finalArray.map((post, index) => (
@@ -176,5 +179,10 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         alignItems:'center'
+    },
+    text: {
+        zIndex: -999,
+        top: 20,
+        color: 'grey'
     }
 })
