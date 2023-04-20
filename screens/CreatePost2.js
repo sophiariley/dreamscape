@@ -93,50 +93,51 @@ const CreatePost2 = ({navigation, route}) => {
             <ScrollView style={{flex:1}}>
                 <View style={{width:windowWidth, height:windowHeight }}>
             
-            <View style={styles.photoContainer}>
-                {image && <Image source={{ uri: image }} style={{ width: "100%", height: "100%" }} resizeMode="cover" />}
-                {/* {video && <Video source={{ uri: video }} style={{ width: "100%", height: "100%" }} resizeMode="cover" />} */}
-            </View>
-            
-            <View style={styles.chooseImageButtonContainer}>
-                <Pressable onPress={handleImage}>
-                    <Text style={styles.chooseImageText}>Choose image</Text>
-                </Pressable>
-            </View>
-            
-            <KeyboardAvoidingView style={styles.captionContainer}>
-                <TextInput
-                     style={styles.captionText} 
-                     placeholder="Write caption..."
-                     value={caption}
-                     onChangeText={text => setCaption(text)}
-                />
-            </KeyboardAvoidingView>
-            
-            <View style={styles.location}>
-                <Ionicons style={styles.globe} name='globe-outline' size={30} color='#3A6496'/>
-                <TextInput 
-                    style={styles.locationText}
-                    placeholder= 'Add Location'
-                    value={location}
-                    placeholderTextColor="#3A6496"
-                    onChangeText={text => setLocation(text)}
-                />
-            </View>
-            
-            <View style={styles.postButtonContainer}>
-                <TouchableOpacity 
-                    style={styles.postButton}
-                    onPress={() => {uploadImageAsync(image); navigation.navigate('Home', {
-                        username: username,
-                        userID: userID,
-                    })}}>
-                    <Text style={styles.postText}>Post</Text>
-                </TouchableOpacity>
-            
-            </View>
-        </View>
-        </ScrollView>
+                    <View style={styles.photoContainer}>
+                        {image && <Image source={{ uri: image }} style={{ width: "100%", height: "100%" }} resizeMode="cover" />}
+                        {/* {/* {video && <Video source={{ uri: video }} style={{ width: "100%", height: "100%" }} resizeMode="cover" />} */}
+                    </View> 
+                    
+                    <View style={styles.chooseImageButtonContainer}>
+                        <Pressable onPress={handleImage}>
+                            <Text style={styles.chooseImageText}>Choose image</Text>
+                        </Pressable>
+                    </View>
+                    
+                    <KeyboardAvoidingView style={styles.captionContainer}>
+                        <TextInput
+                            style={styles.captionText} 
+                            placeholder="Write caption..."
+                            value={caption}
+                            onChangeText={text => setCaption(text)}
+                        />
+                    </KeyboardAvoidingView>
+
+                    <View style={styles.footer}>
+                        <View style={styles.location}>
+                            <Ionicons style={styles.globe} name='globe-outline' size={30} color='#3A6496'/>
+                            <TextInput 
+                                style={styles.locationText}
+                                placeholder= 'Add Location'
+                                value={location}
+                                placeholderTextColor="#3A6496"
+                                onChangeText={text => setLocation(text)}
+                            />
+                        </View>
+                            
+                        <View style={styles.postButtonContainer}>
+                            <TouchableOpacity 
+                                style={styles.postButton}
+                                onPress={() => {uploadImageAsync(image); navigation.navigate('Home', {
+                                    username: username,
+                                    userID: userID,
+                                })}}>
+                                <Text style={styles.postText}>Post</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </ScrollView>
         </View>
     )
 }
@@ -181,25 +182,20 @@ const styles = StyleSheet.create({
         paddingLeft: 10
     },
     postButtonContainer: {
+        backgroundColor: '#D28A8E',
         width: '30%',
-        height: '5%',
-        flex: 1,
+        height: '27%',
         alignSelf: 'flex-end',
-        position: 'absolute',
-        top: 560,
-        right: 20
-    },
-    postButton: {
-        backgroundColor: '#D28A8E', // pink color
-        width: '100%',
-        padding: 15,
+        right: 20,
         borderRadius: 5,
-        alignItems: 'center',
-        position: 'absolute'
+        bottom: -30
     },
     postText: {
         fontSize: 20,
-        color: '#F6F6F6'
+        color: '#F6F6F6',
+        alignSelf: 'center',
+        padding: 12
+        // color: 'black'
     },
     location: {
         flexDirection: 'row',
@@ -207,9 +203,9 @@ const styles = StyleSheet.create({
         paddingBottom: 30,
         paddingTop: 20,
         position: 'absolute',
-        top: 540,
         alignSelf: "flex-start",
-        left: 10
+        left: 10,
+        top: 10
     },
     globe: {
         padding: 10,
@@ -232,5 +228,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         borderRadius: 5,
         bottom: -15
+    },
+    // the styling of the footer, used for the navigation bar
+    footer: {
+        // position: 'absolute',
+        bottom: 0,
+        alignItems:'center'
     }
 })
