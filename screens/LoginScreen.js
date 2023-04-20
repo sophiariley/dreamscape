@@ -26,7 +26,10 @@ const LoginScreen = ({navigation}) => {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             console.log(doc.id, " => ", doc.data());
+<<<<<<< HEAD
             //setUserID(doc.id);
+=======
+>>>>>>> 4d6703ccd3ab8ad83296272df59d40e2b4d90e98
             verified = [true, doc.id];
         });
         return verified;
@@ -96,10 +99,16 @@ const LoginScreen = ({navigation}) => {
                                         auth(username, password).then(
                                             function(value) {
                                                 if (value[0]) {
+<<<<<<< HEAD
                                                     //console.log("KACHOWS",value[0]);
                                                     navigation.navigate('Home', {
                                                         userID: value[1],
                                                         username: username
+=======
+                                                    navigation.navigate('Home', {
+                                                        userID: value[1],
+                                                        username: username,
+>>>>>>> 4d6703ccd3ab8ad83296272df59d40e2b4d90e98
                                                     })
                                                 }
                                                 else {
