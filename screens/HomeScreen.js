@@ -10,12 +10,8 @@ import HomeScreenPost from "../components/homeScreenPost";
 const HomeScreen = ({route}) => {
 
     const username = route.params.username;
-    // const password = route.params.password;
     const userID = route.params.userID;
-    //const [userID, setUserID] = useState('');
-    //const userID = route.params.userID;
-    //const [globalURL, setGlobalURL] = useState('https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2F2d6961e8-dafc-48bb-aa1c-56efe6e57b93.jpeg?alt=media&token=696456ea-1c7c-49ec-8135-1c947e17fe54');
-    //const [globalURL, setGlobalURL] = useState('');
+    const show = route.params.show;
     //------MAKE ARRAY OF GLOBALURLS AND ADD ADD TO CHECK ARRAY AND END OF USEEFFECT
     const [finalArray, setFinalArray] = useState([]);
     //const [posterPFP, setPosterPFP] = useState('')
@@ -42,7 +38,6 @@ const HomeScreen = ({route}) => {
         //     });
         // }
         // getUserID();
-
 
         console.log(userID);
         async function getPicUrl(picpath) {
@@ -130,7 +125,7 @@ const HomeScreen = ({route}) => {
     return (
         <View style={styles.container}>
             <View>
-                <Text style={styles.text}>Click the home button again to view posts!</Text>
+                {show ? <Text style={styles.text}>Click the home button again to view posts!</Text> : null}
             </View>
             <ScrollView>
                 {finalArray ? 
@@ -181,8 +176,9 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     text: {
-        zIndex: -999,
-        top: 20,
-        color: 'grey'
+        zIndex: -10,
+        top: 250,
+        color: 'grey',
+        fontSize: 20
     }
 })

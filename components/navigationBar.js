@@ -38,6 +38,7 @@ export default function NavigationBar({toNavBarUsername, toNavBarUserID}) {
                 onPress={() =>  navigation.navigate('Home', {
                     username: username,
                     userID: userID,
+                    show: false,
                 })}>
                     <Entypo name='home' size={40} color='#3A6496'/>
                 </TouchableOpacity>

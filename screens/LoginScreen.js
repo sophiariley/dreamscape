@@ -97,6 +97,7 @@ const LoginScreen = ({navigation}) => {
                                                     navigation.navigate('Home', {
                                                         userID: value[1],
                                                         username: username,
+                                                        show: true,
                                                     })
                                                 }
                                                 else {
