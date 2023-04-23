@@ -1,3 +1,5 @@
+// Not used in application. Kept for reference and possible future use
+
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Header } from 'react-native';
 import {AntDesign} from 'react-native-vector-icons';

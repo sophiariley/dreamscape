@@ -1,8 +1,9 @@
+// The navigation bar
+
 import React, {useState} from "react";
-import {View, StyleSheet, TouchableOpacity, Image, Text} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {FontAwesome5, Entypo, Foundation} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/core'
-import * as ImagePicker from 'expo-image-picker';
 
 export default function NavigationBar({toNavBarUsername, toNavBarUserID}) {
     const username = toNavBarUsername;
@@ -13,27 +14,12 @@ export default function NavigationBar({toNavBarUsername, toNavBarUserID}) {
     printData();
     const navigation = useNavigation();
 
-    const [image, setImage] = useState(null);
-
-    const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-        });
-
-        console.log(result);
-
-        if (!result.canceled) {
-        setImage(result.assets[0].uri);
-        }
-    };
+    
 
     return (
         <View style={styles.container}>
             <View/>
-                {/* home button */}
+                {/* The home button, which navigates to HomeScreen */}
                 <TouchableOpacity style={styles.button}
                 onPress={() =>  navigation.navigate('Home', {
                     username: username,
@@ -43,7 +29,7 @@ export default function NavigationBar({toNavBarUsername, toNavBarUserID}) {
                     <Entypo name='home' size={40} color='#3A6496'/>
                 </TouchableOpacity>
 
-                {/* explore button */}
+                {/* The explore button, which navigates to ExploreScreen */}
                 <TouchableOpacity style={styles.button}
                      onPress={() =>  navigation.navigate('Explore', {
                         username: username,
@@ -53,7 +39,7 @@ export default function NavigationBar({toNavBarUsername, toNavBarUserID}) {
                 </TouchableOpacity>
 
                 
-                {/* new post button */}
+                {/* The new post button, which navigates to CreatePost2 */}
                 <TouchableOpacity style={styles.button}
                     onPress={() => navigation.navigate('Create Post', {
                         username: username,
@@ -62,7 +48,7 @@ export default function NavigationBar({toNavBarUsername, toNavBarUserID}) {
                     <FontAwesome5 name='plus' size={40} color='#3A6496'/>
                 </TouchableOpacity>
 
-                {/* trips button */}
+                {/* The trips button, which navigates to Trips */}
                 <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Trips', {
                         username: username,
                         userID: userID,
@@ -70,7 +56,7 @@ export default function NavigationBar({toNavBarUsername, toNavBarUserID}) {
                     <FontAwesome5 name='calendar-alt' size={40} color='#3A6496'/>
                 </TouchableOpacity>
 
-                {/* profile button */}
+                {/* The profile button, which navigates to ProfileScreen */}
                 <TouchableOpacity style={styles.button}
                 onPress={() =>  navigation.navigate('Profile', {
                     username: username,
@@ -85,7 +71,7 @@ export default function NavigationBar({toNavBarUsername, toNavBarUserID}) {
 }
 
 const styles = StyleSheet.create({
-    // the styling for the container (i.e. the gray bar)
+    // The styling for the container (i.e. the gray bar)
     container: {
         height: 60,
         flexDirection: 'row',
@@ -94,7 +80,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#D9D9D9',
         width: '100%'
     },
-    // the styling for the icon buttons
+    // The styling for the icons used in the nav bar
     button: {
         width: 50,
         height: 50,

@@ -1,3 +1,5 @@
+// The components found on every post
+
 import React from "react";
 import { useState, useEffect } from "react";
 import {StyleSheet, Text, View, TouchableOpacity, Pressable, Image, Dimensions, ScrollView} from "react-native";
@@ -42,7 +44,7 @@ export default function CommentLikeDislike({userID, userUsername, posterID, post
                     source={{uri: url}}
                     /> 
                 </View>
-                {/*Like button*/}
+                {/*Like button- initially set to a heart outline and turns red when pressed*/}
                 <View style={{flexDirection: 'row', margin: 5, alignItems: 'center', flex: 2, justifyContent: 'space-between'}}>
                     <TouchableOpacity onPress={handleLikePress}>
                         <FontAwesome name={isLiked ? 'heart' : 'heart-o'} size={35} color={isLiked ? 'red' : 'black'}style={{marginRight: 15,marginBottom:-5}}/>
@@ -82,7 +84,8 @@ export default function CommentLikeDislike({userID, userUsername, posterID, post
 }
 
 const styles = StyleSheet.create({
-container: {
+    // A general container
+    container: {
         backgroundColor: 'white',
         flex: 1,
         padding: 1,

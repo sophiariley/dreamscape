@@ -1,4 +1,4 @@
-// not needed currently but keep just in case!
+// Not used in application. Kept for reference and possible future use
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import {FontAwesome5} from 'react-native-vector-icons';

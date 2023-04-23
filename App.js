@@ -1,5 +1,7 @@
+// The different screens of the app and their headers
+
 import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, Modal } from 'react-native';
+import { View, TouchableOpacity, Modal } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
@@ -11,9 +13,8 @@ import CreateAccount1 from './screens/CreateAccount1'
 import CreateAccount2 from './screens/CreateAccount2'
 import ProfileScreen from './screens/ProfileScreen';
 import OtherProfileScreen from './screens/OtherProfileScreen';
-import MessageScreen from './screens/MessageScreen';
+// import MessageScreen from './screens/MessageScreen';
 import SettingsScreen from './screens/SettingsScreen';
-import {FontAwesome5, AntDesign} from 'react-native-vector-icons';
 import PostScreen from './screens/PostScreen';
 import Comments from './screens/comments';
 import Trips from './screens/Trips';
@@ -36,88 +37,104 @@ export default function App({navigation}) {
   console.log("App.js userID: ", uID);
   return (
     <DataContext.Provider value={{ uID, setUID }}>
-    <NavigationContainer>
-        <Stack.Navigator>
-          
-          <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
-
-          <Stack.Screen options={{ headerShown: false }} name="Reset Password" component={ResetPasswordScreen} />
-
-          <Stack.Screen options={{ headerShown: false }} name="Create Account 1" component={CreateAccount1} />
-
-          <Stack.Screen options={{ headerShown: false }} name="Create Account 2" component={CreateAccount2} />
-          
-          <Stack.Screen options={{ headerShown: false }} name="Profile" component={ProfileScreen} />
-
-          <Stack.Screen options={{ headerShown: false }} name="OtherProfileScreen" component={OtherProfileScreen} />
-
-          <Stack.Screen options={{ headerShown: false }} name="PostScreen" component={PostScreen} />
-
-          <Stack.Screen options={{ headerShown: false }} name="TripScreen" component={TripScreen} />
-          
-          <Stack.Screen options={{ headerShown: false }} name="Comments" component={Comments} />
-
-          <Stack.Screen options={{ headerShown: false }} name="CreateTrip" component={CreateTrip} />
-          <Stack.Screen 
-             options={() => ({
-              title: 'Trips',
-              headerTitleStyle: {
-                color: '#F6F6F6',
-                fontSize: 25
-              },
-              headerTitleAlign: 'center',
-              headerBackVisible: false,
-              headerStyle: {
-                backgroundColor: '#D28A8E',
-              },
-               headerRight: () => (
-                <View>
-                  <TouchableOpacity onPress={() => {setModalVisible(true)}}>
-                    <Entypo name='plus' size={35} color='#F6F6F6'/>
-                  </TouchableOpacity>
-                <Modal visible={modalVisible}>
-                <CreateTrip uID={uID} onSave={handleSavePress} onCancel={handleCancelPress}/>
-            </Modal>
-                </View>
-              )
-            })} name="Trips" component={Trips} />
-
-          <Stack.Screen 
-            options={({ navigation }) => ({
-              title: 'Dreamscape',
-              headerTitleAlign: 'center',
-              headerBackVisible: false,
-              headerStyle: {
-                backgroundColor: '#D28A8E'
-              },
-              headerTitleStyle: {
-                color: '#F6F6F6',
-                fontSize: 25
-              },
-              // headerRight: () => (
-              //   <View>
-              //     <TouchableOpacity 
-              //       onPress={() =>  navigation.navigate('Messages')}>
-              //       <FontAwesome5 name='envelope' size={35} color='#F6F6F6'/>
-              //     </TouchableOpacity>
-              //   </View>
-              // )
-            })} name="Home" component={HomeScreen} />
+      <NavigationContainer>
+          <Stack.Navigator>
             
+            {/* LoginScreen doesn't have a header */}
+            <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
+
+            {/* ResetPasswordScreen doesn't have a header */}
+            <Stack.Screen options={{ headerShown: false }} name="Reset Password" component={ResetPasswordScreen} />
+
+            {/* CreateAccount1 doesn't have a header */}
+            <Stack.Screen options={{ headerShown: false }} name="Create Account 1" component={CreateAccount1} />
+
+            {/* CreateAccount2 doesn't have a header */}
+            <Stack.Screen options={{ headerShown: false }} name="Create Account 2" component={CreateAccount2} />
+            
+            {/* ProfileScreen doesn't have a header */}
+            <Stack.Screen options={{ headerShown: false }} name="Profile" component={ProfileScreen} />
+
+            {/* OtherProfileScreen doesn't have a header */}
+            <Stack.Screen options={{ headerShown: false }} name="OtherProfileScreen" component={OtherProfileScreen} />
+
+            {/* PostScreen doesn't have a header */}
+            <Stack.Screen options={{ headerShown: false }} name="PostScreen" component={PostScreen} />
+
+            {/* TripScreen doesn't have a header */}
+            <Stack.Screen options={{ headerShown: false }} name="TripScreen" component={TripScreen} />
+            
+            {/* Comments doesn't have a header */}
+            <Stack.Screen options={{ headerShown: false }} name="Comments" component={Comments} />
+
+            {/* CreateTrip doesn't have a header */}
+            <Stack.Screen options={{ headerShown: false }} name="CreateTrip" component={CreateTrip} />
+            
+            {/* Trips has an interactive header */}
             <Stack.Screen 
-            options={{
-              title: 'Explore',
-              headerTitleStyle: {
-                color: '#F6F6F6',
-                fontSize: 25
-              },
-              headerTitleAlign: 'center',
-              headerBackVisible: false,
-              headerStyle: {
-                backgroundColor: '#D28A8E',
-              }
-            }} name="Explore" component={ExploreScreen} />
-          
+              options={() => ({
+                title: 'Trips',
+                headerTitleStyle: {
+                  color: '#F6F6F6',
+                  fontSize: 25
+                },
+                headerTitleAlign: 'center',
+                headerBackVisible: false,
+                headerStyle: {
+                  backgroundColor: '#D28A8E',
+                },
+                headerRight: () => (
+                  <View>
+                    <TouchableOpacity onPress={() => {setModalVisible(true)}}>
+                      <Entypo name='plus' size={35} color='#F6F6F6'/>
+                    </TouchableOpacity>
+                  <Modal visible={modalVisible}>
+                  <CreateTrip uID={uID} onSave={handleSavePress} onCancel={handleCancelPress}/>
+              </Modal>
+                  </View>
+                )
+              })} name="Trips" component={Trips} />
+
+            {/* HomeScreen has a header */}
+            <Stack.Screen 
+              options={({ navigation }) => ({
+                title: 'Dreamscape',
+                headerTitleAlign: 'center',
+                headerBackVisible: false,
+                headerStyle: {
+                  backgroundColor: '#D28A8E'
+                },
+                headerTitleStyle: {
+                  color: '#F6F6F6',
+                  fontSize: 25
+                },
+                // Code for the message button, which was cut due to time constraints
+                // headerRight: () => (
+                //   <View>
+                //     <TouchableOpacity 
+                //       onPress={() =>  navigation.navigate('Messages')}>
+                //       <FontAwesome5 name='envelope' size={35} color='#F6F6F6'/>
+                //     </TouchableOpacity>
+                //   </View>
+                // )
+              })} name="Home" component={HomeScreen} />
+              
+              {/* ExploreScreen has a header */}
+              <Stack.Screen 
+              options={{
+                title: 'Explore',
+                headerTitleStyle: {
+                  color: '#F6F6F6',
+                  fontSize: 25
+                },
+                headerTitleAlign: 'center',
+                headerBackVisible: false,
+                headerStyle: {
+                  backgroundColor: '#D28A8E',
+                }
+              }} name="Explore" component={ExploreScreen} />
+            
+            {/* CreatePost2 has a header */}
             <Stack.Screen
             options={{
               title: 'Create Post',
@@ -132,7 +149,8 @@ export default function App({navigation}) {
               },
             }} name="Create Post" component={CreatePost2} />
 
-            <Stack.Screen 
+            {/* MessageScreen has a header */}
+            {/* <Stack.Screen 
             options={{ 
               title: 'Messages',
               headerTitleStyle: {
@@ -144,8 +162,9 @@ export default function App({navigation}) {
               headerStyle: {
                 backgroundColor: '#D28A8E',
               }
-            }} name="Messages" component={MessageScreen} />
+            }} name="Messages" component={MessageScreen} /> */}
 
+            {/* SettingsScreen has a header */}
             <Stack.Screen options={{ 
               title: 'Settings',
               headerTitleStyle: {
@@ -158,37 +177,10 @@ export default function App({navigation}) {
                 backgroundColor: '#D28A8E',
               }
             }} name="Settings" component={SettingsScreen} />
-            
+              
         </Stack.Navigator>
 
-    </NavigationContainer>
+      </NavigationContainer>
     </DataContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  dreamscape: {
-    fontSize: 80
-  },
-  backButton: {
-    size: 35
-  },
-  nextButton: {
-    backgroundColor: '#3A6496',
-    borderRadius: 5,
-    width: 70,
-    flexDirection: 'row',
-    alignContent: 'center',
-    justifyContent: 'center',
-    opacity: .85
-  },
-  next: {
-    fontSize: 15,
-    padding: 5,
-    color: '#F6F6F6',
-  },
-  rightArrow: {
-    alignSelf:'center',
-    color: '#F6F6F6'
-  }
-})
