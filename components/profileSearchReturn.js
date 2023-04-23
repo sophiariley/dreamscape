@@ -3,14 +3,15 @@ import {View, StyleSheet, TouchableOpacity, Text, Image, Pressable} from 'react-
 import {Feather} from 'react-native-vector-icons';
 import {useNavigation} from '@react-navigation/core'
 
-const ProfileSearchReturn = ({toSearchReturnUsername, toSearchReturnUserID, toNavBarUsername, toNavBarUserID}) => {
+const ProfileSearchReturn = ({toSearchReturnUsername, toSearchReturnUserID, toNavBarUsername, toNavBarUserID, toSearchReturnPhoto}) => {
     const otherUsername = toSearchReturnUsername;
     const otherUserID = toSearchReturnUserID;
     const username = toNavBarUsername;
     const userID = toNavBarUserID;
+    const profilePhoto = toSearchReturnPhoto;
     const navigation = useNavigation();
+    console.log("URI: " + profilePhoto);
     return (
-        
         <View style={styles.container}>
             <Pressable style={styles.pressable}
                 onPress={() => navigation.navigate('OtherProfileScreen', {
@@ -20,7 +21,7 @@ const ProfileSearchReturn = ({toSearchReturnUsername, toSearchReturnUserID, toNa
                     userID: userID
                 })}>
                 <View style={styles.pfp}>
-                    <Image source={require("../assets/profile_photo.jpg")} style={styles.image}/>
+                    <Image source={{uri: profilePhoto}} style={styles.image}/>
                 </View>
                 <Text style={styles.usernameText}>{otherUsername}</Text>
                 <Feather name='arrow-right' style={styles.arrow} size={20}/>
@@ -65,6 +66,11 @@ const styles = StyleSheet.create ({
         alignSelf: 'center',
         color: '#3A6496',
         opacity: .8
+    },
+    image: {
+        flex: 1,
+        width: undefined,
+        height: undefined,
     }
 
 })
