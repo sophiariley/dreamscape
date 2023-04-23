@@ -1,3 +1,5 @@
+// The screen the user interacts with in order to log into the app or create a new account
+
 import React, { useState, useEffect} from "react";
 import { ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Dimensions, Alert } from "react-native";
 import {useNavigation} from '@react-navigation/core'
@@ -26,10 +28,6 @@ const LoginScreen = ({navigation}) => {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             console.log(doc.id, " => ", doc.data());
-<<<<<<< HEAD
-            //setUserID(doc.id);
-=======
->>>>>>> 4d6703ccd3ab8ad83296272df59d40e2b4d90e98
             verified = [true, doc.id];
         });
         return verified;
@@ -38,7 +36,7 @@ const LoginScreen = ({navigation}) => {
     const windowHeight = Dimensions.get('window').height;
     const windowWidth = Dimensions.get('window').width;
 
-    // Alert for incorrect fields
+    // Alerts user if they input an incorrect username or password
     const wrongAlert = (navigation) =>
     Alert.alert(
         'Error',
@@ -52,6 +50,8 @@ const LoginScreen = ({navigation}) => {
         <View style={styles.container}>
             <ScrollView style={{flex:1}}>
                 <View style={{width:windowWidth, height:windowHeight }}>
+
+                    {/* The background of the screen, sourced from Giphy: https://giphy.com/gifs/cinemagraph-gif-artist-3og0ISzBpn0nNJE3Ac */}
                     <ImageBackground 
                     source={image}
                     style={styles.backgroundImage}>
@@ -60,8 +60,10 @@ const LoginScreen = ({navigation}) => {
                             <Text style={styles.dreamscape}>Dreamscape</Text>
                         </View>
                         
+                        
                         <View style={styles.textContainer}>
                             <Text style={styles.text}>Enter Username</Text>
+                                {/* Input box for user to enter their username */}
                                 <TextInput 
                                     style={styles.inputText} 
                                     placeholder="Username"
@@ -69,6 +71,7 @@ const LoginScreen = ({navigation}) => {
                                     onChangeText={text => setUsername(text)}
                                 />
                             <Text style={styles.text}>Enter Password</Text>
+                                {/* Input box for user to enter their password */}
                                 <TextInput 
                                     style={styles.inputText} 
                                     placeholder="Password"
@@ -78,6 +81,7 @@ const LoginScreen = ({navigation}) => {
                                 />
                         </View>
                                 
+                        {/* The "Forgot Password?" button, which navigates to ResetPasswordScreen */}        
                         <View style={styles.forgotPasswordContainer}>
                             <TouchableOpacity 
                                 onPress={() => {navigation.navigate('Reset Password')}}>
@@ -85,30 +89,26 @@ const LoginScreen = ({navigation}) => {
                             </TouchableOpacity>
                         </View>
                                 
-                        <View style={styles.checkboxContainer}>
+                        {/* A checkbox the user can interact with to save their username and password. Commented out due to bugs */}
+                        {/* <View style={styles.checkboxContainer}>
                             <TouchableOpacity onPress={handleCheck}>
                                 <MaterialCommunityIcons name={isChecked ? 'checkbox-marked' : 'checkbox-blank-outline'} size={35} color={isChecked ? '#F8C98A' : '#F8C98A'}/>
                             </TouchableOpacity>
                             <Text style={styles.rememberMe}>Remember me</Text>
-                        </View>
+                        </View> */}
 
                         <View style={styles.container}>
                             <View style={styles.loginButtonContainer}>
+                                {/* The "Login" button, which navigates to HomeScreen */}
                                 <TouchableOpacity
                                     onPress={() => {
                                         auth(username, password).then(
                                             function(value) {
                                                 if (value[0]) {
-<<<<<<< HEAD
-                                                    //console.log("KACHOWS",value[0]);
-                                                    navigation.navigate('Home', {
-                                                        userID: value[1],
-                                                        username: username
-=======
                                                     navigation.navigate('Home', {
                                                         userID: value[1],
                                                         username: username,
->>>>>>> 4d6703ccd3ab8ad83296272df59d40e2b4d90e98
+                                                        show: true,
                                                     })
                                                 }
                                                 else {
@@ -126,6 +126,7 @@ const LoginScreen = ({navigation}) => {
                                 
                         <View style={styles.noAccountContainer}>
                             <Text style={styles.noAccountText}>────────   Don't have an account?   ────────</Text>
+                                {/* The "Create one here!" button, which navigates to CreateAccount1Screen */}
                                 <TouchableOpacity 
                                     onPress={() => {navigation.navigate('Create Account 1')}}>
                                 <Text style={styles.createText}>Create one here!</Text>
@@ -141,27 +142,32 @@ const LoginScreen = ({navigation}) => {
 
 export default LoginScreen;
 
+// The styles used for this screen
 const styles = StyleSheet.create({
-    // a general container for components
+    // A general container for components
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
     },
+
+    // A container for the username and password input boxes and the text above them
     textContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         top: 20
     },
-    // a container for the dreamscape text
+
+    // A container for the dreamscape text
     dreamscapeContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         top: 0
     },
-    // the styling for the area where text is inputted ("Username","Password")
+
+    // The styling for the area where text is inputted ("Username","Password")
     inputText: {
         fontSize: 20,
         backgroundColor: '#DADADA',
@@ -173,15 +179,21 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         paddingLeft: 10
     },
+
+    // The container for the "Forgot Password" button
     forgotPasswordContainer: {
         right: 40,
         top: 8
     },
+
+    // The styling for the "Forgot Password" text
     forgotPasswordText: {
         fontSize: 15,
         color: '#DADADA',
         alignSelf: 'flex-end'
     },
+
+    // The container for the "Login" button
     loginButtonContainer: {
         width: '70%',
         height: '20%',
@@ -190,12 +202,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         top: 30
     },
-    // the styling for the text inside the login button
+
+    // The styling for the text inside the login button
     login: {
         fontSize: 20,
         color: '#F6F6F6'
     },
-    // the styling for the login button
+
+    // The styling for the login button
     loginButton: {
         backgroundColor: '#D28A8E', // pink color
         width: '100%',
@@ -203,43 +217,52 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignItems: 'center',
     },
-    // the styling for the background
+
+    // The styling for the background
     backgroundImage: {
         flex: 1,
         width: '100%',
         height: '100%',
         justifyContent: 'center'
     },
-    // the styling for any "unimportant" text
+
+    // The styling for any misc. text
     text: {
         color: '#F6F6F6',
         fontSize: 20,
         right: 90
     },
-    // the styling for the "Dreamscape" text
+
+    // The styling for the "Dreamscape" text
     dreamscape: {
         marginTop: 80,
         flex: 1,
         fontSize: 60,
         color: '#F8C98A' // yellow color
     },
+
+    // The container for the "Don't have an account? Click here" component
     noAccountContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
     },
-    // the styling for the "don't have an account?" text
+
+    // The styling for the "Don't have an account?" text
     noAccountText: {
         color: '#F6F6F6',
         fontSize: 15,
         padding: 10
     },
-    // the styling for the "click here" text
+
+    // the styling for the "Click here!" text
     createText: {
         color: '#F8C98A',
         fontSize: 20,
         padding: 10
     },
+
+    // The container for the checkbox
     checkboxContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -247,6 +270,8 @@ const styles = StyleSheet.create({
         // bottom: 40
         top: 30
     },
+
+    //  The styling for the "Remember me" text
     rememberMe: {
         fontSize: 15,
         color: '#DADADA',

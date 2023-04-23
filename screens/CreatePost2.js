@@ -1,3 +1,6 @@
+// The screen the user interacts with in order to create a post.
+// Named CreatePost2 because there was originally another Create Post screen (CreatePost1) which no longer exists
+
 import React, {useState} from "react";
 import {StyleSheet, Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, Dimensions, ScrollView, Pressable, Image} from "react-native";
 import {Ionicons} from 'react-native-vector-icons';
@@ -92,58 +95,66 @@ const CreatePost2 = ({navigation, route}) => {
         <View style={styles.container}>
             <ScrollView style={{flex:1}}>
                 <View style={{width:windowWidth, height:windowHeight }}>
-            
-            <View style={styles.photoContainer}>
-                {image && <Image source={{ uri: image }} style={{ width: "100%", height: "100%" }} resizeMode="cover" />}
-                {/* {video && <Video source={{ uri: video }} style={{ width: "100%", height: "100%" }} resizeMode="cover" />} */}
-            </View>
-            
-            <View style={styles.chooseImageButtonContainer}>
-                <Pressable onPress={handleImage}>
-                    <Text style={styles.chooseImageText}>Choose image</Text>
-                </Pressable>
-            </View>
-            
-            <KeyboardAvoidingView style={styles.captionContainer}>
-                <TextInput
-                     style={styles.captionText} 
-                     placeholder="Write caption..."
-                     value={caption}
-                     onChangeText={text => setCaption(text)}
-                />
-            </KeyboardAvoidingView>
-            
-            <View style={styles.location}>
-                <Ionicons style={styles.globe} name='globe-outline' size={30} color='#3A6496'/>
-                <TextInput 
-                    style={styles.locationText}
-                    placeholder= 'Add Location'
-                    value={location}
-                    placeholderTextColor="#3A6496"
-                    onChangeText={text => setLocation(text)}
-                />
-            </View>
-            
-            <View style={styles.postButtonContainer}>
-                <TouchableOpacity 
-                    style={styles.postButton}
-                    onPress={() => {uploadImageAsync(image); navigation.navigate('Home', {
-                        username: username,
-                        userID: userID,
-                    })}}>
-                    <Text style={styles.postText}>Post</Text>
-                </TouchableOpacity>
-            
-            </View>
-        </View>
-        </ScrollView>
+
+                    {/* A container to hold the user's image */}
+                    <View style={styles.photoContainer}>
+                        {image && <Image source={{ uri: image }} style={{ width: "100%", height: "100%" }} resizeMode="cover" />}
+                        {/* {/* {video && <Video source={{ uri: video }} style={{ width: "100%", height: "100%" }} resizeMode="cover" />} */}
+                    </View> 
+                    
+                    {/* The "Choose image" button, which access the user's camera roll */}
+                    <View style={styles.chooseImageButtonContainer}>
+                        <Pressable onPress={handleImage}>
+                            <Text style={styles.chooseImageText}>Choose image</Text>
+                        </Pressable>
+                    </View>
+                    
+                    {/* The caption container, where the user can write a caption for their post */}
+                    <KeyboardAvoidingView style={styles.captionContainer}>
+                        <TextInput
+                            style={styles.captionText} 
+                            placeholder="Write caption..."
+                            value={caption}
+                            onChangeText={text => setCaption(text)}
+                        />
+                    </KeyboardAvoidingView>
+
+                    {/* The footer of the screen, which includes the area where the user can insert a location and the post button */}
+                    <View style={styles.footer}>
+                        <View style={styles.location}>
+                            <Ionicons style={styles.globe} name='globe-outline' size={30} color='#3A6496'/>
+                            <TextInput 
+                                style={styles.locationText}
+                                placeholder= 'Add Location'
+                                value={location}
+                                placeholderTextColor="#3A6496"
+                                onChangeText={text => setLocation(text)}
+                            />
+                        </View>
+                            
+                        {/* The post button, which saves the user's post and navigates to HomeScreen */}
+                        <View style={styles.postButtonContainer}>
+                            <TouchableOpacity 
+                                style={styles.postButton}
+                                onPress={() => {uploadImageAsync(image); navigation.navigate('Home', {
+                                    username: username,
+                                    userID: userID,
+                                })}}>
+                                <Text style={styles.postText}>Post</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </ScrollView>
         </View>
     )
 }
 
 export default CreatePost2;
 
+// The styles used for this screen
 const styles = StyleSheet.create({
+    // A general container for components
     container: {
         backgroundColor: 'white',
         flex: 1,
@@ -151,6 +162,8 @@ const styles = StyleSheet.create({
         alignItems: 'center', 
         flexDirection: 'column',
     },
+
+    // A container for the caption
     captionContainer: {
         backgroundColor: '#F6F6F6',
         opacity: .8,
@@ -160,6 +173,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         bottom: -20
     },
+
+    // A container for the image
     photoContainer: {
         backgroundColor: '#F6F6F6',
         backgroundOpacity: .8,
@@ -169,6 +184,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         top: 10
     },
+
+    // The styling for the caption text
     captionText: {
         fontSize: 20,
         color: '#3A6496',
@@ -180,40 +197,44 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         paddingLeft: 10
     },
+
+    // A container for the "Post" button
     postButtonContainer: {
+        backgroundColor: '#D28A8E',
         width: '30%',
-        height: '5%',
-        flex: 1,
+        height: '27%',
         alignSelf: 'flex-end',
-        position: 'absolute',
-        top: 560,
-        right: 20
-    },
-    postButton: {
-        backgroundColor: '#D28A8E', // pink color
-        width: '100%',
-        padding: 15,
+        right: 20,
         borderRadius: 5,
-        alignItems: 'center',
-        position: 'absolute'
+        bottom: -30
     },
+
+    // The styling for the "Post" text
     postText: {
         fontSize: 20,
-        color: '#F6F6F6'
+        color: '#F6F6F6',
+        alignSelf: 'center',
+        padding: 12
     },
+
+    // A container for the "Location" component
     location: {
         flexDirection: 'row',
         alignItems: 'center',
         paddingBottom: 30,
         paddingTop: 20,
         position: 'absolute',
-        top: 540,
         alignSelf: "flex-start",
-        left: 10
+        left: 10,
+        top: 10
     },
+
+    // The styling for the globe icon
     globe: {
         padding: 10,
     },
+
+    // The syling for the "Location" text
     locationText: {
         color: '#3A6496',
         fontSize: 20,
@@ -225,6 +246,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
         paddingTop: 2
     },
+
+    // A container for the "Choose image" button
     chooseImageButtonContainer: {
         backgroundColor: '#3A6496',
         width: '40%',
@@ -232,5 +255,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         borderRadius: 5,
         bottom: -15
+    },
+
+    // The styling of the footer, which contains the "Location" component and "Post" button
+    footer: {
+        bottom: 0,
+        alignItems:'center'
     }
 })
