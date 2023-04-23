@@ -19,6 +19,7 @@ const LoginScreen = ({navigation}) => {
     const handleCheck = () => {
         setIsChecked(!isChecked);
     };
+   // const [userID, setUserID] = useState('');
 
 
     async function auth(username, password) {

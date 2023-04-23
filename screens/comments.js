@@ -37,6 +37,7 @@ const Comments = ({route}) => {
     await addDoc(collection(docRef, 'comments'), {
         username: username,
         comment: newComment,
+        //timestamp: firebase.firestore.FieldValue.serverTimestamp()
         timestamp: serverTimestamp()
     });
   }

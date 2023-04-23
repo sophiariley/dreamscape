@@ -6,25 +6,47 @@ import NavigationBar from "../components/navigationBar";
 import ProfileSearchReturn from "../components/profileSearchReturn";
 import {Foundation} from 'react-native-vector-icons';
 import { collection, query, where, onSnapshot, getDocs, setDoc, doc } from "firebase/firestore";
-import { db } from "../firebase-config";
+import { getStorage, ref, getDownloadURL, } from "firebase/storage"
+import { db, storage } from "../firebase-config";
 
 const ExploreScreen = ({route}) => {
     const [search, setSearch] = useState('');
     const [match, setMatch] = useState('');
     const [matchFound, setMatchFound] = useState(false);
     const [matchID, setMatchID] = useState('');
+    const [matchPhoto, setMatchPhoto] = useState("https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5");
 
     async function findUsernameMatch(username) {
         setMatch('');
         setMatchFound(false);
-        const q = query(collection(db, "users"), where("username", "==", username));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            console.log(doc.data().username); //TODO - Alter this to help with UI display
-            setMatch(username);
-            setMatchFound(true);
-            setMatchID(doc.id);
+        if (username != "") {
+            const q = query(collection(db, "users"), where("username", ">=", username), where("username", "<=", username + '\uf8ff'));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                console.log(doc.data().username); //TODO - Alter this to help with UI display
+                setMatchFound(true);
+                setMatchID(doc.id);
+                getProfilePhoto();
+                setMatch(doc.data().username);
+                return;
+            });
+        }
+        
+    }
+
+    async function getProfilePhoto() {
+        const images = await getDocs(collection(doc(db, "users", matchID), "images"));
+        images.forEach(async (doc) => {
+            const picPath = doc.data().url;
+            const imagesRef = ref(storage, "images");
+            const pathRef = ref(imagesRef, picPath);
+            const downloadUrl = await getDownloadURL(pathRef)
+                .catch((error) => {
+                  });
+            setMatchPhoto(downloadUrl);
+            return;
         });
+        {setMatchPhoto("https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5"); }
     }
 
     function doBoth(text) {
@@ -37,7 +59,7 @@ const ExploreScreen = ({route}) => {
     const userID = route.params.userID;
 
 
-    const searchReturn = matchFound && match!='' && matchID!=''? <ProfileSearchReturn toSearchReturnUsername={match} toSearchReturnUserID={matchID} toNavBarUsername={username} toNavBarUserID={userID}/> : null;
+    const searchReturn = matchFound && match!=[''] && matchID!=''? <ProfileSearchReturn toSearchReturnUsername={match} toSearchReturnUserID={matchID} toNavBarUsername={username} toNavBarUserID={userID} toSearchReturnPhoto={matchPhoto}/> : null;
     
     return (
         <View style={styles.container}>
@@ -60,6 +82,26 @@ const ExploreScreen = ({route}) => {
             <KeyboardAvoidingView style={styles.footer}>
                 <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>
             </KeyboardAvoidingView>
+
+            {/* <ScrollView>
+                {finalArray ? 
+                finalArray.map((post, index) => (
+                    <HomeScreenPost 
+                        userID={userID}
+                        userUsername={username}
+                        key={index} 
+                        username={post[0]} 
+                        url={post[1]} 
+                        caption={post[2]} 
+                        location={post[3]}
+                        posterID={post[4]}
+                        postID={post[5]}
+                        posterPFP={post[6]}
+
+                    />
+                )) : <HomeScreenPost/>}
+            </ScrollView> */}
+            
             {searchReturn}
         </View>
     )
