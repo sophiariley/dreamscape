@@ -1,0 +1,718 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing choose image button button should say choose image 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "white",
+      "flex": 1,
+      "flexDirection": "column",
+      "justifyContent": "center",
+    }
+  }
+>
+  <RCTScrollView
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View>
+      <View
+        style={
+          {
+            "height": 1334,
+            "width": 750,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignSelf": "center",
+              "backgroundColor": "#F6F6F6",
+              "backgroundOpacity": 0.8,
+              "borderRadius": 5,
+              "height": "50%",
+              "top": 10,
+              "width": "90%",
+            }
+          }
+        />
+        <View
+          style={
+            {
+              "alignSelf": "center",
+              "backgroundColor": "#3A6496",
+              "borderRadius": 5,
+              "bottom": -15,
+              "height": "5%",
+              "width": "40%",
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            testID="chooseImageButton"
+          >
+            <Text
+              style={
+                {
+                  "alignSelf": "center",
+                  "color": "#F6F6F6",
+                  "fontSize": 20,
+                  "paddingTop": 2,
+                }
+              }
+            >
+              Choose image
+            </Text>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={
+            {
+              "alignSelf": "center",
+              "backgroundColor": "#F6F6F6",
+              "borderRadius": 5,
+              "bottom": -20,
+              "height": "20%",
+              "opacity": 0.8,
+              "width": "90%",
+            }
+          }
+        >
+          <TextInput
+            onChangeText={[Function]}
+            placeholder="Write caption..."
+            style={
+              {
+                "borderRadius": 5,
+                "color": "#3A6496",
+                "fontSize": 20,
+                "height": "20%",
+                "marginBottom": 10,
+                "marginTop": 5,
+                "opacity": 0.5,
+                "paddingLeft": 10,
+                "width": "80%",
+              }
+            }
+            testID="captionBox"
+            value=""
+          />
+        </View>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "bottom": 0,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "alignSelf": "flex-start",
+                "flexDirection": "row",
+                "left": 10,
+                "paddingBottom": 30,
+                "paddingTop": 20,
+                "position": "absolute",
+                "top": 10,
+              }
+            }
+          >
+            <TextInput
+              onChangeText={[Function]}
+              placeholder="Add Location"
+              placeholderTextColor="#3A6496"
+              style={
+                {
+                  "color": "#3A6496",
+                  "fontSize": 20,
+                  "padding": 5,
+                }
+              }
+              testID="locationBox"
+              value=""
+            />
+          </View>
+          <View
+            style={
+              {
+                "alignSelf": "flex-end",
+                "backgroundColor": "#D28A8E",
+                "borderRadius": 5,
+                "bottom": -30,
+                "height": "27%",
+                "right": 20,
+                "width": "30%",
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+              testID="postButton"
+            >
+              <Text
+                style={
+                  {
+                    "alignSelf": "center",
+                    "color": "#F6F6F6",
+                    "fontSize": 20,
+                    "padding": 12,
+                  }
+                }
+              >
+                Post
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
+
+exports[`Testing post button button should say post 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "white",
+      "flex": 1,
+      "flexDirection": "column",
+      "justifyContent": "center",
+    }
+  }
+>
+  <RCTScrollView
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View>
+      <View
+        style={
+          {
+            "height": 1334,
+            "width": 750,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignSelf": "center",
+              "backgroundColor": "#F6F6F6",
+              "backgroundOpacity": 0.8,
+              "borderRadius": 5,
+              "height": "50%",
+              "top": 10,
+              "width": "90%",
+            }
+          }
+        />
+        <View
+          style={
+            {
+              "alignSelf": "center",
+              "backgroundColor": "#3A6496",
+              "borderRadius": 5,
+              "bottom": -15,
+              "height": "5%",
+              "width": "40%",
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            testID="chooseImageButton"
+          >
+            <Text
+              style={
+                {
+                  "alignSelf": "center",
+                  "color": "#F6F6F6",
+                  "fontSize": 20,
+                  "paddingTop": 2,
+                }
+              }
+            >
+              Choose image
+            </Text>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={
+            {
+              "alignSelf": "center",
+              "backgroundColor": "#F6F6F6",
+              "borderRadius": 5,
+              "bottom": -20,
+              "height": "20%",
+              "opacity": 0.8,
+              "width": "90%",
+            }
+          }
+        >
+          <TextInput
+            onChangeText={[Function]}
+            placeholder="Write caption..."
+            style={
+              {
+                "borderRadius": 5,
+                "color": "#3A6496",
+                "fontSize": 20,
+                "height": "20%",
+                "marginBottom": 10,
+                "marginTop": 5,
+                "opacity": 0.5,
+                "paddingLeft": 10,
+                "width": "80%",
+              }
+            }
+            testID="captionBox"
+            value=""
+          />
+        </View>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "bottom": 0,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "alignSelf": "flex-start",
+                "flexDirection": "row",
+                "left": 10,
+                "paddingBottom": 30,
+                "paddingTop": 20,
+                "position": "absolute",
+                "top": 10,
+              }
+            }
+          >
+            <TextInput
+              onChangeText={[Function]}
+              placeholder="Add Location"
+              placeholderTextColor="#3A6496"
+              style={
+                {
+                  "color": "#3A6496",
+                  "fontSize": 20,
+                  "padding": 5,
+                }
+              }
+              testID="locationBox"
+              value=""
+            />
+          </View>
+          <View
+            style={
+              {
+                "alignSelf": "flex-end",
+                "backgroundColor": "#D28A8E",
+                "borderRadius": 5,
+                "bottom": -30,
+                "height": "27%",
+                "right": 20,
+                "width": "30%",
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+              testID="postButton"
+            >
+              <Text
+                style={
+                  {
+                    "alignSelf": "center",
+                    "color": "#F6F6F6",
+                    "fontSize": 20,
+                    "padding": 12,
+                  }
+                }
+              >
+                Post
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
+
+exports[`renders correctly across screens 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "white",
+      "flex": 1,
+      "flexDirection": "column",
+      "justifyContent": "center",
+    }
+  }
+>
+  <RCTScrollView
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View>
+      <View
+        style={
+          {
+            "height": 1334,
+            "width": 750,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignSelf": "center",
+              "backgroundColor": "#F6F6F6",
+              "backgroundOpacity": 0.8,
+              "borderRadius": 5,
+              "height": "50%",
+              "top": 10,
+              "width": "90%",
+            }
+          }
+        />
+        <View
+          style={
+            {
+              "alignSelf": "center",
+              "backgroundColor": "#3A6496",
+              "borderRadius": 5,
+              "bottom": -15,
+              "height": "5%",
+              "width": "40%",
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            testID="chooseImageButton"
+          >
+            <Text
+              style={
+                {
+                  "alignSelf": "center",
+                  "color": "#F6F6F6",
+                  "fontSize": 20,
+                  "paddingTop": 2,
+                }
+              }
+            >
+              Choose image
+            </Text>
+          </View>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={
+            {
+              "alignSelf": "center",
+              "backgroundColor": "#F6F6F6",
+              "borderRadius": 5,
+              "bottom": -20,
+              "height": "20%",
+              "opacity": 0.8,
+              "width": "90%",
+            }
+          }
+        >
+          <TextInput
+            onChangeText={[Function]}
+            placeholder="Write caption..."
+            style={
+              {
+                "borderRadius": 5,
+                "color": "#3A6496",
+                "fontSize": 20,
+                "height": "20%",
+                "marginBottom": 10,
+                "marginTop": 5,
+                "opacity": 0.5,
+                "paddingLeft": 10,
+                "width": "80%",
+              }
+            }
+            testID="captionBox"
+            value=""
+          />
+        </View>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "bottom": 0,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "alignSelf": "flex-start",
+                "flexDirection": "row",
+                "left": 10,
+                "paddingBottom": 30,
+                "paddingTop": 20,
+                "position": "absolute",
+                "top": 10,
+              }
+            }
+          >
+            <TextInput
+              onChangeText={[Function]}
+              placeholder="Add Location"
+              placeholderTextColor="#3A6496"
+              style={
+                {
+                  "color": "#3A6496",
+                  "fontSize": 20,
+                  "padding": 5,
+                }
+              }
+              testID="locationBox"
+              value=""
+            />
+          </View>
+          <View
+            style={
+              {
+                "alignSelf": "flex-end",
+                "backgroundColor": "#D28A8E",
+                "borderRadius": 5,
+                "bottom": -30,
+                "height": "27%",
+                "right": 20,
+                "width": "30%",
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+              testID="postButton"
+            >
+              <Text
+                style={
+                  {
+                    "alignSelf": "center",
+                    "color": "#F6F6F6",
+                    "fontSize": 20,
+                    "padding": 12,
+                  }
+                }
+              >
+                Post
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
