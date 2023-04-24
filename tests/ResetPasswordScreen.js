@@ -57,7 +57,7 @@ const ResetPasswordScreen = ({navigation}) => {
                                 style={styles.inputText} 
                                 placeholder="Email"
                                 value={email}
-                                onChangeText={text => findEmailMatch(text)}
+                                // onChangeText={text => findEmailMatch(text)}
                             />
                             
                             {/* The new password input box */}
@@ -67,7 +67,7 @@ const ResetPasswordScreen = ({navigation}) => {
                                 style={styles.inputText} 
                                 placeholder="New password"
                                 value={newPassword}
-                                onChangeText={text => setNewPassword(text)}
+                                // onChangeText={text => setNewPassword(text)}
                             />
                     </View>
 
@@ -75,10 +75,14 @@ const ResetPasswordScreen = ({navigation}) => {
                         {/* The "Reset Password" button, which updates the user's password and navigates to LoginScreen */}
                         <TouchableOpacity
                             testID="resetPasswordButton"
-                            onPress={() => {updatePassword(newPassword); navigation.navigate('Login')}}
+                            onPress={() => {navigation.navigate('Login')}}
+                            // onPress={() => {updatePassword(newPassword); navigation.navigate('Login')}}
                             style={styles.resetPasswordButton}
                         > 
-                        <Text style={styles.resetPasswordButtonText}>Reset Password</Text>
+                            <Text style={styles.resetPasswordButtonText}
+                            testID="resetPasswordButtonText">
+                                Reset Password
+                            </Text>
                         </TouchableOpacity>
                     </View>
 
@@ -88,7 +92,10 @@ const ResetPasswordScreen = ({navigation}) => {
                             testID="returnButton"
                             onPress={() => {{navigation.navigate('Login')}}}
                         >
-                            <Text style={styles.returnToLogin}>Return to login</Text>
+                            <Text style={styles.returnToLogin}
+                            testID="returnText">
+                                Return to login
+                            </Text>
                         </TouchableOpacity>
                     </View>
 
