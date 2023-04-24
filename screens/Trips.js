@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, ScrollView, Text, TouchableOpacity, LogBox } from "react-native";
 import NavigationBar from "../components/navigationBar";
-import { collection, query, where, onSnapshot, getDocs, setDoc, doc } from "firebase/firestore";
+import { collection, query, where, onSnapshot, getDocs, setDoc, doc, getCountFromServer } from "firebase/firestore";
 import { db } from "../firebase-config";
 import { DataContext } from "../DataContext";
 
@@ -31,14 +31,22 @@ const Trips = ({ route, navigation }) => {
         return newtrips;
     }
 
-    useEffect(() => {
-        const aysncrun = async () => {
-            const mytrips = await getTrips();
-            setTrips(mytrips);
-        }
-        aysncrun();
-    }, []);
+    
 
+    async function runIt() {
+        const userRef = doc(db,"users", userID);
+        const snapshot = await getCountFromServer(collection(userRef, 'trips'));
+        if (snapshot.data().count != trips.length) {
+            const aysncrun = async () => {
+                const mytrips = await getTrips();
+                setTrips(mytrips);
+            }
+            aysncrun();
+        }
+        
+    }
+
+    runIt();
 
     return (
         <View style={styles.container}>
