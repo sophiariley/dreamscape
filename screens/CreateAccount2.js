@@ -15,7 +15,7 @@ const CreateAccount2 = ({route, navigation}) => {
     const [userID, setUserID] = useState(''); //CAN BE USED TO PASS UID THROUGH INSTEAD OF FINDING IT LATER
     //const res = db.collection('users');
 
-    function createUser(firstName, lastName, email, username, password) {
+    async function createUser(firstName, lastName, email, username, password) {
         const runit = async () => await addDoc(collection(db, "users"), {
        firstName: firstName,
        lastName: lastName,
@@ -25,9 +25,12 @@ const CreateAccount2 = ({route, navigation}) => {
      })
      .then(function(docRef) {
         console.log("Create Acct UID: ", docRef.id);
-        setUserID(docRef.id);
+        //setUserID(docRef.id);
+        return docRef.id;
      });
-     runit();
+     const uid = await runit();
+     console.log("Create account user ID", userID);
+     return uid;
     }
 
     const windowHeight = Dimensions.get('window').height;
@@ -53,11 +56,12 @@ const CreateAccount2 = ({route, navigation}) => {
         ]
     );
 
-    const doBoth = () => {
-        createUser(firstName, lastName, email, username, password); 
+    const doBoth = async () => {
+        const uid = await createUser(firstName, lastName, email, username, password); 
         navigation.navigate('Home', {
             username: username,
             password: password,
+            userID: uid,
         });
     }
 
