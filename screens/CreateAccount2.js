@@ -44,7 +44,7 @@ const CreateAccount2 = ({route, navigation}) => {
     );
 
     // Alerts user if input in confirmed password box doesn't match that in password box
-    const wrongPasswordAlert = () =>
+    const wrongPasswordAlert = () => 
     Alert.alert(
         'Error',
         'Your password does\'t match.',
@@ -59,6 +59,21 @@ const CreateAccount2 = ({route, navigation}) => {
             username: username,
             password: password,
         });
+    }
+    
+    async function auth(username, password, password2) {
+        let verified = [false, ''];
+        if (username=='' || password=='' || password2=='') { emptyAlert(); return verified; } 
+        if (password!=password2) { wrongPasswordAlert(); return verified; }
+
+        createUser(firstName, lastName, email, username, password); 
+        const q = query(collection(db, "users"), where("username", "==", username), where("password", "==", password));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            console.log(doc.id, " => ", doc.data());
+            verified = [true, doc.id];
+        });
+        return verified;
     }
 
     return (
@@ -101,7 +116,23 @@ const CreateAccount2 = ({route, navigation}) => {
                     {/* Next button, which saves the user's input and navigates to HomeScreen */}
                     <View style={styles.nextButtonContainer}>
                         <TouchableOpacity 
-                            onPress={() => { username=='' || password=='' || password2=='' ? emptyAlert() : password!=password2 ? wrongPasswordAlert() : doBoth() } }
+                            onPress={() => { 
+                                auth(username, password).then(
+                                    function(value) {
+                                        if (value[0]) {
+                                            navigation.navigate('Home', {
+                                                userID: value[1],
+                                                username: username,
+                                                show: true,
+                                            })
+                                        }
+                                        else {
+                                            // wrongAlert();
+                                        } 
+                                    }
+                                );
+                            }}
+                            //;username=='' || password=='' || password2=='' ? emptyAlert() : password!=password2 ? wrongPasswordAlert() : doBoth() } }
                             // change to Login later
 
                             style={styles.nextButton}

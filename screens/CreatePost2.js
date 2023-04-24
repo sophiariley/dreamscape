@@ -7,7 +7,7 @@ import {Ionicons} from 'react-native-vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { db, storage } from "../firebase-config";
-import { collection, addDoc, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual, getCountFromServer } from "firebase/firestore";
+import { collection, addDoc, query, where, onSnapshot, getDocs, getDoc, getDocuments, doc, snapshotEqual, getCountFromServer, serverTimestamp } from "firebase/firestore";
 
 
 const CreatePost2 = ({navigation, route}) => {
@@ -85,7 +85,7 @@ const CreatePost2 = ({navigation, route}) => {
 
     async function addToFirestore(image, caption, location) {
         const userRef = doc(db, "users", userID);
-        const docRef = await addDoc(collection(userRef, "userPosts"), {image, caption, location});
+        const docRef = await addDoc(collection(userRef, "userPosts"), {image, caption, location, timestamp: serverTimestamp()});
     }
 
     const windowHeight = Dimensions.get('window').height;
