@@ -68,14 +68,19 @@ const HomeScreen = ({route}) => {
 
                     //-------- get profile pic here
                     var docID = '';
-                    const images = await getDocs(collection(userRef2, "images"));
-                    images.forEach((doc) => {
-                        docID = doc.id;
-                    });
-                    const pfpID = docID;
-                    const pic = doc(userRef2, "images", pfpID);
-                    const picSnap = await getDoc(pic);
-                    const posterPFP = await getPicUrl(picSnap.data().url);       
+                    var posterPFP = "https://firebasestorage.googleapis.com/v0/b/dreamscapeofficial-ef560.appspot.com/o/images%2Fdefault.jpg?alt=media&token=b1a61225-6f54-40e1-9cda-0493dc02c6c5";
+                    try {
+                        const images = await getDocs(collection(userRef2, "images"));
+                        images.forEach((doc) => {
+                            docID = doc.id;
+                        });
+                        const pfpID = docID;
+                        const pic = doc(userRef2, "images", pfpID);
+                        const picSnap = await getDoc(pic);
+                        posterPFP = await getPicUrl(picSnap.data().url);  
+                    } catch (err) {
+                        console.log(posterPFP);
+                    }
                     
                     console.log("MAFF FOR THE WIN", posterPFP);
                     
@@ -96,10 +101,10 @@ const HomeScreen = ({route}) => {
                             followingArray.push([acctUsername, globalURL, thecaption, thelocation]);
                         }*/
                         followingArray.push([acctUsername, globalURL, thecaption, thelocation, docu.data().userID, docu2.id, posterPFP]);
-                        console.log("ARRAY in loop: ", followingArray);
+                        //console.log("ARRAY in loop: ", followingArray);
                     });
                     setFinalArray(followingArray);
-                    console.log("FinalARRAY: ", finalArray);
+                    //console.log("FinalARRAY: ", finalArray);
                     //return followingArray;
                 });
             }
