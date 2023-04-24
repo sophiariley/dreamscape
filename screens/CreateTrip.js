@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {Alert} from "react-native";
 import { collection, query, where, onSnapshot, getDocs, addDoc, doc } from "firebase/firestore";
 import { db } from "../firebase-config";
 import {
@@ -36,7 +37,15 @@ const CreateTrip = ({ uID, onSave, onCancel }) => {
     onSave(); //----------- copy and past code for this here?
   }
 
-  //console.log("CreateTrip userID",userID);
+  // Alerts user if they input an incorrect username or password
+  const emptyAlert = (navigation) =>
+  Alert.alert(
+      'Error',
+      'You must fill out all fields to make a trip!',
+      [
+      {text: 'Ok', style: 'cancel'}
+      ]
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -44,7 +53,7 @@ const CreateTrip = ({ uID, onSave, onCancel }) => {
         <TouchableOpacity onPress={onCancel} style={styles.cancelContainer}>
           <Text>Cancel</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => createATrip(city, startDate, endDate, flightInfo, hotelInfo, itenerary)} style={styles.saveContainer}>
+        <TouchableOpacity onPress={() => city=='' || startDate=='' || endDate=='' || flightInfo=='' || hotelInfo=='' || itenerary=='' ? emptyAlert() : createATrip(city, startDate, endDate, flightInfo, hotelInfo, itenerary)} style={styles.saveContainer}>
           <Text>Create</Text>
         </TouchableOpacity>
         <Text style={styles.text}>Create Trip</Text>

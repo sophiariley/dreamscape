@@ -10,16 +10,6 @@ const TripScreen = ({route,navigation}) => {
   const hotelInfo = route.params.hotelInfo;
   const itenerary = route.params.itenerary;
 
-  // Alerts user if they input an incorrect username or password
-  const emptyAlert = (navigation) =>
-  Alert.alert(
-      'Error',
-      'You must fill out all fields to make a trip!',
-      [
-      {text: 'Ok', style: 'cancel'}
-      ]
-  );
-
     return (
         <SafeAreaView style={styles.container}>
             <View style={{marginTop:20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',  borderBottomWidth: 1,
