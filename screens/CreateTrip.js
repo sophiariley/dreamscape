@@ -14,8 +14,10 @@ import {
 
 const CreateTrip = ({ uID, onSave, onCancel }) => {
 
+  // Set userID to the prop passed in from the parent component
   const userID = uID;
 
+  // Set initial state for trip details
   const [city, setCity] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -23,6 +25,7 @@ const CreateTrip = ({ uID, onSave, onCancel }) => {
   const [hotelInfo, sethotleInfo] = useState('');
   const [itenerary, setItenerary] = useState('');
 
+  // Function that adds a new trip to the user's collection in Firestore
   async function createATrip(city, startDate, endDate, flightInfo, hotelInfo, itenerary) {
     const userRef = doc(db, "users", userID);
     //const userRef = doc(db, "users", 'bV26oHiTJBDec19IiA5b'); //-----------fix hardcode UID
@@ -49,16 +52,21 @@ const CreateTrip = ({ uID, onSave, onCancel }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Container for the top part of the screen */}
       <View style={styles.topContainer}>
+         {/* Button to cancel trip creation */}
         <TouchableOpacity onPress={onCancel} style={styles.cancelContainer}>
           <Text>Cancel</Text>
         </TouchableOpacity>
+         {/* Button to create a new trip */}
         <TouchableOpacity onPress={() => city=='' || startDate=='' || endDate=='' || flightInfo=='' || hotelInfo=='' || itenerary=='' ? emptyAlert() : createATrip(city, startDate, endDate, flightInfo, hotelInfo, itenerary)} style={styles.saveContainer}>
           <Text>Create</Text>
         </TouchableOpacity>
         <Text style={styles.text}>Create Trip</Text>
       </View>
+       {/* Container for the scrollable part of the screen */}
       <ScrollView>
+         {/* Input fields for trip details */}
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>City</Text>
           <TextInput
@@ -68,6 +76,7 @@ const CreateTrip = ({ uID, onSave, onCancel }) => {
             onChangeText={text => setCity(text)}
           />
         </View>
+        {/* Start Date */}
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Start Date:</Text>
           <TextInput
@@ -77,6 +86,7 @@ const CreateTrip = ({ uID, onSave, onCancel }) => {
             onChangeText={text => setStartDate(text)}
           />
         </View>
+        {/* End Date */}
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>End Date:</Text>
           <TextInput
@@ -86,6 +96,7 @@ const CreateTrip = ({ uID, onSave, onCancel }) => {
             onChangeText={text => setEndDate(text)}
           />
         </View>
+        {/* Flight information */}
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Flight Information:</Text>
           <TextInput
@@ -95,6 +106,7 @@ const CreateTrip = ({ uID, onSave, onCancel }) => {
             onChangeText={text => setFlightInfo(text)}
           />
         </View>
+        {/* Hotel Information */}
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Hotel Information:</Text>
           <TextInput
@@ -104,6 +116,7 @@ const CreateTrip = ({ uID, onSave, onCancel }) => {
             onChangeText={text => sethotleInfo(text)}
           />
         </View>
+        {/* Itinerary */}
         <View style={styles.itineraryContainer}>
           <Text style={styles.inputLabel}>Itinerary:</Text>
           <TextInput

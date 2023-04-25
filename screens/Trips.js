@@ -45,13 +45,15 @@ const Trips = ({ route, navigation }) => {
         }
         
     }
-
+    // Run the function to check for changes in the number of trips
     runIt();
 
     return (
+        // Render the trips list and navigation bar
         <View style={styles.container}>
             <View style={styles.scrollViewContainer}>
                 <ScrollView>
+                    {/* Map through the trips and create a TouchableOpacity for each trip */}
                     {trips.map((trip, index) => (
                     <TouchableOpacity key={index} style={styles.tripBox} onPress={() => navigation.navigate('TripScreen', {
                         city: trip.city,
@@ -69,6 +71,7 @@ const Trips = ({ route, navigation }) => {
                     ))}
                 </ScrollView>
             </View>
+            {/* Navigation bar */}
             <View style={styles.footer}>
                 <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>
             </View>

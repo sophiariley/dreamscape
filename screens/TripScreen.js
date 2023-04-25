@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView } fr
 import { Ionicons } from "@expo/vector-icons";
 
 const TripScreen = ({route,navigation}) => {
+  // Extract data about the trip from the route object
   const city = route.params.city;
   const startDate = route.params.startDate;
   const endDate = route.params.endDate;
@@ -12,6 +13,7 @@ const TripScreen = ({route,navigation}) => {
 
     return (
         <SafeAreaView style={styles.container}>
+          {/* Header with back button and trip city name */}
             <View style={{marginTop:20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',  borderBottomWidth: 1,
                 borderColor: '#f0f0f0'}}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.buttonContainer}>
@@ -20,23 +22,29 @@ const TripScreen = ({route,navigation}) => {
                 <Text style={styles.header}>{city}</Text>
                 <View style={{ width: 30 }} />
             </View>
+            {/* Scrollable view containing trip information */}
             <ScrollView style={styles.scrollView}>
+                {/* Start date */}
                 <View style={styles.tripInfoContainer}>
                 <Text style={styles.tripInfoLabel}>Start Date:</Text>
                 <Text style={styles.tripInfoValue}>{startDate}</Text>
                 </View>
+                {/* End date */}
                 <View style={styles.tripInfoContainer}>
                 <Text style={styles.tripInfoLabel}>End Date:</Text>
                 <Text style={styles.tripInfoValue}>{endDate}</Text>
                 </View>
+                {/* Flight information */}
                 <View style={styles.tripInfoContainer}>
                 <Text style={styles.tripInfoLabel}>Flight Information:</Text>
                 <Text style={styles.tripInfoValue}>{flightInfo}</Text>
                 </View>
+                {/* Hotel information */}
                 <View style={styles.tripInfoContainer}>
                 <Text style={styles.tripInfoLabel}>Hotel Information:</Text>
                 <Text style={styles.tripInfoValue}>{hotelInfo}</Text>
                 </View>
+                {/* Itinerary */}
                 <View style={styles.itineraryInfoContainer}>
                 <Text style={styles.itineraryInfoLabel}>Itinerary:</Text>
                 <ScrollView>

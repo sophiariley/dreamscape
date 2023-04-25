@@ -252,9 +252,11 @@ const OtherProfileScreen = ({route, navigation}) => {
     }
     //printData();
 
+    // State variables
     const [showPhotoGrid, setShowPhotoGrid] = useState(true);
     const [activeButton, setActiveButton] = useState('Photos');
 
+    // Event handlers for switching between Photos and Locations views
     const handleLocationsPress = () => {
         setShowPhotoGrid(false);
         setActiveButton('Locations');
@@ -265,8 +267,10 @@ const OtherProfileScreen = ({route, navigation}) => {
     }
     return (
         <SafeAreaView style={styles.container}>
+            {/* Display username */}
             <Text style={styles.profileName}>{username}</Text>
 
+            {/* Display user profile information */}
             <View style={styles.profileContainer}>
                 <View style={styles.profileImage}>
                     <Image source={{uri: globalUrl}} style={styles.image}/>
@@ -307,12 +311,15 @@ const OtherProfileScreen = ({route, navigation}) => {
                 </View>
             </View>
 
+            {/* Display user profile name and location */}
             <View style={styles.profileInfo}>
                 <View style={{flexDirection: 'row'}}>
                     <Text style={styles.textName}>{firstName}</Text>
                 </View>
                 <Text style={{fontSize: 13, color: '#3A6496', opacity: .7}}>{location}</Text>  
             </View>
+
+            {/* Display "Follow" or "Unfollow" button */}
             <TouchableOpacity style={styles.editProfile}
             onPress={() => followText=='Follow' ? followAccount() : unFollowAccount()}>
                 <Text style={{color: 'white'}}>{followText}</Text>

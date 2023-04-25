@@ -223,38 +223,47 @@ const ProfileScreen = ({route, navigation}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [showPhotoGrid, setShowPhotoGrid] = useState(true);
     const [activeButton, setActiveButton] = useState('Photos');
+    // Function to handle the save button press
     const handleSavePress= (username) => {
         if(username!='') {
             setUsername(username);
         }
         setModalVisible(false);
     }
+    // Function to handle the cancel button press
     const handleCancelPress= () => {
         setModalVisible(false);
     }
+    // Function to handle the Locations button press
     const handleLocationsPress = () => {
         setShowPhotoGrid(false);
         setActiveButton('Locations');
     }
+    // Function to handle the Photos button press
     const handlePhotosPress = () => {
         setShowPhotoGrid(true);
         setActiveButton('Photos');
     }
     return (
         <SafeAreaView style={styles.container}>
+            {/* Profile header */}
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                 <Text style={styles.profileName}>{username}</Text>
                 <View>
+                    {/* Settings button */}
                     <TouchableOpacity onPress={() =>  navigation.navigate('Settings')}>
                         <EvilIcons name='gear' size={30} color='#3A6496' style={styles.icon}/>
                     </TouchableOpacity>
                 </View>
             </View>
 
+            {/* User profile information */}
             <View style={styles.profileContainer}>
                 <View style={styles.profileImage}>
                     <Image source={{uri: globalUrl}} style={styles.image}/>
                 </View>
+
+                {/* User stats */}
                 <View style={{flexDirection: 'row', marg: 'center'}}>
                     <View style={{alignItems: 'center'}}>
                         <Text style={styles.number}>
@@ -291,6 +300,7 @@ const ProfileScreen = ({route, navigation}) => {
                 </View>
             </View>
 
+        {/* User name and location */}
             <View style={styles.profileInfo}>
                 <View style={{flexDirection: 'row'}}>
                     <Text style={styles.textName}>{firstName}</Text>
@@ -333,6 +343,7 @@ const ProfileScreen = ({route, navigation}) => {
             ) : (
                 <Locations />
             )}
+            {/* Navigation bar */}
             <SafeAreaView style={styles.footer}>
                 <NavigationBar toNavBarUsername={username} toNavBarUserID={userID}/>
             </SafeAreaView>
